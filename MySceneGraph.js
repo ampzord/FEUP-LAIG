@@ -1164,7 +1164,7 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
  * Parses the <LEAVES> block.
  */
  
-/*
+
 MySceneGraph.prototype.parseLeaves = function(leavesNode) {
     
     var children = leavesNode.children;
@@ -1230,7 +1230,7 @@ MySceneGraph.prototype.parseLeaves = function(leavesNode) {
     
     console.log("Parsed leaves");
 }
-*/
+
 /**
  * Parses the <NODES> block.
  */
@@ -1418,9 +1418,15 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 							this.log("   Leaf: "+ type);
 						else
 							this.warn("Error in leaf");
-						
+						console.log("OLAAAAAAAAAAAAAAAAAAAAAA");
+                        console.log(descendants[j].attributes);
+                        console.log("ADDEEUSSSSSSSSSSSSSSS");
+                        console.log(descendants[j]);
+                        //console.log(descendants[j].attributes[0].name);
+                        //console.log(descendants[j].attributes[1].name);
+                        //console.log(descendants[j].attributes[2].name);
 						//parse leaf
-						//this.nodes[nodeID].addLeaf(new MyGraphLeaf(this,descendants[j]);
+						this.nodes[nodeID].addChild(new MyGraphLeaf(this,descendants[j]));
                         sizeChildren++;
 					}
 					else

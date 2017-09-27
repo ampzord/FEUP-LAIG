@@ -4,7 +4,7 @@ function Node()
 {
 	this.ID = null;
 	this.descendants = [];
-	this.mat = null;
+	this.matrix = null;
 	this.texture = null;
 	//...
 };
