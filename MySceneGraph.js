@@ -20,7 +20,8 @@ function MySceneGraph(filename, scene) {
     this.scene = scene;
     scene.graph = this;
 
-    this.grafocena = [];
+    //BARBOSA
+    //this.grafocena = [];
     
     this.nodes = [];
     
@@ -1163,8 +1164,6 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
 /**
  * Parses the <LEAVES> block.
  */
- 
-
 MySceneGraph.prototype.parseLeaves = function(leavesNode) {
     
     var children = leavesNode.children;
@@ -1225,7 +1224,7 @@ MySceneGraph.prototype.parseLeaves = function(leavesNode) {
         }
         
         // Creates node.
-        this.nodes[nodeID] = new MyGraphLeaf(this,nodeID,type,args);
+        this.nodes[nodeID] = new MyGraphLeafWithArgs(this,nodeID,type,args);
     }
     
     console.log("Parsed leaves");
@@ -1418,14 +1417,8 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 							this.log("   Leaf: "+ type);
 						else
 							this.warn("Error in leaf");
-						console.log("OLAAAAAAAAAAAAAAAAAAAAAA");
-                        console.log(descendants[j].attributes);
-                        console.log("ADDEEUSSSSSSSSSSSSSSS");
-                        console.log(descendants[j]);
-                        //console.log(descendants[j].attributes[0].name);
-                        //console.log(descendants[j].attributes[1].name);
-                        //console.log(descendants[j].attributes[2].name);
-						//parse leaf
+						
+
 						this.nodes[nodeID].addChild(new MyGraphLeaf(this,descendants[j]));
                         sizeChildren++;
 					}
@@ -1496,11 +1489,15 @@ MySceneGraph.generateRandomString = function(length) {
     return String.fromCharCode.apply(null, numbers);
 }
 
+MySceneGraph.processGraph = function(nodeID)
+{
+    
+}
+
 /**
  * Displays the scene, processing each node, starting in the root node.
  */
-MySceneGraph.prototype.displayScene = function() {
-	// entry point for graph rendering
-	// remove log below to avoid performance issues
-	//this.log("Graph should be rendered here...");
+MySceneGraph.prototype.displayScene = function() 
+{
+    
 }
