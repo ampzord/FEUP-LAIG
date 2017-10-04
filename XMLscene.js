@@ -148,7 +148,6 @@ XMLscene.prototype.display = function() {
 		// Draw axis
 		this.axis.display();
 	}
-    
 
     this.popMatrix();
     

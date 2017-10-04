@@ -1417,7 +1417,6 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 							this.log("   Leaf: "+ type);
 						else
 							this.warn("Error in leaf");
-						
 
 						this.nodes[nodeID].addChild(new MyGraphLeaf(this,descendants[j]));
                         sizeChildren++;
@@ -1489,8 +1488,32 @@ MySceneGraph.generateRandomString = function(length) {
     return String.fromCharCode.apply(null, numbers);
 }
 
-MySceneGraph.processGraph = function(nodeID)
+MySceneGraph.prototype.processGraph = function(nodeName, material, texture) 
 {
+    var material = material;
+
+    if (nodeName != null) {
+        var node = this.grafo[nodeName];
+
+        if (node.material != null) {
+            material = node.material;
+        }
+
+        this.mulMatrix(node.transformMatrix); //tava node.m
+
+        for(i=0;i < node.descendants.length;i++) {
+            this.pushMatrix();
+            this.ApplyMaterial(material);
+            this.processGraph(node.descendants[i]);
+            this.popMatrix();
+        }
+        if (material != null) {
+            this.ApplyMaterial(material);
+        }
+        if (node.leaf != null) {
+            node.leaf.display();
+        }
+    }
     
 }
 
@@ -1499,5 +1522,5 @@ MySceneGraph.processGraph = function(nodeID)
  */
 MySceneGraph.prototype.displayScene = function() 
 {
-    
+    this.processGraph(this.rootNode, this.material, this.texture);
 }
