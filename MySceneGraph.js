@@ -1224,7 +1224,7 @@ MySceneGraph.prototype.parseLeaves = function(leavesNode) {
         }
         
         // Creates node.
-        this.nodes[nodeID] = new MyGraphLeafWithArgs(this,nodeID,type,args);
+        this.nodes[nodeID] = new MyGraphLeaf(this,nodeID,type,args);
     }
     
     console.log("Parsed leaves");
@@ -1418,7 +1418,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 						else
 							this.warn("Error in leaf");
 
-						this.nodes[nodeID].addChild(new MyGraphLeaf(this,descendants[j]));
+						this.nodes[nodeID].addLeaf(new MyGraphLeaf(this,descendants[j]));
                         sizeChildren++;
 					}
 					else
@@ -1488,30 +1488,39 @@ MySceneGraph.generateRandomString = function(length) {
     return String.fromCharCode.apply(null, numbers);
 }
 
-MySceneGraph.prototype.processGraph = function(nodeName, material, texture) 
+MySceneGraph.prototype.processGraph = function(nodeName, materialArg, textureArg) 
 {
-    var material = material;
+	//If one of materialArg, textureArg is null it inherits its fother's properties
+    var material = materialArg;
+    var texture = textureArg;
+
+    //console.log('1');
 
     if (nodeName != null) {
-        var node = this.grafo[nodeName];
+        var node = this.nodes[nodeName];
 
         if (node.material != null) {
             material = node.material;
         }
 
-        this.mulMatrix(node.transformMatrix); //tava node.m
 
-        for(i=0;i < node.descendants.length;i++) {
-            this.pushMatrix();
-            this.ApplyMaterial(material);
-            this.processGraph(node.descendants[i]);
-            this.popMatrix();
+        this.scene.pushMatrix();
+        this.scene.multMatrix(node.transformMatrix); //tava node.m
+
+        for(let i=0; i < node.children.length; i++) {     
+             this.processGraph(node.children[i]);
         }
+
         if (material != null) {
-            this.ApplyMaterial(material);
+            material.apply();
         }
-        if (node.leaf != null) {
-            node.leaf.display();
+        if (texture != null) {
+            texture.bind();
+        }
+
+        for(let i = 0; i < node.leaves.length; i++){
+        	node.leaves[i].display();
+        	this.scene.popMatrix();
         }
     }
     
@@ -1522,5 +1531,5 @@ MySceneGraph.prototype.processGraph = function(nodeName, material, texture)
  */
 MySceneGraph.prototype.displayScene = function() 
 {
-    this.processGraph(this.rootNode, this.material, this.texture);
+    this.processGraph(this.idRoot, this.material, this.texture);
 }
