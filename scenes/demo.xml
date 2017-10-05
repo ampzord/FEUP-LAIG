@@ -164,7 +164,6 @@
         <TEXTURE id="null" />  
 
         <DESCENDANTS>
-
             <NODEREF id="luzes" />    
             <NODEREF id="piramide" /> 
             <NODEREF id="arvores" />   

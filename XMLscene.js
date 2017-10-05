@@ -10,8 +10,6 @@ function XMLscene(interface) {
     this.interface = interface;
 
     this.lightValues = {};
-
-    this.graph = null;
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -148,6 +146,7 @@ XMLscene.prototype.display = function() {
 		// Draw axis
 		this.axis.display();
 	}
+    
 
     this.popMatrix();
     

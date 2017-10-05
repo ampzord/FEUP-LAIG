@@ -19,9 +19,6 @@ function MySceneGraph(filename, scene) {
     // Establish bidirectional references between scene and graph.
     this.scene = scene;
     scene.graph = this;
-
-    //BARBOSA
-    //this.grafocena = [];
     
     this.nodes = [];
     
@@ -1161,74 +1158,6 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
     console.log("Parsed materials");
 }
 
-/**
- * Parses the <LEAVES> block.
- */
-MySceneGraph.prototype.parseLeaves = function(leavesNode) {
-    
-    var children = leavesNode.children;
-    
-    var numArgs = [];
-    numArgs["rectangle"] = 4;
-    numArgs["cylinder"] = 5;
-    numArgs["sphere"] = 3;
-    numArgs["triangle"] = 9;
-    
-    for (var i = 0; i < children.length; i++) {
-        if (children[i].nodeName != "LEAF") {
-            this.onXMLMinorError("invalid tag name <" + children[i].nodeName + ">");
-            continue;
-        }
-        
-        // Retrieves node ID.
-        var nodeID = this.reader.getString(children[i], 'id');
-        if (nodeID == null )
-            return "failed to parse node ID";
-        // Verifies ID.
-        if (this.nodes[nodeID] != null )
-            return "node ID must be unique (conflict: ID = " + nodeID + ")";
-        
-        // Gets type of leaf.
-        var type = this.reader.getItem(children[i], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle']);
-        if (type == null )
-            return "failed to parse type of leaf for ID = " + nodeID;
-        
-        // Retrieves arguments.
-        var unsplit = this.reader.getString(children[i], 'args');
-        if (unsplit == null )
-            return "failed to retrieve list of arguments";
-        var args = unsplit.split(/ +/);
-
-        if (args[args.length - 1] == "")
-            args.splice(-1, 1);
-        
-        // Checks if all arguments are numeric.
-        for (var j = 0; j < args.length; j++) {
-            var numeric;
-            if (isNaN((numeric = parseFloat(args[j]))))
-                return "non-numeric argument for ID = " + nodeID;
-            else
-                args[j] = numeric;
-        }
-        
-        // Checks for a correct number of arguments.
-        if (args.length != numArgs[type])
-            return "incorrect number of arguments for type " + type + " (ID = " + nodeID + ")";
-
-        // Checks valid cylinder and sphere parameters.
-        if (type === 'cylinder' || type == 'sphere') {
-            for (var j = 0; j < args.length; j++) {
-                if (args[j] < 0)
-                    return "all arguments for a " +  type + " must be positive";
-            }
-        }
-        
-        // Creates node.
-        this.nodes[nodeID] = new MyGraphLeaf(this,nodeID,type,args);
-    }
-    
-    console.log("Parsed leaves");
-}
 
 /**
  * Parses the <NODES> block.
@@ -1417,7 +1346,8 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 							this.log("   Leaf: "+ type);
 						else
 							this.warn("Error in leaf");
-
+						
+						//parse leaf
 						this.nodes[nodeID].addLeaf(new MyGraphLeaf(this,descendants[j]));
                         sizeChildren++;
 					}
@@ -1488,48 +1418,62 @@ MySceneGraph.generateRandomString = function(length) {
     return String.fromCharCode.apply(null, numbers);
 }
 
-MySceneGraph.prototype.processGraph = function(nodeName, materialArg, textureArg) 
+
+MySceneGraph.prototype.processNode = function(node, parTex, parAsp) 
 {
-	//If one of materialArg, textureArg is null it inherits its fother's properties
-    var material = materialArg;
-    var texture = textureArg;
+    var textura = parTex;
+    var material = parAsp;
 
-    //console.log('1');
+    this.scene.pushMatrix();
+    this.scene.multMatrix(node.transformMatrix);
 
-    if (nodeName != null) {
-        var node = this.nodes[nodeName];
-
-        if (node.material != null) {
-            material = node.material;
-        }
-
-
-        this.scene.pushMatrix();
-        this.scene.multMatrix(node.transformMatrix); //tava node.m
-
-        for(let i=0; i < node.children.length; i++) {     
-             this.processGraph(node.children[i]);
-        }
-
-        if (material != null) {
-            material.apply();
-        }
-        if (texture != null) {
-            texture.bind();
-        }
-
-        for(let i = 0; i < node.leaves.length; i++){
-        	node.leaves[i].display();
-        	this.scene.popMatrix();
-        }
+    if (node.textureID != null) 
+    {
+        if (node.textureID == 'clear')
+            textura = null;
+    else
+        this.scene.currTexture = this.textures[node.textureID];
     }
-    
+
+    if (node.materialID != "null") {
+        material = this.materials[node.materialID];
+    }
+
+  if (node.textureID != "null" && node.textureID != "clear") 
+  {
+    textura = this.textures[node.textureID][0];
+  }
+  else if (node.textureID == "clear")
+    textura = null;
+
+
+  for (var i = 0; i < node.children.length; i++) 
+  {
+    this.processNode(this.nodes[node.children[i]], textura, material);
+  }
+
+
+  for (var j = 0; j < node.leaves.length; j++) 
+  {
+    if (material != null) {
+        material.apply();
+    }
+
+    if (textura != null) {
+        textura.bind();
+    }
+
+    node.leaves[j].display();
+  }
+  this.scene.popMatrix();
 }
+
 
 /**
  * Displays the scene, processing each node, starting in the root node.
  */
 MySceneGraph.prototype.displayScene = function() 
 {
-    this.processGraph(this.idRoot, this.material, this.texture);
+    //this.processNode(this.nodes[this.idRoot], null, null);
+    this.processNode(this.nodes[this.idRoot], null, null);
 }
