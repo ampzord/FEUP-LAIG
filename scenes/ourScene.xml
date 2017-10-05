@@ -79,6 +79,17 @@
         <DESCENDANTS>
         	<NODEREF id="floor" />
         	<NODEREF id="chair" />
+
+        	<!-- <NODEREF id="lamplight" /> 
+            <NODEREF id="chair" />
+            <NODEREF id="table" />
+            <NODEREF id="pcTower" />
+            <NODEREF id="mousepad" />
+            <NODEREF id="mouse" />
+            <NODEREF id="keyboard" />
+            <NODEREF id="monitor" />
+            <NODEREF id="lamp" /> -->
+
         </DESCENDANTS>
     </NODE>
 
