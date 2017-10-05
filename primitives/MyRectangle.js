@@ -53,7 +53,7 @@ this.vertices = [
 		this.minS, this.minT,
 		this.minS, this.maxT,
 		this.maxS, this.maxT,
-		this.maxS, this.minT,
+		this.maxS, this.minT
 	];
 
 
