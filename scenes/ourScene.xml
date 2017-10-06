@@ -134,8 +134,8 @@
 			<NODEREF id="backFace2" />
 			<NODEREF id="backFace3" />
 			<NODEREF id="backFace4" />
-			<!--<NODEREF id="backFace5" />
-			<NODEREF id="backFace6" />  -->     
+			<NODEREF id="backFace5" />
+			<!--<NODEREF id="backFace6" />  -->     
         </DESCENDANTS>
 	</NODE>
 
@@ -169,11 +169,11 @@
 
 	<NODE id="backFace3">
     	<MATERIAL id="null" />
-    	<TEXTURE id="basic" />
+    	<TEXTURE id="carbon" />
 
     	<TRANSLATION x="11.9" y="2" z="12.2" />
     	<ROTATION axis="y" angle="60" />
-    	<SCALE sx="0.05" sy="0.6" sz="0.05" />
+    	<SCALE sx="0.045" sy="0.6" sz="0.05" />
 
     	<DESCENDANTS>
 			<LEAF  type="rectangle" args="0 4 5 0" />        
@@ -184,13 +184,24 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="carbon" />
     	
-    	<TRANSLATION x="9.43" y="2" z="10.52" />
+    	<TRANSLATION x="9.4351" y="2" z="10.51" />
     	<ROTATION axis="y" angle="-120" />
-    	<SCALE sx="0.05" sy="0.6" sz="0.05" />
+    	<SCALE sx="0.045" sy="0.6" sz="0.043" />
 
     	<DESCENDANTS>
 			<LEAF  type="rectangle" args="0 4 5 0" />        
-        </DESCENDANTS> -->
+        </DESCENDANTS>
+	</NODE>
+
+	<NODE id="backFace5">
+    	<MATERIAL id="null" />
+    	<TEXTURE id="carbon" />
+    	
+    	<ROTATION axis="z" angle="-90" />
+
+    	<DESCENDANTS>
+			<LEAF  type="rectangle" args="0 4 5 0" />        
+        </DESCENDANTS>
 	</NODE>
 
 
