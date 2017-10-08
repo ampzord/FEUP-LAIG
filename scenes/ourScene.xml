@@ -91,9 +91,10 @@
         	<NODEREF id="floor" />
         	<NODEREF id="chair" />
         	<NODEREF id="table" />
+            <NODEREF id="pcTower" />
         	<!-- <NODEREF id="lamplight" /> 
             <NODEREF id="chair" />
-            <NODEREF id="pcTower" />
+            
             <NODEREF id="mousepad" />
             <NODEREF id="mouse" />
             <NODEREF id="keyboard" />
@@ -119,6 +120,8 @@
     <NODE id="chair">
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
+        <TRANSLATION x="1" y="0" z="-3" />
+
 
     	<DESCENDANTS>
 			<NODEREF id="chairBack" />
@@ -380,6 +383,7 @@
 	<NODE id="table">
     	<MATERIAL id="null" />
     	<TEXTURE id="woodchair" />
+        <TRANSLATION x="1.5" y="0" z="0" />
 
     	<DESCENDANTS>
 			<NODEREF id="tabletop" />
@@ -527,6 +531,148 @@
         </DESCENDANTS>
 	</NODE>
 
+    <!-- MINE -->
+    
+    <NODE id="pcTower">      
+    <MATERIAL id="null" />    
+    <TEXTURE id="basic" />
+    <TRANSLATION x="13" y="10" z="1" />
+
+    <DESCENDANTS>
+        <NODEREF id="towerFace1" />
+        <NODEREF id="towerFace2" />
+        <NODEREF id="towerFace3" />
+        <NODEREF id="towerFace4" />
+        <NODEREF id="towerFace5" />
+        <NODEREF id="towerFace6" />
+    </DESCENDANTS>
+</NODE>
+
+<!-- LEFT SIDE -->
+<NODE id="towerFace1">
+    <MATERIAL id="null" />
+    <TEXTURE id="null" />
+
+    <ROTATION axis="y" angle="-90"/>
+
+    <DESCENDANTS>
+        <LEAF  type="rectangle" args="0 4 5 0" />        
+    </DESCENDANTS>
+</NODE>
+
+<!-- RIGHT SIDE -->
+<NODE id="towerFace2">
+    <MATERIAL id="null" />
+    <TEXTURE id="null" />
+
+    <TRANSLATION x="2" y="0" z="5" /> 
+    <ROTATION axis="y" angle="90"/>
+
+    <DESCENDANTS>
+        <LEAF  type="rectangle" args="0 4 5 0" />        
+    </DESCENDANTS>
+</NODE>
+
+<!-- FRONT FACE -->
+<NODE id="towerFace3">
+    <MATERIAL id="null" />
+    <TEXTURE id="null" />
+
+    <TRANSLATION x="0" y="0" z="5" />
+    <SCALE sx="0.8" sy="0.57" sz="1" />
+
+    <DESCENDANTS>
+        <LEAF  type="rectangle" args="0 7 2.5 0" />        
+    </DESCENDANTS>
+</NODE>
+
+<!-- BACK FACE-->
+<NODE id="towerFace4">
+    <MATERIAL id="null" />
+    <TEXTURE id="null" />
+
+    <TRANSLATION x="0" y="4" z="0" />
+    <SCALE sx="0.8" sy="0.57" sz="1" />
+    <ROTATION axis="x" angle="180" />
+
+    <DESCENDANTS>
+        <LEAF  type="rectangle" args="0 7 2.5 0" />        
+    </DESCENDANTS>
+</NODE>
+
+<!-- BOTTTOM FACE -->
+<NODE id="towerFace5">
+    <MATERIAL id="null" />
+    <TEXTURE id="null" />
+    <SCALE sx="0.4" sy="1" sz="1.275" />
+    <ROTATION axis="x" angle="90"/>
+
+    <DESCENDANTS>
+        <LEAF  type="rectangle" args="0 4 5 0" />        
+    </DESCENDANTS>
+</NODE>
+
+<!-- TOP FACE -->
+<NODE id="towerFace6">
+    <MATERIAL id="null" />
+    <TEXTURE id="null" />
+
+    <TRANSLATION x="0" y="4" z="5" /> 
+    <SCALE sx="0.4" sy="1" sz="1.275" />
+    <ROTATION axis="x" angle="-90" /> 
+
+    <DESCENDANTS>
+        <LEAF  type="rectangle" args="0 4 5 0" />        
+    </DESCENDANTS>
+</NODE>
+
+<!--
+<NODE id="monitor">      
+    <MATERIAL id="null" />    
+    <TEXTURE id="basic" />
+
+    <DESCENDANTS>
+        <NODEREF id="monitorBase" />
+        <NODEREF id="monitorScreen" />
+    </DESCENDANTS>
+</NODE>
+
+<NODE id="monitorBase">
+    <MATERIAL id="null" />
+    <TEXTURE id="basic" />
+
+    <DESCENDANTS>
+       <NODEREF id="monitorBottomBase" />
+       <NODEREF id="monitorHolder" />
+   </DESCENDANTS>
+   <NODE/>
+
+
+   <NODE id="monitorBottomBase">
+     <MATERIAL id="null" />
+     <TEXTURE id="basic" />
+     <SCALE sx="0.4" sy="0.5" sz="0.65" />
+     <TRANSLATION x="7" y="7" z="3" />
+     <ROTATION axis="x" angle="90"/>
+
+     <DESCENDANTS>
+        <LEAF  type="rectangle" args="0 4 5 0" />        
+    </DESCENDANTS>
+</NODE>
+
+<NODE id="monitorHolder">
+     <MATERIAL id="null" />
+     <TEXTURE id="basic" />
+     <SCALE sx="0.4" sy="0.5" sz="0.65" />
+     <TRANSLATION x="7" y="7" z="3" />
+     <ROTATION axis="x" angle="90"/>
+
+     <DESCENDANTS>
+        <LEAF  type="rectangle" args="0 4 5 0" />        
+    </DESCENDANTS>
+</NODE>
+
+-->
 </NODES>
 
 </SCENE>
