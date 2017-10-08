@@ -744,6 +744,16 @@
 
 	<NODE id="monitorScreen">
 	    <MATERIAL id="null" />
+	    <TEXTURE id="null" />
+
+	    <DESCENDANTS>
+	        <NODEREF id="monitorScreenFront" />
+	        <NODEREF id="monitorScreenBack" />       
+	    </DESCENDANTS>
+	</NODE>
+
+	<NODE id="monitorScreenFront">
+	    <MATERIAL id="null" />
 	    <TEXTURE id="monitorscreen" />
 
 		<TRANSLATION x="-0.05" y="0.5" z="-0.4" />
@@ -754,6 +764,22 @@
 	        <LEAF  type="rectangle" args="0 4 5 0" />       
 	    </DESCENDANTS>
 	</NODE>
+
+	<NODE id="monitorScreenBack">
+		<MATERIAL id="null" />
+		<TEXTURE id="plastic" />
+
+		<TRANSLATION x="2" y="0.5" z="-0.41" />
+		<ROTATION axis="x" angle="-10" />
+		<ROTATION axis="y" angle="180" />
+		<SCALE sx="0.4" sy="0.4" sz="0.15" />
+
+		<DESCENDANTS>
+		    <LEAF  type="rectangle" args="0 4 5 0" />       
+		</DESCENDANTS>
+	</NODE>
+
+	
 
 	<NODE id="lamp1">
 	    <MATERIAL id="null" />
