@@ -101,8 +101,13 @@
         <amplif_factor s="4" t="4" />                           
     </TEXTURE>
 
-     <TEXTURE id="mouse">
+    <TEXTURE id="mouse">
         <file path="images/mouse.jpg" />               
+        <amplif_factor s="4" t="4" />                           
+    </TEXTURE>
+
+    <TEXTURE id="black">
+        <file path="images/black.jpg" />               
         <amplif_factor s="4" t="4" />                           
     </TEXTURE>
 </TEXTURES>
@@ -902,7 +907,8 @@
 
    <NODE id="mouse">      
     <MATERIAL id="null" />    
-    <TEXTURE id="mouse" />
+    <TEXTURE id="black" />
+
     <TRANSLATION x="13.05" y="3.02" z="3.35" />
     <SCALE sx="0.15" sy="0.05" sz="0.1" />
 
@@ -983,7 +989,7 @@
 <!-- TOP FACE -->
 <NODE id="mouseFace6">
     <MATERIAL id="null" />
-    <TEXTURE id="null" />
+    <TEXTURE id="mouse" />
 
     <TRANSLATION x="0" y="4" z="5" /> 
     <SCALE sx="0.4" sy="1" sz="1.275" />
