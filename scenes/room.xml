@@ -40,19 +40,8 @@
 
 <TEXTURES>
 
-	<!-- Tree trunk -->
-    <TEXTURE id="trunk">
-        <file path="images/trunk-image.jpg" />               
-        <amplif_factor s="2" t="2" />                           
-    </TEXTURE>
-
     <TEXTURE id="woodfloor">
         <file path="images/floor_wood.jpg" />               
-        <amplif_factor s="4" t="4" />                           
-    </TEXTURE>
-
-    <TEXTURE id="basic">
-        <file path="images/basic.png" />               
         <amplif_factor s="4" t="4" />                           
     </TEXTURE>
 
@@ -183,7 +172,7 @@
 
 	<NODE id="chairBack">
     	<MATERIAL id="null" />
-    	<TEXTURE id="basic" />
+    	<TEXTURE id="null" />
 
     	<DESCENDANTS>
 			<NODEREF id="backFace1" />
