@@ -13,6 +13,8 @@ function MyCylinder(scene, args) {
     this.topRad = parseFloat(args[2]);
     this.stacks = parseFloat(args[3]);
     this.slices = parseFloat(args[4]);
+    //this.top = parseFloat(args[5]);
+    //this.bottom = parseFloat(args[6]);
 
     this.initBuffers();
 };

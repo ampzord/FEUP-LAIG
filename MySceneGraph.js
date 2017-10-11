@@ -1439,12 +1439,12 @@ MySceneGraph.prototype.processNode = function(node, parTex, parAsp)
         material = this.materials[node.materialID];
     }
 
-  if (node.textureID != "null" && node.textureID != "clear") 
-  {
-    textura = this.textures[node.textureID][0];
-  }
-  else if (node.textureID == "clear")
-    textura = null;
+	if (node.textureID != "null" && node.textureID != "clear") 
+	{
+	  textura = this.textures[node.textureID][0];
+	}
+	else if (node.textureID == "clear")
+	  textura = null;
 
 
   for (var i = 0; i < node.children.length; i++) 
@@ -1474,6 +1474,5 @@ MySceneGraph.prototype.processNode = function(node, parTex, parAsp)
  */
 MySceneGraph.prototype.displayScene = function() 
 {
-    //this.processNode(this.nodes[this.idRoot], null, null);
     this.processNode(this.nodes[this.idRoot], null, null);
 }
