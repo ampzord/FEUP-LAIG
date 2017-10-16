@@ -7,15 +7,19 @@ function MyCylinder(scene, args) {
     CGFobject.call(this, scene);
 
     args = args.split(" ");
-
+    this.scene = scene;
     this.height = parseFloat(args[0]);
     this.botRad = parseFloat(args[1]);
     this.topRad = parseFloat(args[2]);
     this.stacks = parseFloat(args[3]);
     this.slices = parseFloat(args[4]);
-    //this.top = parseFloat(args[5]);
-    //this.bottom = parseFloat(args[6]);
+    this.top = parseFloat(args[5]);
+    this.bottom = parseFloat(args[6]);
 
+   if (this.top == 1 && this.bottom == 1) 
+   {
+        this.circle = new MyCylinderTopBottom(this.scene,this.slices, this.botRad, this.topRad);
+    }
     this.initBuffers();
 };
 
@@ -28,10 +32,10 @@ MyCylinder.prototype.initBuffers = function() {
     var currRadius = this.botRad;
     var radiusInc = (this.topRad - this.botRad)/this.stacks;
 
-    this.vertices = new Array();
-    this.indices = new Array();
-    this.normals = new Array();
-    this.texCoords = new Array();
+    this.vertices = [];
+    this.indices = [];
+    this.normals = [];
+    this.texCoords = [];
 
     var deltaS = 1/this.slices;
 	var deltaT = 1/this.stacks;
@@ -55,6 +59,15 @@ MyCylinder.prototype.initBuffers = function() {
 		}
  	}
 
+    if (this.top == 1 && this.bottom == 1)
+    {
+        //CGFobject.prototype.display.call(this);
+        this.circle.display();
+        /*this.scene.rotate(Math.PI,1,0,0);
+        this.scene.translate(0,0,-1);
+        this.circle.display();*/
+    }
+
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();
-};
+};;
