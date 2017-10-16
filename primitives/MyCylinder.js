@@ -13,13 +13,7 @@ function MyCylinder(scene, args) {
     this.topRad = parseFloat(args[2]);
     this.stacks = parseFloat(args[3]);
     this.slices = parseFloat(args[4]);
-    this.top = parseFloat(args[5]);
-    this.bottom = parseFloat(args[6]);
 
-   if (this.top == 1 && this.bottom == 1) 
-   {
-        this.circle = new MyCylinderTopBottom(this.scene,this.slices, this.botRad, this.topRad);
-    }
     this.initBuffers();
 };
 
@@ -59,15 +53,6 @@ MyCylinder.prototype.initBuffers = function() {
 		}
  	}
 
-    if (this.top == 1 && this.bottom == 1)
-    {
-        //CGFobject.prototype.display.call(this);
-        this.circle.display();
-        /*this.scene.rotate(Math.PI,1,0,0);
-        this.scene.translate(0,0,-1);
-        this.circle.display();*/
-    }
-
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();
-};;
+};

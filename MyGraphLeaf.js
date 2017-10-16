@@ -32,7 +32,13 @@ function MyGraphLeaf(graph, leafData)
 		break;
 
 		case 'cylinder':
-		this.primitive = new MyCylinder(graph.scene, this.args);
+		this.argsSplit = this.args.split(" ");
+		if (this.argsSplit[5] == 0 && this.argsSplit[6] == 0) {
+			this.primitive = new MyCylinder(graph.scene, this.args);
+		}
+		else {
+			this.primitive = new MyCylinderWithTops(graph.scene, this.args);
+		}
 		break;
 
 		case 'triangle':
