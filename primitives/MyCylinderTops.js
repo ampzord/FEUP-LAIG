@@ -14,41 +14,44 @@ function MyCylinderTops(scene, radius, slices) {
 MyCylinderTops.prototype = Object.create(CGFobject.prototype);
 MyCylinderTops.prototype.constructor = MyCylinderTops;
 
-MyCylinderTops.prototype.initBuffers = function() {
-
+MyCylinderTops.prototype.initBuffers = function() 
+{
 
     this.vertices = [];
-    this.indices = [];
-    this.normals = [];
+    this.indices=[];
     this.texCoords = [];
 
-
-    var ang = (2*Math.PI) / this.slices;
-    var start = 1;
-    var texCenter;
-    
-
-    // Circle center
-    this.vertices.push(0, 0, 0);
-    this.normals.push(0, 0, 1);
-    this.texCoords.push(0.5, 0.5);
-
-
-    for (var slice = 0; slice <= this.slices; slice++) {
-        var x = Math.cos(slice * ang);
-        var y = Math.sin(slice * ang);
-
-        this.vertices.push(this.radius * x, this.radius * y, 0);
-        this.normals.push(0, 0, 1);
-        this.texCoords.push(0.5 + 0.5 * x, 0.5 - 0.5 * y);
-
-        if (slice > 1)
-            this.indices.push(start++, start, 0);
+    var inq=2*Math.PI/this.slices;
+    var ang=0.0;
+    for(var i = 0; i < this.slices; i++)
+    {
+        this.vertices.push(Math.cos(ang),  Math.sin(ang), 0); //z a 1
+        ang += inq;
     }
+ 
+    for(i=0;i<this.slices-1;i++)
+    {  
+        if(i==this.slices-2)
+        {
+            this.indices.push(0,this.slices-1,0);
+        }
+        else
+        {
+            this.indices.push(0, i+1, i+2);
+ 
+        }
+   
+    }
+   
+    inq=2*Math.PI/this.slices;
+    ang=0.0;
 
-    this.indices.push(0, start, 1);
-
-
+    for(var i = 0; i < this.slices; i++)
+    {
+        this.texCoords.push((Math.cos(ang)/2)+0.5,  (Math.sin(ang)/2)+0.5);
+        ang += inq;
+    }
+ 
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();
 };

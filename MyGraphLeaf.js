@@ -2,10 +2,6 @@
  * MyGraphLeaf class, representing a leaf in the scene graph.
  * @constructor
  **/
-
-//Como verificar o nome do atributo e mais informacoes sobre os args
-//rectangle tem 2 atributos e cylinder tem 3
-
 function MyGraphLeaf(graph, leafData)
 {
 	this.primitive = null;
@@ -43,6 +39,10 @@ function MyGraphLeaf(graph, leafData)
 
 		case 'triangle':
 		this.primitive = new MyTriangle(graph.scene, this.args);
+		break;
+
+		case 'patch':
+		this.primitive = new MyPatch(graph.scene, this.args);
 		break;
 	}
 }

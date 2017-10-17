@@ -5,14 +5,18 @@
 function MyCylinderWithTops(scene, args) {
     CGFobject.call(this, scene);
 
+    this.argsRaw = args;
+
     args = args.split(" ");
+    this.height = parseFloat(args[0]);
     this.botRad = parseFloat(args[1]);
     this.topRad = parseFloat(args[2]);
+    this.stacks = parseFloat(args[3]);
     this.slices = parseFloat(args[4]);
-    
+    this.topTrue = parseFloat(args[5]);
+    this.botTrue = parseFloat(args[6]);
 
-
-    this.cylinder = new MyCylinder(scene, args);
+    this.cylinder = new MyCylinder(scene, this.argsRaw);
     this.baseCyl = new MyCylinderTops(scene, this.botRad, this.slices);
     this.topCyl = new MyCylinderTops(scene, this.topRad, this.slices);
 };
@@ -24,13 +28,19 @@ MyCylinderWithTops.prototype.display = function()
 {
     this.cylinder.display();
 
-    this.scene.pushMatrix();
-        this.scene.rotate(Math.PI, 0, 1, 0);
-        this.baseCyl.display();
-    this.scene.popMatrix();
+    if (this.botTrue == 1) 
+    {
+        this.scene.pushMatrix();
+            this.scene.rotate(Math.PI, 0, 1, 0);
+            this.baseCyl.display();
+        this.scene.popMatrix();
+    }
 
-    this.scene.pushMatrix();
-        this.scene.translate(0, 0, 1);
-        this.topCyl.display();
-    this.scene.popMatrix();
+    if (this.topTrue == 1) 
+    {
+        this.scene.pushMatrix();
+            this.scene.translate(0, 0, this.height);
+            this.topCyl.display();
+        this.scene.popMatrix();
+    }
 }

@@ -1,19 +1,16 @@
 /**
  * MyCylinder
  * @constructor
- * @args height, bottom radius, top radius, sections along height(stacks) and parts per section(slices)
  */
 function MyCylinder(scene, args) {
     CGFobject.call(this, scene);
 
     args = args.split(" ");
-    this.scene = scene;
     this.height = parseFloat(args[0]);
     this.botRad = parseFloat(args[1]);
     this.topRad = parseFloat(args[2]);
     this.stacks = parseFloat(args[3]);
     this.slices = parseFloat(args[4]);
-
     this.initBuffers();
 };
 
