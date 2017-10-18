@@ -1462,21 +1462,13 @@ MySceneGraph.prototype.processNode = function(node, parTex, parAsp)
     }
 
     if (textura != null) {
-        textura.bind();
-    }
-
-    if (this.scene.currTexture != null && this.scene.currTexture.length > 0 && (node.leaves[j].type == 'rectangle' || node.leaves[j].type == 'triangle')) {
         node.leaves[j].applyAf(ampS, ampT);
-        console.log('dsfdsfds');
-        console.log(ampS);
-        console.log(ampT);
-    }
-
-    //if (node.leaves[j].type == 'rectangle' || node.leaves[j].type == 'triangle')
-     //   node.leaves[j].applyAf(this.scene.currTexture.amplifFactorS, this.scene.currTexture.amplifFactorT);
+        textura.bind();
+    }    
 
     node.leaves[j].display();
   }
+  
   this.scene.popMatrix();
 }
 

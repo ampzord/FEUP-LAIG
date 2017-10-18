@@ -44,3 +44,5 @@ MyCylinderWithTops.prototype.display = function()
         this.scene.popMatrix();
     }
 }
+
+MyCylinderWithTops.prototype.applyAf = function (afS,afT){};
