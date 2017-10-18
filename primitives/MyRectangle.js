@@ -60,3 +60,12 @@ this.vertices = [
 	this.primitiveType=this.scene.gl.TRIANGLES;
 	this.initGLBuffers();
 };
+
+MyRectangle.prototype.applyAf = function (afS,afT)
+{
+	for (var i = 0; i < this.texCoords.length; i+=2) {
+        this.texCoords[i] = this.baseTexCoords[i]/afS;
+        this.texCoords[i+1] = this.baseTexCoords[i+1]/afT;
+    }
+    this.updateTexCoordsGLBuffers();
+};

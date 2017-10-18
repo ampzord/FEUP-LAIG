@@ -870,8 +870,8 @@ MySceneGraph.prototype.parseTextures = function(texturesNode) {
             
             var texSpecs = eachTexture[i].children;
             var filepath = null ;
-            var amplifFactorS = null ;
-            var amplifFactorT = null ;
+            var amplifFactorS = null;
+            var amplifFactorT = null;
             // Retrieves texture specifications.
             for (var j = 0; j < texSpecs.length; j++) {
                 var name = texSpecs[j].nodeName;
@@ -1442,6 +1442,8 @@ MySceneGraph.prototype.processNode = function(node, parTex, parAsp)
 	if (node.textureID != "null" && node.textureID != "clear") 
 	{
 	  textura = this.textures[node.textureID][0];
+      ampS = this.textures[node.textureID][1];
+      ampT = this.textures[node.textureID][2];
 	}
 	else if (node.textureID == "clear")
 	  textura = null;
@@ -1462,6 +1464,16 @@ MySceneGraph.prototype.processNode = function(node, parTex, parAsp)
     if (textura != null) {
         textura.bind();
     }
+
+    if (this.scene.currTexture != null && this.scene.currTexture.length > 0 && (node.leaves[j].type == 'rectangle' || node.leaves[j].type == 'triangle')) {
+        node.leaves[j].applyAf(ampS, ampT);
+        console.log('dsfdsfds');
+        console.log(ampS);
+        console.log(ampT);
+    }
+
+    //if (node.leaves[j].type == 'rectangle' || node.leaves[j].type == 'triangle')
+     //   node.leaves[j].applyAf(this.scene.currTexture.amplifFactorS, this.scene.currTexture.amplifFactorT);
 
     node.leaves[j].display();
   }

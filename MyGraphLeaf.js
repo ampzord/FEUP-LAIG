@@ -47,6 +47,10 @@ function MyGraphLeaf(graph, leafData)
 	}
 }
 
+MyGraphLeaf.prototype.applyAf = function(afS,afT){
+		this.primitive.applyAf(afS,afT);
+};
+
 MyGraphLeaf.prototype.display = function(){
 		this.primitive.display();
 };

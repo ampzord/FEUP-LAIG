@@ -43,3 +43,12 @@ MyTriangle.prototype.constructor=MyTriangle;
     this.primitiveType=this.scene.gl.TRIANGLES;
     this.initGLBuffers();
 };
+
+MyTriangle.prototype.applyAf = function (afS,afT)
+{
+    for (var i = 0; i < this.texCoords.length; i+=2) {
+        this.texCoords[i] = this.texCoords[i]/afS;
+        this.texCoords[i+1] = this.texCoords[i+1]/afT;
+    }
+    this.updateTexCoordsGLBuffers();
+};
