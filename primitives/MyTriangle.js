@@ -26,15 +26,33 @@ MyTriangle.prototype.constructor=MyTriangle;
     this.normals = new Array();
     this.baseTexCoords = new Array();
 
-    this.vertices.push(args[0],args[1],args[2]);
-    this.vertices.push(args[3],args[4],args[5]);
-    this.vertices.push(args[6],args[7],args[8]);
-
-    this.normals.push(0,1,0);
-    this.normals.push(0,1,0);
-    this.normals.push(0,1,0);
+    this.vertices.push(this.args[0],this.args[1],this.args[2]);
+    this.vertices.push(this.args[3],this.args[4],this.args[5]);
+    this.vertices.push(this.args[6],this.args[7],this.args[8]);
 
     this.indices.push(0, 1, 2);
+
+   	var vec1 = [
+        this.args[0]-this.args[3],
+        this.args[1]-this.args[4],
+        this.args[2]-this.args[5]
+    ];
+
+    var vec2 = [
+        this.args[0]-this.args[6],
+        this.args[1]-this.args[7],
+        this.args[2]-this.args[8]
+    ];
+
+    var normal = vec3.create();
+
+    vec3.cross(normal,vec1,vec2);
+
+    this.normals = [
+        vec3[0],vec3[1],vec3[2],
+        vec3[0],vec3[1],vec3[2],
+        vec3[0],vec3[1],vec3[2]
+    ];
 
     this.baseTexCoords.push(0,0);
     this.baseTexCoords.push(1,0);
