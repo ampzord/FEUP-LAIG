@@ -172,7 +172,7 @@
         <TEXTURE id="null" />                
 
         <DESCENDANTS>
-            <LEAF id="cylinder1" type="cylinder" args="4 1 1 20 20 1 1" /> 
+            <LEAF id="sphere1" type="sphere" args="2 20 20" /> 
         </DESCENDANTS>
 
     </NODE>
