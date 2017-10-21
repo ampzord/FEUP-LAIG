@@ -9,6 +9,7 @@ function MyGraphLeaf(graph, leafData)
 	if (leafData.attributes.length == 2) {
 		this.type = leafData.attributes[0].value
 		this.args = leafData.attributes[1].value;
+		this.patchInfo = leafData;
 	}
 	//id, type and args
 	else {
@@ -42,7 +43,7 @@ function MyGraphLeaf(graph, leafData)
 		break;
 
 		case 'patch':
-		this.primitive = new MyPatch(graph.scene, this.args);
+		this.primitive = new MyPatch(graph.scene, this.patchInfo, this.args);
 		break;
 	}
 }

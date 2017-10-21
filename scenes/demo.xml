@@ -162,20 +162,38 @@
         <TEXTURE id="null" />  
 
         <DESCENDANTS>
-            <NODEREF id="test" />
+            <NODEREF id="front" />
         </DESCENDANTS>
 
     </NODE>
     
-    <NODE id="test">      
-        <MATERIAL id="null" />     
-        <TEXTURE id="null" />                
-
+    <NODE id="front">
+        <MATERIAL id="defaultMaterial" />         
+        <TEXTURE id="null" />  
         <DESCENDANTS>
-            <LEAF id="sphere1" type="sphere" args="2 20 20" /> 
+            <LEAF type="patch" args="20 20" >
+                <CPLINE>
+                    <CPOINT xx="-1" yy="1" zz="0" ww="1" />
+                    <CPOINT xx="-1" yy="-1" zz="0" ww="1" />
+                </CPLINE>
+                <CPLINE>
+                    <CPOINT xx="-1" yy="1" zz="-1" ww="1" />
+                    <CPOINT xx="-1" yy="-1" zz="-1" ww="1" />
+                    <CPOINT xx="-1" yy="-1" zz="-1" ww="1" />
+                </CPLINE>
+                <CPLINE>
+                    <CPOINT xx="1" yy="1" zz="-1" ww="1" />
+                    <CPOINT xx="1" yy="-1" zz="-1" ww="1" />
+                    <CPOINT xx="1" yy="-1" zz="-1" ww="1" />
+                </CPLINE>
+                <CPLINE>
+                    <CPOINT xx="1" yy="1" zz="0" ww="1" />
+                    <CPOINT xx="1" yy="-1" zz="0" ww="1" />
+                </CPLINE>
+            </LEAF>
         </DESCENDANTS>
-
     </NODE>
+
 
 </NODES>
 
