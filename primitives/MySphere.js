@@ -15,13 +15,13 @@ function MySphere(scene, args) {
 
  MySphere.prototype.initBuffers = function() {
 
-	var stepAng = 2*Math.PI / this.slices; //step in radians
+	var stepAng = 2*Math.PI / this.slices;
 	this.vertices = new Array();
 	this.indices = new Array();
 	this.normals = new Array();
 	this.texCoords = new Array();
-	//var depth = 1.0/this.stacks;
-	var radius = Math.PI / this.stacks; //Radius
+	
+	var radius = Math.PI / this.stacks; 
 	var currtRadius;
 
  	for (var i = 0; i <this.stacks; i++){
@@ -42,12 +42,10 @@ function MySphere(scene, args) {
       		this.indices.push((i*2*this.slices)+(2*j)+0);
 
 			this.indices.push((i*2*this.slices)+(((2*j)+3) % (this.slices * 2)));
-			this.indices.push((i*2*this.slices)+(((2*j)+0) % (this.slices * 2))); //This doesn't need integer division
+			this.indices.push((i*2*this.slices)+(((2*j)+0) % (this.slices * 2)));
      		this.indices.push((i*2*this.slices)+(((2*j)+2) % (this.slices * 2)));
 		}
  	}
-
-
  	this.primitiveType = this.scene.gl.TRIANGLES;
  	this.initGLBuffers();
  };

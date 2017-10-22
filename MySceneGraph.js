@@ -1388,10 +1388,7 @@ var NODES_INDEX = 6;
                                 var vDegree = cLinePointsAux.length-1;
                                 
                             }
-
                             var uDegree = patchFirstChild.length-1;
-
-                            //var patchArgs = [args[0], args[1], uDegree, vDegree, patchSecondChild];
                             this.nodes[nodeID].addLeaf(new MyGraphLeaf(this, descendants[j]));
                         }
                         this.nodes[nodeID].addLeaf(new MyGraphLeaf(this, descendants[j]));

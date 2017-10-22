@@ -1,11 +1,6 @@
 /**
  * MyRectangle
- * @param gl {WebGLRenderingContext}
- * @constructor
- * @ param args coordinates for left-top and right-bottom vertices.
  */
-
-
 function MyRectangle(scene, args) 
 {
 	CGFobject.call(this,scene);
@@ -45,9 +40,8 @@ this.vertices = [
 		0, 0, 1,
 		0, 0, 1,
 		0, 0, 1,
-    ]
+    ];
 
-	//coordenadas de textura, tendo em conta os vértices
 
    this.baseTexCoords = [
 		this.minS, this.minT,
