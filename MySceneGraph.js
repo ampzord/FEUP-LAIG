@@ -1357,6 +1357,7 @@ var NODES_INDEX = 6;
                            for (var p = 0; p < patchFirstChild.length; p++) 
                            {
                                 var cLinePointsAux = nodeSpecs[descendantsIndex].children[0].children[p].children;
+
                                 var cLinePoints = [];
 
                                 for(var h = 0; h < cLinePointsAux.length; h++) {
@@ -1385,13 +1386,10 @@ var NODES_INDEX = 6;
 
                                 patchSecondChild.push(cLinePoints);
                                 var vDegree = cLinePointsAux.length-1;
-                                console.log('scenegraph');
-                                console.log(vDegree);
-                                console.log('ENDscenegraph');
+                                
                             }
 
                             var uDegree = patchFirstChild.length-1;
-                            //console.log(descendants[j]);
 
                             //var patchArgs = [args[0], args[1], uDegree, vDegree, patchSecondChild];
                             this.nodes[nodeID].addLeaf(new MyGraphLeaf(this, descendants[j]));

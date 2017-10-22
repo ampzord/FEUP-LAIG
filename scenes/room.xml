@@ -40,8 +40,19 @@
 
 <TEXTURES>
 
+	<!-- Tree trunk -->
+    <TEXTURE id="trunk">
+        <file path="images/trunk-image.jpg" />               
+        <amplif_factor s="2" t="2" />                           
+    </TEXTURE>
+
     <TEXTURE id="woodfloor">
         <file path="images/floor_wood.jpg" />               
+        <amplif_factor s="4" t="4" />                           
+    </TEXTURE>
+
+    <TEXTURE id="basic">
+        <file path="images/basic.png" />               
         <amplif_factor s="4" t="4" />                           
     </TEXTURE>
 
@@ -112,6 +123,38 @@
         <emission r="0.0" g="0.0" b="0.0" a="1" />        
     </MATERIAL>
 
+    <MATERIAL id="wood">                                  
+        <shininess value="1" />
+        <specular r="0.0" g="0.0" b="0.0" a="1" />        
+        <diffuse r="0.6" g="0.298" b="0.0" a="1" />      
+        <ambient r="0.1" g="0.1" b="0.1" a="1" />         
+        <emission r="0.0" g="0.0" b="0.0" a="1" />       
+    </MATERIAL>
+
+    <MATERIAL id="tablewood">                                  
+        <shininess value="1" />
+        <specular r="0.0" g="0.0" b="0.0" a="1" />        
+        <diffuse r="0.7" g="0.350" b="0.0" a="1" />      
+        <ambient r="0.2" g="0.2" b="0.2" a="1" />         
+        <emission r="0.0" g="0.0" b="0.0" a="1" />       
+    </MATERIAL>
+
+    <MATERIAL id="carpet">                                  
+        <shininess value="1" />
+        <specular r="0.0" g="0.0" b="0.0" a="1" />        
+        <diffuse r="0.2" g="0.25" b="0.2" a="1" />      
+        <ambient r="0.05" g="0.05" b="0.05" a="1" />         
+        <emission r="0.0" g="0.0" b="0.0" a="1" />       
+    </MATERIAL>
+
+    <MATERIAL id="keyboardMat">                                  
+        <shininess value="1" />
+        <specular r="0.0" g="0.0" b="0.0" a="1" />        
+        <diffuse r="0.8" g="0.8" b="1" a="1" />      
+        <ambient r="0.6" g="0.7" b="0.05" a="1" />         
+        <emission r="0.0" g="0.0" b="0.0" a="1" />       
+    </MATERIAL>
+
 </MATERIALS>
 
 <!-- The leaves -->
@@ -143,7 +186,7 @@
     </NODE>
 
     <NODE id="floor">      
-        <MATERIAL id="null" />    
+        <MATERIAL id="wood" />    
         <TEXTURE id="woodfloor" />
 
         <SCALE sx="5" sy="0.8" sz="4" />
@@ -172,7 +215,7 @@
 
 	<NODE id="chairBack">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="basic" />
 
     	<DESCENDANTS>
 			<NODEREF id="backFace1" />
@@ -418,7 +461,7 @@
 	</NODE>
 
 	<NODE id="table">
-    	<MATERIAL id="null" />
+    	<MATERIAL id="tablewood" />
     	<TEXTURE id="woodchair" />
         <TRANSLATION x="1.5" y="0" z="0" />
 
@@ -867,7 +910,7 @@
 	</NODE>
 
 	<NODE id="keyboard">
-    	<MATERIAL id="null" />
+    	<MATERIAL id="keyboardMat" />
     	<TEXTURE id="keyboard" />
 
     	<TRANSLATION x="9.18" y="3.01" z="4" />

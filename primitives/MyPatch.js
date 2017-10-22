@@ -1,7 +1,6 @@
 /**
  * MyPatch
  */
-
  function MyPatch(scene, patchInfo, args) 
  {
     CGFobject.call(this,scene);
@@ -9,90 +8,75 @@
 
     this.divU = args[0];
     this.divV = args[1];
+    this.vDegree = null;
+    this.uDegree = null;
+    this.controlpoints = new Array();
     this.parseInfo(patchInfo);
-
-    this.initBuffers();
+    this.surface = this.makeSurface();
 };
 
 MyPatch.prototype = Object.create(CGFobject.prototype);
-MyPatch.prototype.constructor=MyPatch;
-
-MyPatch.prototype.initBuffers = function () {
-
-
-    this.primitiveType=this.scene.gl.TRIANGLES;
-    this.initGLBuffers();
-};
-
-MyPatch.prototype.applyAf = function (afS,afT){};
+MyPatch.prototype.constructor = MyPatch;
 
 MyPatch.prototype.parseInfo = function(patchInfo) 
-{
-    //console.log(patchInfo.children[0].children[0].attributes);
-    var cPoints = new Array();
-
+{ 
     for(let i = 0; i < patchInfo.children.length; i++)
     {
-        this.vDegree = patchInfo.children[i].children.length;
         for(let j = 0; j < patchInfo.children[i].children.length; j++)
         {
-
             this.x = patchInfo.children[i].children[j].attributes[0].value;
             this.y = patchInfo.children[i].children[j].attributes[1].value;
             this.z = patchInfo.children[i].children[j].attributes[2].value;
             this.w = patchInfo.children[i].children[j].attributes[3].value;
+            this.controlpoints.push([this.x, this.y, this.z, this.w]);
         }
-        console.log('patch');
-        this.vDegree -= 1;
-        console.log('ENDpatch');
+        this.vDegree = patchInfo.children[i].children.length -1;
     }
+    this.uDegree = patchInfo.children.length -1;
+}
 
-
-    var patchFirstChild = nodeSpecs[descendantsIndex].children[0].children;
-    console.log(patchFirstChild);
-    var patchSecondChild = [];
-
-    for (var p = 0; p < patchFirstChild.length; p++) {
-        var cLinePointsAux = nodeSpecs[descendantsIndex].children[0].children[p].children;
-        var cLinePoints = [];
-
-        for(var h = 0; h < cLinePointsAux.length; h++) {
-            var patchPoints = [];
-
-            var x = this.reader.getFloat(cLinePointsAux[h], 'xx');
-            if (x == null)
-                return "failed to retrieve CPOINT 'xx' argument";
-
-            var y = this.reader.getFloat(cLinePointsAux[h], 'yy');
-            if (y == null)
-                return "failed to retrieve CPOINT 'yy' argument";
-
-            var z = this.reader.getFloat(cLinePointsAux[h], 'zz');
-            if (z == null)
-                return "failed to retrieve CPOINT 'zz' argument";
-
-            var w = this.reader.getFloat(cLinePointsAux[h], 'ww');
-            if (w == null)
-                return "failed to retrieve CPOINT 'ww' argument";
-
-            patchPoints.push(x,y,z,w);
-
-            cLinePoints.push(patchPoints);
-            /*console.log('ADDDEEEEEEUSSS');
-            console.log(x);
-            console.log(y);
-            console.log(z);
-            console.log(w);
-            console.log('ADDDEEEEEEUSSS');*/
+MyPatch.prototype.getControlVertex = function()
+{
+    var resF = new Array();
+    var res = new Array();
+    for(var u = 0; u <= this.uDegree; u++)
+    {   
+        var controlVerts = new Array();
+        for(var v = 0; v <= this.vDegree; v++)
+        {
+            var i = v + u * (this.vDegree + 1);
+            controlVerts.push([this.controlpoints[i][0],this.controlpoints[i][1],this.controlpoints[i][2],1]);
         }
-
-        patchSecondChild.push(cLinePoints);
-        var vDegree = cLinePointsAux.length-1;
+        res.push(controlVerts);
     }
+    resF.push(res);
+    console.log(resF);
+    return resF;
+}
 
-    var uDegree = patchFirstChild.length-1;
-    console.log(descendants[j]);
+MyPatch.prototype.getKnotsVector = function(degree) 
+{
+    var v = new Array();
+    for (var i=0; i<=degree; i++) {
+        v.push(0);
+    }
+    for (var i=0; i<=degree; i++) {
+        v.push(1);
+    }
+    return v;
+}
 
-    var patchArgs = [args[0], args[1], uDegree, vDegree, patchSecondChild];
+MyPatch.prototype.makeSurface = function () 
+{
+    var knots1 = this.getKnotsVector(this.vDegree); // to be built inside webCGF in later versions ()
+    var knots2 = this.getKnotsVector(this.uDegree); // to be built inside webCGF in later versions
 
-};
+    var nurbsSurface = new CGFnurbsSurface(this.vDegree, this.uDegree, knots1, knots2, this.getControlVertex());
+    getSurfacePoint = function(u, v) {
+        return nurbsSurface.getPoint(u, v);
+    };
+    CGFnurbsObject.call(this, this.scene, getSurfacePoint, this.divU, this.divV);
+}
+
+MyPatch.prototype.applyAf = function (afS,afT){};
+
