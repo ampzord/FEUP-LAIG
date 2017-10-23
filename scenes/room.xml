@@ -36,6 +36,13 @@
         <specular r="1.0" g="1.0" b="1.0" a="1.0" />      
     </LIGHT>
 
+    <LIGHT id="light3">                                    
+        <enable value ="1" />                              
+        <position  x="12" y="20" z="7" w="1" />             
+        <ambient r="1.0" g="1.0" b="1.0" a="1.0" />          
+        <diffuse r="0.2" g="0.2" b="0.2" a="1.0" />        
+        <specular r="0.2" g="0.2" b="0.2" a="1.0" />      
+    </LIGHT>
 </LIGHTS>
 
 <TEXTURES>
@@ -76,14 +83,9 @@
         <amplif_factor s="4" t="4" />                           
     </TEXTURE>
 
-    <TEXTURE id="carpet">
-    	<file path="images/carpet.png" />               
-        <amplif_factor s="4" t="4" />                           
-    </TEXTURE>
-
     <TEXTURE id="keyboard">
     	<file path="images/keyboard.png" />               
-        <amplif_factor s="4" t="4" />                           
+        <amplif_factor s="5" t="5" />                           
     </TEXTURE>
 
      <TEXTURE id="mousepad">
@@ -109,6 +111,11 @@
     <TEXTURE id="black">
         <file path="images/black.jpg" />               
         <amplif_factor s="4" t="4" />                           
+    </TEXTURE>
+
+    <TEXTURE id="carpet">
+        <file path="images/carpet.jpg" />               
+        <amplif_factor s="6" t="6" />                           
     </TEXTURE>
 </TEXTURES>
 
@@ -182,6 +189,7 @@
             <NODEREF id="keyboard" />
             <NODEREF id="mousepad" />
             <NODEREF id="mouse" />
+            <!-- <NODEREF id="pieces" /> -->
         </DESCENDANTS>
     </NODE>
 
@@ -791,7 +799,7 @@
 
 	<NODE id="monitorScreenFront">
 	    <MATERIAL id="null" />
-	    <TEXTURE id="monitorscreen" />
+	    <TEXTURE id="monitorscreen" /> 
 
 		<TRANSLATION x="-0.05" y="0.5" z="-0.4" />
 		<ROTATION axis="x" angle="-10" />
@@ -1031,6 +1039,65 @@
         <LEAF  type="rectangle" args="0 4 5 0" />        
     </DESCENDANTS>
 </NODE>
+
+ <!--
+ <NODE id="pieces">      
+        <MATERIAL id="null" />    
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="7" y="7" z="5" />
+
+        <DESCENDANTS>
+            <NODEREF id="piece" />
+        </DESCENDANTS>
+
+</NODE>
+
+ <NODE id="piece">      
+        <MATERIAL id="wood" />    
+        <TEXTURE id="black" />
+
+        <DESCENDANTS>
+            <LEAF type="patch" args="4 4" />
+                <CPLINE>
+                    <CPOINT xx="-1.0" yy="-2.0" zz="0.0" ww="1"/>
+                    <CPOINT xx="-1.0" yy="-1.0" zz="0.0" ww="1"/>
+                    <CPOINT xx="-1.0" yy="-1.0" zz="0.5" ww="1"/>
+                    <CPOINT xx="-1.0" yy="1.0" zz="0.5" ww="1"/>
+                    <CPOINT xx="-1.0" yy="2.0" zz="0.0" ww="1"/>
+                </CPLINE>
+                <CPLINE>
+                    <CPOINT xx="-0.5" yy="-2.0" zz="0.0" ww="1"/>
+                    <CPOINT xx="-0.5" yy="-1.0" zz="0.25" ww="1"/>
+                    <CPOINT xx="-0.5" yy="0.0" zz="0.25" ww="1"/>
+                    <CPOINT xx="-0.5" yy="0.0" zz="0.25" ww="1"/>
+                    <CPOINT xx="-0.5" yy="2.0" zz="0.0" ww="1"/>
+                </CPLINE>
+                <CPLINE>
+                    <CPOINT xx="0.0" yy="-2.0" zz="0.0" ww="1"/>
+                    <CPOINT xx="0.0" yy="-1.0" zz="0.5" ww="1"/>
+                    <CPOINT xx="0.5" yy="-1.0" zz="0.5" ww="1"/>
+                    <CPOINT xx="0.5" yy="0.0" zz="0.5" ww="1"/>
+                    <CPOINT xx="0.5" yy="1.0" zz="0.0" ww="1"/>
+                </CPLINE>
+                <CPLINE>
+                    <CPOINT xx="0.5" yy="-2.0" zz="0.0" ww="1"/>
+                    <CPOINT xx="0.5" yy="-1.0" zz="0.25" ww="1"/>
+                    <CPOINT xx="0.5" yy="0.0" zz="0.25" ww="1"/>
+                    <CPOINT xx="0.5" yy="1.0" zz="0.25" ww="1"/>
+                    <CPOINT xx="0.5" yy="2.0" zz="0.0" ww="1"/>
+                </CPLINE>
+                <CPLINE>
+                    <CPOINT xx="1.0" yy="-2.0" zz="0.0" ww="1"/>
+                    <CPOINT xx="1.0" yy="-1.0" zz="0.0" ww="1"/>
+                    <CPOINT xx="1.0" yy="0.0" zz="0.25" ww="1"/>
+                    <CPOINT xx="1.0" yy="1.0" zz="0.0" ww="1"/>
+                    <CPOINT xx="1.0" yy="2.0" zz="0.0" ww="1"/>
+                </CPLINE>
+        </DESCENDANTS>
+
+    </NODE>
+-->
 
 </NODES>
 

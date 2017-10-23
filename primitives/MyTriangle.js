@@ -1,3 +1,7 @@
+/*
+* MyTriangle
+* @constructor
+*/
 function MyTriangle(scene, args) {
     CGFobject.call(this,scene);
 
@@ -48,6 +52,9 @@ MyTriangle.prototype.initBuffers = function () {
     this.initGLBuffers();
 };
 
+/*
+* Applies amplification factors
+*/
 MyTriangle.prototype.applyAf = function(ampS, ampT){
     this.texCoords = [
             0, 1,

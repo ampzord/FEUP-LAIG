@@ -28,6 +28,7 @@ MyCylinderWithTops.prototype.display = function()
 {
     this.cylinder.display();
 
+    //Bottom Cylinder
     if (this.botTrue == 1) 
     {
         this.scene.pushMatrix();
@@ -36,6 +37,7 @@ MyCylinderWithTops.prototype.display = function()
         this.scene.popMatrix();
     }
 
+    //Top Cylinder
     if (this.topTrue == 1) 
     {
         this.scene.pushMatrix();

@@ -1,6 +1,8 @@
 /**
  * MyPatch
+ * @constructor
  */
+ 
  function MyPatch(scene, patchInfo, args) 
  {
     CGFobject.call(this,scene);
@@ -69,7 +71,6 @@ MyPatch.prototype.parseInfo = function(patchInfo)
 {
     var knots1 = this.getKnotsVector(degree1); // to be built inside webCGF in later versions ()
     var knots2 = this.getKnotsVector(degree2); // to be built inside webCGF in later versions
-
     var nurbsSurface = new CGFnurbsSurface(degree1, degree2, knots1, knots2, this.ctrlVer);
     getSurfacePoint = function(u, v) {
         return nurbsSurface.getPoint(u, v);

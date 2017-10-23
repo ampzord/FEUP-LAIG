@@ -1346,68 +1346,69 @@ var NODES_INDEX = 6;
             			else
             				this.warn("Error in leaf");
 
-                        //Added code
+                        //If it's patch
                         if (type == 'patch') 
                         {
-                            
-                            var patchFirstChild = nodeSpecs[descendantsIndex].children[0].children;
-                            //console.log(patchFirstChild);
+                        	var patchFirstChild = nodeSpecs[descendantsIndex].children[0].children;
                             var patchSecondChild = [];
 
-                           for (var p = 0; p < patchFirstChild.length; p++) 
-                           {
-                                var cLinePointsAux = nodeSpecs[descendantsIndex].children[0].children[p].children;
+                            for (var p = 0; p < patchFirstChild.length; p++) 
+                            {
+                            	var cLinePointsAux = nodeSpecs[descendantsIndex].children[0].children[p].children;
 
-                                var cLinePoints = [];
+                            	var cLinePoints = [];
 
-                                for(var h = 0; h < cLinePointsAux.length; h++) {
-                                    var patchPoints = [];
+                            	for(var h = 0; h < cLinePointsAux.length; h++) {
+                            		var patchPoints = [];
 
-                                    var x = this.reader.getFloat(cLinePointsAux[h], 'xx');
-                                    if (x == null)
-                                        return "failed to retrieve CPOINT 'xx' argument";
+                            		var x = this.reader.getFloat(cLinePointsAux[h], 'xx');
+                            		if (x == null)
+                            			return "failed to retrieve CPOINT 'xx' argument";
 
-                                    var y = this.reader.getFloat(cLinePointsAux[h], 'yy');
-                                    if (y == null)
-                                        return "failed to retrieve CPOINT 'yy' argument";
+                            		var y = this.reader.getFloat(cLinePointsAux[h], 'yy');
+                            		if (y == null)
+                            			return "failed to retrieve CPOINT 'yy' argument";
 
-                                    var z = this.reader.getFloat(cLinePointsAux[h], 'zz');
-                                    if (z == null)
-                                        return "failed to retrieve CPOINT 'zz' argument";
+                            		var z = this.reader.getFloat(cLinePointsAux[h], 'zz');
+                            		if (z == null)
+                            			return "failed to retrieve CPOINT 'zz' argument";
 
-                                    var w = this.reader.getFloat(cLinePointsAux[h], 'ww');
-                                    if (w == null)
-                                        return "failed to retrieve CPOINT 'ww' argument";
-                                    
-                                    patchPoints.push(x,y,z,w);
+                            		var w = this.reader.getFloat(cLinePointsAux[h], 'ww');
+                            		if (w == null)
+                            			return "failed to retrieve CPOINT 'ww' argument";
 
-                                    cLinePoints.push(patchPoints);
-                                }
+                            		patchPoints.push(x,y,z,w);
 
-                                patchSecondChild.push(cLinePoints);
-                                var vDegree = cLinePointsAux.length-1;
-                                
+                            		cLinePoints.push(patchPoints);
+                            	}
+
+                            	patchSecondChild.push(cLinePoints);
+                            	var vDegree = cLinePointsAux.length-1;
+
                             }
                             var uDegree = patchFirstChild.length-1;
                             this.nodes[nodeID].addLeaf(new MyGraphLeaf(this, descendants[j]));
                         }
+                        else {	//type != patch
+                        
                         this.nodes[nodeID].addLeaf(new MyGraphLeaf(this, descendants[j]));
                         sizeChildren++;
                     }
-                    else
-                    	this.onXMLMinorError("unknown tag <" + descendants[j].nodeName + ">");
-
                 }
-                if (sizeChildren == 0)
-                	return "at least one descendant must be defined for each intermediate node";
-            } 
-            else
-            	this.onXMLMinorError("unknown tag name <" + nodeName);
-        }
+                else
+                	this.onXMLMinorError("unknown tag <" + descendants[j].nodeName + ">");
 
-        console.log("Parsed nodes");
-        return null ;
+            }
+            if (sizeChildren == 0)
+            	return "at least one descendant must be defined for each intermediate node";
+        } 
+        else
+        	this.onXMLMinorError("unknown tag name <" + nodeName);
     }
+
+    console.log("Parsed nodes");
+    return null ;
+}
 
 /*
  * Callback to be executed on any read error
@@ -1461,7 +1462,9 @@ var NODES_INDEX = 6;
     return String.fromCharCode.apply(null, numbers);
 }
 
-
+/**
+* function that processes each Node giving each Node their correct texture and material according to heritage
+*/
 MySceneGraph.prototype.processNode = function(node, parTex, parAsp) 
 {
 	var textura = parTex;
@@ -1470,6 +1473,7 @@ MySceneGraph.prototype.processNode = function(node, parTex, parAsp)
 	this.scene.pushMatrix();
 	this.scene.multMatrix(node.transformMatrix);
 
+	//Replaces heritage texture with new texture if it exits
 	if (node.textureID != null) 
 	{
 		if (node.textureID == 'clear')
@@ -1492,12 +1496,14 @@ MySceneGraph.prototype.processNode = function(node, parTex, parAsp)
 		textura = null;
 
 
+	//process each child of tree
 	for (var i = 0; i < node.children.length; i++) 
 	{
 		this.processNode(this.nodes[node.children[i]], textura, material);
 	}
 
 
+	//add material and texture to node
 	for (var j = 0; j < node.leaves.length; j++) 
 	{
 		if (material != null) {

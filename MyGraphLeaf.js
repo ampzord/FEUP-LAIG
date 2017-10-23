@@ -48,9 +48,16 @@ function MyGraphLeaf(graph, leafData)
 	}
 }
 
+/*
+* Applies amplification factors from texture
+*/
 MyGraphLeaf.prototype.applyAf = function(afS,afT){
 		this.primitive.applyAf(afS,afT);
 };
+
+/*
+* Displays the primitive
+*/
 
 MyGraphLeaf.prototype.display = function(){
 		this.primitive.display();

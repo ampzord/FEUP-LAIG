@@ -23,12 +23,15 @@ MyCylinderTops.prototype.initBuffers = function()
 
     var inq=2*Math.PI/this.slices;
     var ang=0.0;
+
+    //VERTEX
     for(var i = 0; i < this.slices; i++)
     {
-        this.vertices.push(Math.cos(ang),  Math.sin(ang), 0); //z a 1
+        this.vertices.push(Math.cos(ang),  Math.sin(ang), 0); 
         ang += inq;
     }
- 
+    
+    //INDICE
     for(i=0;i<this.slices-1;i++)
     {  
         if(i==this.slices-2)
@@ -38,14 +41,13 @@ MyCylinderTops.prototype.initBuffers = function()
         else
         {
             this.indices.push(0, i+1, i+2);
- 
         }
-   
     }
    
     inq=2*Math.PI/this.slices;
     ang=0.0;
 
+    //TEXCOORDS
     for(var i = 0; i < this.slices; i++)
     {
         this.texCoords.push((Math.cos(ang)/2)+0.5,  (Math.sin(ang)/2)+0.5);
