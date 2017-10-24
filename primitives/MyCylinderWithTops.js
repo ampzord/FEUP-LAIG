@@ -33,6 +33,7 @@ MyCylinderWithTops.prototype.display = function()
     {
         this.scene.pushMatrix();
             this.scene.rotate(Math.PI, 0, 1, 0);
+            this.scene.scale(this.botRad, this.botRad, 1);
             this.baseCyl.display();
         this.scene.popMatrix();
     }
@@ -42,6 +43,7 @@ MyCylinderWithTops.prototype.display = function()
     {
         this.scene.pushMatrix();
             this.scene.translate(0, 0, this.height);
+            this.scene.scale(this.topRad, this.topRad, 1);
             this.topCyl.display();
         this.scene.popMatrix();
     }
