@@ -1346,69 +1346,77 @@ var NODES_INDEX = 6;
             			else
             				this.warn("Error in leaf");
 
-                        //If it's patch
-                        if (type == 'patch') 
-                        {
-                        	var patchFirstChild = nodeSpecs[descendantsIndex].children[0].children;
+            			var argsSplit = descendants[j].attributes.getNamedItem('args').nodeValue.split(' ');
+                            
+                        for (let i = 0; i < argsSplit.length; i++) {
+                          argsSplit[i] = parseFloat(argsSplit[i]);
+                        }
+
+            			if (type == 'patch') {
+                            
+                            var patchFirstChild = nodeSpecs[descendantsIndex].children[0].children;
                             var patchSecondChild = [];
 
-                            for (var p = 0; p < patchFirstChild.length; p++) 
-                            {
-                            	var cLinePointsAux = nodeSpecs[descendantsIndex].children[0].children[p].children;
+                           for (var p = 0; p < patchFirstChild.length; p++) {
+                                var cLinePointsAux = nodeSpecs[descendantsIndex].children[0].children[p].children;
+                                var cLinePoints = [];
 
-                            	var cLinePoints = [];
+                                for(var h = 0; h < cLinePointsAux.length; h++) {
+                                    var patchPoints = [];
 
-                            	for(var h = 0; h < cLinePointsAux.length; h++) {
-                            		var patchPoints = [];
+                                    var x = this.reader.getFloat(cLinePointsAux[h], 'xx');
+                                    if (x == null)
+                                        return "failed to retrieve CPOINT 'xx' argument";
 
-                            		var x = this.reader.getFloat(cLinePointsAux[h], 'xx');
-                            		if (x == null)
-                            			return "failed to retrieve CPOINT 'xx' argument";
+                                    var y = this.reader.getFloat(cLinePointsAux[h], 'yy');
+                                    if (y == null)
+                                        return "failed to retrieve CPOINT 'yy' argument";
 
-                            		var y = this.reader.getFloat(cLinePointsAux[h], 'yy');
-                            		if (y == null)
-                            			return "failed to retrieve CPOINT 'yy' argument";
+                                    var z = this.reader.getFloat(cLinePointsAux[h], 'zz');
+                                    if (z == null)
+                                        return "failed to retrieve CPOINT 'zz' argument";
 
-                            		var z = this.reader.getFloat(cLinePointsAux[h], 'zz');
-                            		if (z == null)
-                            			return "failed to retrieve CPOINT 'zz' argument";
+                                    var w = this.reader.getFloat(cLinePointsAux[h], 'ww');
+                                    if (w == null)
+                                        return "failed to retrieve CPOINT 'ww' argument";
+                                    
+                                    patchPoints.push(x,y,z,w);
+                                    cLinePoints.push(patchPoints);
+                                }
 
-                            		var w = this.reader.getFloat(cLinePointsAux[h], 'ww');
-                            		if (w == null)
-                            			return "failed to retrieve CPOINT 'ww' argument";
+                                patchSecondChild.push(cLinePoints);
+                                var vDegree = cLinePointsAux.length-1;
+                           }
 
-                            		patchPoints.push(x,y,z,w);
+                            var uDegree = patchFirstChild.length-1;
 
-                            		cLinePoints.push(patchPoints);
-                            	}
+                            argsSplit.push(uDegree, vDegree, patchSecondChild);
 
-                            	patchSecondChild.push(cLinePoints);
-                            	var vDegree = cLinePointsAux.length-1;
+                            this.nodes[nodeID].addLeaf(new MyGraphLeaf(this, descendants[j], argsSplit));
 
                             }
-                            var uDegree = patchFirstChild.length-1;
-                            this.nodes[nodeID].addLeaf(new MyGraphLeaf(this, descendants[j]));
-                        }
+                            
+                        //-----------------------------------------------------------------------
                         else {	//type != patch
-                        
-                        this.nodes[nodeID].addLeaf(new MyGraphLeaf(this, descendants[j]));
+                            this.nodes[nodeID].addLeaf(new MyGraphLeaf(this, descendants[j]));
+                         
+                        }
                         sizeChildren++;
                     }
-                }
-                else
-                	this.onXMLMinorError("unknown tag <" + descendants[j].nodeName + ">");
+                    else
+                     this.onXMLMinorError("unknown tag <" + descendants[j].nodeName + ">");
 
-            }
-            if (sizeChildren == 0)
-            	return "at least one descendant must be defined for each intermediate node";
-        } 
-        else
-        	this.onXMLMinorError("unknown tag name <" + nodeName);
-    }
+             }
+             if (sizeChildren == 0)
+                 return "at least one descendant must be defined for each intermediate node";
+         } 
+         else
+             this.onXMLMinorError("unknown tag name <" + nodeName);
+     }
 
-    console.log("Parsed nodes");
-    return null ;
-}
+     console.log("Parsed nodes");
+     return null ;
+ }
 
 /*
  * Callback to be executed on any read error

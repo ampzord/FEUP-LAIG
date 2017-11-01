@@ -2,14 +2,19 @@
  * MyGraphLeaf class, representing a leaf in the scene graph.
  * @constructor
  **/
-function MyGraphLeaf(graph, leafData)
+function MyGraphLeaf(graph, leafData, patchInfo)
 {
 	this.primitive = null;
 	//type and args
 	if (leafData.attributes.length == 2) {
 		this.type = leafData.attributes[0].value
-		this.args = leafData.attributes[1].value;
-		this.patchInfo = leafData;
+		if (this.type == 'patch') {
+			this.patchInfo = patchInfo;
+		}
+		else {
+			this.args = leafData.attributes[1].value;
+	}
+
 	}
 	//id, type and args
 	else {
@@ -43,7 +48,7 @@ function MyGraphLeaf(graph, leafData)
 		break;
 
 		case 'patch':
-		this.primitive = new MyPatch(graph.scene, this.patchInfo, this.args);
+		this.primitive = new MyPatch(graph.scene, this.patchInfo);
 		break;
 	}
 }
