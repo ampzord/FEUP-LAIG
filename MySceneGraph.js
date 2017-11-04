@@ -1339,23 +1339,33 @@ var NODES_INDEX = 6;
             	else
             		if (descendants[j].nodeName == "LEAF")
             		{
-            			var type=this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle', 'patch']);
+            			var type = this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle', 'patch']);
 
             			if (type != null)
-            				this.log("   Leaf: "+ type);
+            				this.log("   Leaf type: "+ type);
             			else
-            				this.warn("Error in leaf");
+            				this.warn("   Error in leaf type.");
 
-            			var argsSplit = descendants[j].attributes.getNamedItem('args').nodeValue.split(' ');
+                        //added
+                      var id = this.reader.getString(descendants[j], "id");
+
+                        if (id == null){
+                            id = "no id";
+                            console.log("    Leaf has no id");
+                        }
+                        else
+                            console.log("    Leaf id: " + id);
+
+            			var argsParsed = descendants[j].attributes.getNamedItem('args').nodeValue.split(' ');
                             
-                        for (let i = 0; i < argsSplit.length; i++) {
-                          argsSplit[i] = parseFloat(argsSplit[i]);
+                        for (let i = 0; i < argsParsed.length; i++) {
+                          argsParsed[i] = parseFloat(argsParsed[i]);
                         }
 
             			if (type == 'patch') {
                             
                             var patchFirstChild = nodeSpecs[descendantsIndex].children[0].children;
-                            var patchSecondChild = [];
+                            var controlPoints = [];
 
                            for (var p = 0; p < patchFirstChild.length; p++) {
                                 var cLinePointsAux = nodeSpecs[descendantsIndex].children[0].children[p].children;
@@ -1384,24 +1394,17 @@ var NODES_INDEX = 6;
                                     cLinePoints.push(patchPoints);
                                 }
 
-                                patchSecondChild.push(cLinePoints);
+                                controlPoints.push(cLinePoints);
                                 var vDegree = cLinePointsAux.length-1;
                            }
 
                             var uDegree = patchFirstChild.length-1;
 
-                            argsSplit.push(uDegree, vDegree, patchSecondChild);
-
-                            this.nodes[nodeID].addLeaf(new MyGraphLeaf(this, descendants[j], argsSplit));
-
-                            }
-                            
-                        //-----------------------------------------------------------------------
-                        else {	//type != patch
-                            this.nodes[nodeID].addLeaf(new MyGraphLeaf(this, descendants[j]));
-                         
+                            argsParsed.push(uDegree, vDegree, controlPoints);
                         }
-                        sizeChildren++;
+                        
+                            this.nodes[nodeID].addLeaf(new MyGraphLeaf(this, type, argsParsed));
+                            sizeChildren++;                        
                     }
                     else
                      this.onXMLMinorError("unknown tag <" + descendants[j].nodeName + ">");
@@ -1415,7 +1418,7 @@ var NODES_INDEX = 6;
      }
 
      console.log("Parsed nodes");
-     return null ;
+     return null;
  }
 
 /*

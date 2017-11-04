@@ -2,38 +2,34 @@
  * MyPatch
  * @constructor
  */
- /*
- function MyPatch(scene, args, patchInfo) 
+ 
+ function MyPatch(scene, args) 
  {
- 	
-    CGFobject.call(this,scene);
-    args = args.split(" ");
+    this.scene = scene;
 
-    this.divU = args[0];
-    this.divV = args[1];
-    this.vDegree = null;
-    this.uDegree = null;
-    this.controlpoints = new Array();
-    this.parseInfo(patchInfo);
-    this.ctrlVer = this.getControlVertex();
+    var uDivisions = args[0];
+    var vDivisions = args[1];
+    var uDegree = args[2];
+    var vDegree = args[3];
+    var controlPoints = args[4];
 
+    var knots1 = this.getKnotsVector(uDegree);
+    var knots2 = this.getKnotsVector(vDegree);
 
-    var knots1 = this.getKnotsVector(this.vDegree);
-    var knots2 = this.getKnotsVector(this.uDegree);
-
-    var nurbsSurface = new CGFnurbsSurface(this.vDegree, this.uDegree, knots1, knots2);
-    *//*
-    getSurfacePoint = function(u, v) {
-        return nurbsSurface.getPoint(u, v);
-    };
-
-    this.patchObject = new CGFnurbsObject(this, getSurfacePoint, 20, 20);
+    this.nurbsSurface = new CGFnurbsSurface(uDegree, vDegree, knots1, knots2, controlPoints);
+    CGFnurbsObject.call(this, this.scene, this.getSurfacePoint, uDivisions, vDivisions);
 };
 
-MyPatch.prototype = Object.create(CGFobject.prototype);
+MyPatch.prototype = Object.create(CGFnurbsObject.prototype);
 MyPatch.prototype.constructor = MyPatch;
 
+MyPatch.prototype.getSurfacePoint = function(u, v) {
+    return this.nurbsSurface.getPoint(u, v);
+};
 
+MyPatch.prototype.display = function(){
+  CGFnurbsObject.prototype.display.call(this);
+}
 
 MyPatch.prototype.getKnotsVector = function(degree) 
 {
@@ -49,12 +45,8 @@ MyPatch.prototype.getKnotsVector = function(degree)
 
 MyPatch.prototype.applyAf = function (afS,afT){};
 
-MyPatch.prototype.display = function() 
-{
-    this.patchObject.display();
-}
 
-*/
+
 /*
 function MyPatch(scene, divU, divV, controlvertexes) {
   CGFobject.call(this,scene);*/
@@ -185,6 +177,35 @@ MyPatch.prototype.constructor = MyPatch;
  * MyPatch
  * @constructor
  */
+ /*
+ function MyPatch (scene, args) {
+  this.scene = scene;
+  
+  var uDivs = args[0];
+  var vDivs = args[1];
+  var uDegree = args[2];
+  var vDegree = args[3];
+  var cPoints = args[4];
+
+  var knots1 = this.getKnotsVector(uDegree);
+  var knots2 = this.getKnotsVector(vDegree);
+
+  console.log(cPoints);
+
+  this.nurbsSurface = new CGFnurbsSurface(uDegree, vDegree, knots1, knots2, cPoints);
+
+  CGFnurbsObject.call(this, this.scene, this.getSurfacePoint, uDivs, vDivs);
+};
+
+
+
+*/
+/**
+ * MyPatch
+ * @constructor
+ */
+
+ /*
  function MyPatch (scene, args) {
   this.scene = scene;
   
@@ -224,4 +245,4 @@ MyPatch.prototype.getKnotsVector = function(degree) {
     v.push(1);
   }
   return v;
-};
+};*/

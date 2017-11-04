@@ -2,26 +2,11 @@
  * MyGraphLeaf class, representing a leaf in the scene graph.
  * @constructor
  **/
-function MyGraphLeaf(graph, leafData, patchInfo)
+function MyGraphLeaf(graph, type, args)
 {
 	this.primitive = null;
-	//type and args
-	if (leafData.attributes.length == 2) {
-		this.type = leafData.attributes[0].value
-		if (this.type == 'patch') {
-			this.patchInfo = patchInfo;
-		}
-		else {
-			this.args = leafData.attributes[1].value;
-	}
-
-	}
-	//id, type and args
-	else {
-		this.id = leafData.attributes[0].value;
-		this.type = leafData.attributes[1].value;
-		this.args = leafData.attributes[2].value;
-	}
+	this.type = type;
+	this.args = args;
 
 	switch(this.type) 
 	{
@@ -34,8 +19,8 @@ function MyGraphLeaf(graph, leafData, patchInfo)
 		break;
 
 		case 'cylinder':
-		this.argsSplit = this.args.split(" ");
-		if (this.argsSplit[5] == 0 && this.argsSplit[6] == 0) {
+		//this.argsSplit = this.args.split(" ");
+		if (this.args[5] == 0 && this.args[6] == 0) {
 			this.primitive = new MyCylinder(graph.scene, this.args);
 		}
 		else {
@@ -48,7 +33,7 @@ function MyGraphLeaf(graph, leafData, patchInfo)
 		break;
 
 		case 'patch':
-		this.primitive = new MyPatch(graph.scene, this.patchInfo);
+		this.primitive = new MyPatch(graph.scene, this.args);
 		break;
 	}
 }
