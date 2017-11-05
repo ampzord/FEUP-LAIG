@@ -5,14 +5,8 @@
 function MyTriangle(scene, args) {
     CGFobject.call(this,scene);
 
-    /*this.args = args.split(" ");
-    for(var i = 0; i < this.args.length; i++){
-        this.args[i] = parseFloat(this.args[i]);
-    }*/
-
     this.args = args;
 
-    
     this.initBuffers();
 };
 

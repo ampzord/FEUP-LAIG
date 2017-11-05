@@ -7,15 +7,6 @@ function MyCylinderWithTops(scene, args) {
 
     
     this.args = args;
-    /*
-    args = args.split(" ");
-    this.height = parseFloat(args[0]);
-    this.botRad = parseFloat(args[1]);
-    this.topRad = parseFloat(args[2]);
-    this.stacks = parseFloat(args[3]);
-    this.slices = parseFloat(args[4]);
-    this.topTrue = parseFloat(args[5]);
-    this.botTrue = parseFloat(args[6]);*/
 
     this.height = this.args[0];
     this.botRad = this.args[1];

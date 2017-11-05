@@ -6,11 +6,6 @@ function MyRectangle(scene, args)
 {
 	CGFobject.call(this,scene);
 
-	/*this.args = args.split(" ");
-	for(let i = 0; i < this.args.length; i++){
-			this.args[i] = parseFloat(this.args[i]);
-	}*/
-
 	this.args = args;
 
 	this.minS = 0;

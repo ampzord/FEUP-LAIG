@@ -19,7 +19,6 @@ function MyGraphLeaf(graph, type, args)
 		break;
 
 		case 'cylinder':
-		//this.argsSplit = this.args.split(" ");
 		if (this.args[5] == 0 && this.args[6] == 0) {
 			this.primitive = new MyCylinder(graph.scene, this.args);
 		}

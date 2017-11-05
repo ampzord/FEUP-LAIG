@@ -1339,6 +1339,7 @@ var NODES_INDEX = 6;
             	else
             		if (descendants[j].nodeName == "LEAF")
             		{
+            			//type
             			var type = this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle', 'patch']);
 
             			if (type != null)
@@ -1346,8 +1347,9 @@ var NODES_INDEX = 6;
             			else
             				this.warn("   Error in leaf type.");
 
-                        //added
-                      var id = this.reader.getString(descendants[j], "id");
+                        //ID
+                        
+                      	var id = this.reader.getString(descendants[j], "id");
 
                         if (id == null){
                             id = "no id";
@@ -1356,14 +1358,16 @@ var NODES_INDEX = 6;
                         else
                             console.log("    Leaf id: " + id);
 
+                        //args
             			var argsParsed = descendants[j].attributes.getNamedItem('args').nodeValue.split(' ');
                             
                         for (let i = 0; i < argsParsed.length; i++) {
                           argsParsed[i] = parseFloat(argsParsed[i]);
                         }
 
+                        //patch args
             			if (type == 'patch') {
-                            
+
                             var patchFirstChild = nodeSpecs[descendantsIndex].children[0].children;
                             var controlPoints = [];
 
@@ -1402,9 +1406,8 @@ var NODES_INDEX = 6;
 
                             argsParsed.push(uDegree, vDegree, controlPoints);
                         }
-                        
-                            this.nodes[nodeID].addLeaf(new MyGraphLeaf(this, type, argsParsed));
-                            sizeChildren++;                        
+                         this.nodes[nodeID].addLeaf(new MyGraphLeaf(this, type, argsParsed));
+                        sizeChildren++;                        
                     }
                     else
                      this.onXMLMinorError("unknown tag <" + descendants[j].nodeName + ">");
