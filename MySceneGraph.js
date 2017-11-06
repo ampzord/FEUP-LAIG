@@ -1157,6 +1157,16 @@ var NODES_INDEX = 6;
     console.log("Parsed materials");
 }
 
+/* ANIMATIONS */
+
+/**
+ * Parses the <ANIMATIONS> node.
+ */
+ MySceneGraph.prototype.parseAnimations = function(animationsNode) {
+
+ 	
+}
+
 
 /**
  * Parses the <NODES> block.
