@@ -1181,22 +1181,28 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode)
     this.animations = [];
     var children = animationsNode.children;
 
+    //ANIMATION NODE
     for(var i = 0; i < children.length; i++)
     {
         //ID
-        this.animations.push[i][j].push(children[i].attributes[0].value); 
+        this.animations.push[i][0].push(children[i].attributes[0].value); 
+
+        console.log('111111111111111111111');
+        console.log(children[0].attributes[1].value);
 
         //SPEED OR TYPE(COMBO)
-        this.animations.push[i][j].push(children[i].attributes[1].value);
+        this.animations.push[i][1].push(children[i].attributes[1].value);
 
         if (children[i].attributes[1].value != "combo")
         {
-
+            console.log('1');
             //TYPE
-            this.animations.push[i][j].push(children[i].attributes[2].value);
+            this.animations.push[i][3].push(children[i].attributes[2].value);
 
+            //CIRCULAR TYPE
             if (children[i].attributes[2].value == "circular")
             {
+                console.log('2');
                 this.animations.push[i][3].push(children[i].attributes[3].value);
                 this.animations.push[i][4].push(children[i].attributes[4].value);
                 this.animations.push[i][5].push(children[i].attributes[5].value);
@@ -1205,29 +1211,22 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode)
                 this.animations.push[i][8].push(children[i].attributes[8].value);
             }
 
-
-            for (let j = 0; j < children[i].children.length; j++)
+            //LINEAR TYPE
+            if (children[i].attributes[2].value == "linear")
             {
-                
-                if (children[i].attributes[2].value == "circular")
-                {
-                    this.animations.push[i][j].push(children[i].attributes[3].value);
-                    this.animations.push[i][j].push(children[i].attributes[4].value);
-                    this.animations.push[i][j].push(children[i].attributes[5].value);
-                    this.animations.push[i][j].push(children[i].attributes[6].value);
-                    this.animations.push[i][j].push(children[i].attributes[7].value);
-                    this.animations.push[i][j].push(children[i].attributes[8].value);
+                console.log('3');
+                //GET CONTROLPOINTS
+                for (let j = 0; j < children[i].children.length; j++)
+                {  
+                    console.log('HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH');
+                    console.log(children[i].children[j].tagName);
                 }
-                
-                if (children[i].attributes[2].value == "linear")
-                {
-
-                }
-
             }
         }
 
-        var e = children[0].children[i];
+        //CHECK LATER
+        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        /*var e = children[0].children[i];
 
         this.scene.animations = [];
         this.scene.animations[i] = [];
@@ -1280,7 +1279,7 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode)
                 console.log("Animation id: " + this.scene.animations[i][0] + " time " +this.scene.animations[i][1]+ " type " + this.scene.animations[i][2]+ "center:"+ this.scene.animations[i][3]+ "," + this.scene.animations[i][4]+ "," +this.scene.animations[i][5]+ "radius: " + this.scene.animations[i][6]+ "Initial Angle:" + this.scene.animations[i][7]+ "Rotation Angle" + this.scene.animations[i][8] );
             }
 
-        }
+        }*/
     }
     console.log("Parsed animations");
 }

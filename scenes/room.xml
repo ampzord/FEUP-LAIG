@@ -177,10 +177,14 @@
 
 <ANIMATIONS>
 
-    <ANIMATION id="ss" speed="2" type="linear">
+    <ANIMATION id="1stanim" speed="2" type="linear">
         <controlpoint xx="1.0" yy="1.0" zz="1.0" />
         <controlpoint xx="2.0" yy="2.0" zz="2.0" />
     </ANIMATION>
+
+	<ANIMATION id="2ndanim" speed="2" type="circular"
+		centerx="1" centery="0" centerz="1"
+		radius="0.5" startang="10" rotang="25"/>
 
 </ANIMATIONS>
 
