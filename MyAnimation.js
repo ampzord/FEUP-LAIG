@@ -2,4 +2,12 @@
  @constructor
  @abstract
  */
-var MyAnimation = function(scene) {};
+function MyAnimation(scene) {
+	
+}
+
+MyAnimation.prototype.move = function(time) {
+
+}
+
+
