@@ -40,5 +40,6 @@ MyCircularAnimation.prototype.constructor = MyCircularAnimation;
 MyCircularAnimation.prototype.move = function(time) {
 
 	//check if it's time to stop
+	
 }
 

@@ -6,15 +6,13 @@ function MyLinearAnimation(scene, speed, controlPoints) {
 	this.speed = speed; //medida em unidades 3D por segundo
 	this.controlPoints = controlPoints;
 
-	//check distance between the controlPoints
-
-
 	// velocidade = distancia / segundo -> seg = distancia / velocidade
 	
 	this.dist = 0;
 	this.timerFinished = 0;
 	this.controlPointDist = [];
 
+	//check distance between the controlPoints
 	var i;
 	for(i = 1; i < controlPoints.length; i++) {
 		console.log("Ponto " + i-1 + " : ",  controlPoints[i-1][0]);
@@ -26,11 +24,7 @@ function MyLinearAnimation(scene, speed, controlPoints) {
 		this.controlPointDist.push(this.dist);
 	}
 
-
-	/*
-	if (controlPoints.length == 1) {
-
-	}*/
+	this.time = this.speed / this.dist;
 }
 
 // <ANIMATION id="ss" speed="ff" type="linear">
