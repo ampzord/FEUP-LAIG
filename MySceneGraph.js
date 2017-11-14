@@ -1178,108 +1178,86 @@ console.log("Parsed materials");
 */
 MySceneGraph.prototype.parseAnimations = function(animationsNode)
 {
-    this.animations = [];
+    this.scene.animations = [];
     var children = animationsNode.children;
 
-    //ANIMATION NODE
+    //Animation Node
     for(var i = 0; i < children.length; i++)
     {
-        //ID
-        this.animations.push[i][0].push(children[i].attributes[0].value); 
+        //2d Array
+        this.scene.animations[i] = [];
 
-        console.log('111111111111111111111');
-        console.log(children[0].attributes[1].value);
+        //id
+        var id = children[i].attributes.getNamedItem("id").value;
+        this.scene.animations[i][0] = id;
 
-        //SPEED OR TYPE(COMBO)
-        this.animations.push[i][1].push(children[i].attributes[1].value);
-
-        if (children[i].attributes[1].value != "combo")
+        //Combo Animation
+        if (children[i].attributes.getNamedItem("type").value == "combo")
         {
-            console.log('1');
-            //TYPE
-            this.animations.push[i][3].push(children[i].attributes[2].value);
+            //Type
+            var type = children[i].attributes.getNamedItem("type").value;
+            this.scene.animations[i][1] = type;
 
-            //CIRCULAR TYPE
-            if (children[i].attributes[2].value == "circular")
-            {
-                console.log('2');
-                this.animations.push[i][3].push(children[i].attributes[3].value);
-                this.animations.push[i][4].push(children[i].attributes[4].value);
-                this.animations.push[i][5].push(children[i].attributes[5].value);
-                this.animations.push[i][6].push(children[i].attributes[6].value);
-                this.animations.push[i][7].push(children[i].attributes[7].value);
-                this.animations.push[i][8].push(children[i].attributes[8].value);
-            }
-
-            //LINEAR TYPE
-            if (children[i].attributes[2].value == "linear")
-            {
-                console.log('3');
-                //GET CONTROLPOINTS
-                for (let j = 0; j < children[i].children.length; j++)
-                {  
-                    console.log('HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH');
-                    console.log(children[i].children[j].tagName);
-                }
+            for (let j = 0; j < children[i].children.length; j++)
+            {  
+                console.log('hhhhhhhhhhhhhhhhhhhhh');
+                console.log(children[i].children[j]);
             }
         }
 
-        //CHECK LATER
-        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        /*var e = children[0].children[i];
-
-        this.scene.animations = [];
-        this.scene.animations[i] = [];
-        if(e.tagName == "controlpoint")
+        //Circular Animation
+        if (children[i].attributes[2].value == "circular")
         {
-            ids[i] = e.id;
-            this.scene.animations[i][0] = e.id;
-            console.log('ID DA ANIMACAO');
-            console.log(this.scene.animations[i][0]);
-            this.scene.animations[i][1] = e.attributes.getNamedItem("speed").value;
-            this.scene.animations[i][2] = e.attributes.getNamedItem("type").value;
-            var ctrlPoints = [];
+            //Speed
+            var speed = children[i].attributes.getNamedItem("speed").value;
+            this.scene.animations[i][1] = speed;
 
-            if(this.scene.animations[i][2] == "linear")
-            {
-                var descN2 = e.children.length;
-                for(var j = 0; j < descN2; j++)
-                {
-                    var f = e.children[j];
+            //Type
+            var type = children[i].attributes.getNamedItem("type").value;
+            this.scene.animations[i][2] = type;
 
-                    if(f.tagName == "controlpoint")
-                    {
-                        this.scene.animations[i][3*(j+1)]   = f.attributes.getNamedItem("xx").value;
-                        console.log(this.scene.animations[i][3*(j+1)]);
-                        this.scene.animations[i][3*(j+1)+1] = f.attributes.getNamedItem("yy").value;
-                        console.log(this.scene.animations[i][3*(j+1)+1]);
-                        this.scene.animations[i][3*(j+1)+2] = f.attributes.getNamedItem("zz").value;
-                        console.log(this.scene.animations[i][3*(j+1)+2]);
 
-                        ctrlPoints.push([parseFloat(this.scene.animations[i][3*(j+1)]),parseFloat(this.scene.animations[i][3*(j+1)+1]),parseFloat(this.scene.animations[i][3*(j+1)+2])]);
-                    }
-                }
-                //var lnAnim = new MyLinearAnimation(this.scene,e.id,parseFloat(this.scene.animations[i][1]),ctrlPoints);
-                this.animations[e.id] = lnAnim;
-                console.log("Animation id: " + this.scene.animations[i][0] + " speed " + this.scene.animations[i][1] + " type " + this.scene.animations[i][2] + "control points: ");
-                console.log(ctrlPoints);
+            this.scene.animations.push[i][3] = children[i].attributes[3].value; //CenterX
+            this.scene.animations.push[i][4] = children[i].attributes[4].value; //CenterY
+            this.scene.animations.push[i][5] = children[i].attributes[5].value; //CenterZ
+            this.scene.animations.push[i][6] = children[i].attributes[6].value; //Radius
+            this.scene.animations.push[i][7] = children[i].attributes[7].value; //StartAng
+            this.scene.animations.push[i][8] = children[i].attributes[8].value; //RotAng
+        }
 
+        //Linear or Bezier Animations
+        if (children[i].attributes[2].value == "linear" || children[i].attributes[2].value == "bezier")
+        {
+            //Speed
+            var speed = children[i].attributes.getNamedItem("speed").value;
+            this.scene.animations[i][1] = speed;
+
+            //Type
+            var type = children[i].attributes.getNamedItem("type").value;
+            this.scene.animations[i][2] = type;
+            
+            var controlPoints = [];
+
+            //Control points
+            for (let j = 0; j < children[i].children.length; j++)
+            {  
+                this.scene.animations[i][3*(j+1)] = children[i].children[j].attributes.getNamedItem("xx").value;
+                //console.log(this.scene.animations[i][3*(j+1)]);
+                this.scene.animations[i][3*(j+1)+1] = children[i].children[j].attributes.getNamedItem("yy").value;
+                //console.log(this.scene.animations[i][3*(j+1)+1]);
+                this.scene.animations[i][3*(j+1)+2] = children[i].children[j].attributes.getNamedItem("zz").value;
+                //console.log(this.scene.animations[i][3*(j+1)+2]);
+
+                controlPoints.push([parseFloat(this.scene.animations[i][3*(j+1)]),parseFloat(this.scene.animations[i][3*(j+1)+1]),parseFloat(this.scene.animations[i][3*(j+1)+2])]);
             }
 
-            if(this.scene.animations[i][2] == "circular"){
-                this.scene.animations[i][3] = e.attributes.getNamedItem("centerx").value;
-                this.scene.animations[i][4] = e.attributes.getNamedItem("centery").value;
-                this.scene.animations[i][5] = e.attributes.getNamedItem("centerz").value;
-                this.scene.animations[i][6] = e.attributes.getNamedItem("radius").value;
-                this.scene.animations[i][7] = e.attributes.getNamedItem("startang").value;
-                this.scene.animations[i][8] = e.attributes.getNamedItem("rotang").value;
-
-                var crlAnim = new MyCircularAnimation(this.scene, e.id,parseFloat(this.scene.animations[i][1]),[parseFloat(this.scene.animations[i][3]),parseFloat(this.scene.animations[i][4]),parseFloat(this.scene.animations[i][5])],parseFloat(this.scene.animations[i][7]),parseFloat(this.scene.animations[i][8]),parseFloat(this.scene.animations[i][6]) )
-                this.animations[e.id] = crlAnim;
-                console.log("Animation id: " + this.scene.animations[i][0] + " time " +this.scene.animations[i][1]+ " type " + this.scene.animations[i][2]+ "center:"+ this.scene.animations[i][3]+ "," + this.scene.animations[i][4]+ "," +this.scene.animations[i][5]+ "radius: " + this.scene.animations[i][6]+ "Initial Angle:" + this.scene.animations[i][7]+ "Rotation Angle" + this.scene.animations[i][8] );
-            }
-
-        }*/
+            //Maybe need to store these objects somewhere, dont know where
+            //Instantiate object
+            /*if (type == "bezier")
+                new MyBezierAnimation(scene,speed,controlPoints);
+            else
+                new MyLinearAnimation(scene,speed,controlPoints);*/
+        }
     }
     console.log("Parsed animations");
 }
