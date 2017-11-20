@@ -228,13 +228,18 @@
         </DESCENDANTS>
     </NODE>
 
-    <NODE id="floor">      
+    <NODE id="floor" selectable="1">      
         <MATERIAL id="wood" />    
         <TEXTURE id="woodfloor" />
 
         <SCALE sx="5" sy="0.8" sz="4" />
         <TRANSLATION x="0" y="0" z="4" />
         <ROTATION axis="x" angle="-90" />
+
+		<ANIMATIONREFS>
+			<ANIMATIONREF id="1stanim"/>
+		</ANIMATIONREFS> 
+
 
         <DESCENDANTS>
 			<LEAF  id ="rectangle1" type="rectangle" args="0 4 5 0" />        
