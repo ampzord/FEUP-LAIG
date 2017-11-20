@@ -1221,7 +1221,7 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode)
             this.scene.animations[i][7] = children[i].attributes[7].value; //StartAng
             this.scene.animations[i][8] = children[i].attributes[8].value; //RotAng
 
-            new MyCir
+            //xxnew MyCir
         }
 
         //Linear or Bezier Animations
@@ -1289,15 +1289,23 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
             if (this.nodes[nodeID] != null )
                 return "node ID must be unique (conflict: ID = " + nodeID + ")";
 
+            //Checks if selectable is true
+            if (this.reader.hasAttribute(children[i], 'selectable'))
+                var nodeSelectable = this.reader.getFloat(children[i], 'selectable');
+            else
+                var nodeSelectable = 0;
+
             this.log("Processing node "+nodeID);
 
             // Creates node.
             this.nodes[nodeID] = new MyGraphNode(this,nodeID);
+            if (nodeSelectable == 1) 
+                this.nodes[nodeID].selectable = true;
 
             // Gathers child nodes.
             var nodeSpecs = children[i].children;
             var specsNames = [];
-            var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "DESCENDANTS"];
+            var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "DESCENDANTS", "ANIMATIONREFS"];
             for (var j = 0; j < nodeSpecs.length; j++) {
                 var name = nodeSpecs[j].nodeName;
                 specsNames.push(nodeSpecs[j].nodeName);
@@ -1411,6 +1419,23 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                         break;
                 }
             }
+
+            // Retrieves information about animations
+            var animationsIndex = specsNames.indexOf("ANIMATIONREFS");
+            if (animationsIndex != -1) 
+            {
+                console.log('HHHHHHHHHHHHHHHHHHHHHH');
+                console.log(specsNames[animationsIndex].children);
+            }
+            //var animationDescendants = nodeSpecs[animationsIndex].children;
+           // console.log(animationDescendants);
+
+            /*if (animationsIndex != -1)
+            {
+                var animations = nodeSpecs[animationsIndex].children;
+                console.log('HIIIIIIIIIIIIII');
+                console.log(animations);
+            }*/
 
             // Retrieves information about children.
             var descendantsIndex = specsNames.indexOf("DESCENDANTS");
