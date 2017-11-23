@@ -7,7 +7,7 @@ function MyGraphNode(graph, nodeID) {
     this.graph = graph;
 
     this.nodeID = nodeID;
-    
+
     // IDs of child nodes.
     this.children = [];
 
@@ -19,6 +19,12 @@ function MyGraphNode(graph, nodeID) {
 
     // The texture ID.
     this.textureID = null ;
+
+    //Selectable field in LSX File
+    this.selectable = false;
+
+    //Animations Array
+    this.animations = [];
 
     this.transformMatrix = mat4.create();
     mat4.identity(this.transformMatrix);

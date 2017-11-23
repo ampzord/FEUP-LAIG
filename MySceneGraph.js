@@ -31,7 +31,7 @@ this.axisCoords['x'] = [1, 0, 0];
 this.axisCoords['y'] = [0, 1, 0];
 this.axisCoords['z'] = [0, 0, 1];
 
-// File reading 
+// File reading
 this.reader = new CGFXMLreader();
 
 /*
@@ -1198,15 +1198,13 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode)
             var type = children[i].attributes.getNamedItem("type").value;
             this.scene.animations[i][1] = type;
 
-            for (let j = 0; j < children[i].children.length; j++)
-            {  
-                console.log('hhhhhhhhhhhhhhhhhhhhh');
-                console.log(children[i].children[j]);
-            }
+            //Ids of animations
+            for (let j = 1; j < children[i].children.length; j++)
+                this.scene.animations[i][j] = children[i].children[j].attributes.getNamedItem("id").value;
         }
 
         //Circular Animation
-        if (children[i].attributes[2].value == "circular")
+        if (children[i].attributes.getNamedItem("type").value == "circular")
         {
             //Speed
             var speed = children[i].attributes.getNamedItem("speed").value;
@@ -1216,17 +1214,18 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode)
             var type = children[i].attributes.getNamedItem("type").value;
             this.scene.animations[i][2] = type;
 
+            this.scene.animations[i][3] = children[i].attributes[3].value; //CenterX
+            this.scene.animations[i][4] = children[i].attributes[4].value; //CenterY
+            this.scene.animations[i][5] = children[i].attributes[5].value; //CenterZ
+            this.scene.animations[i][6] = children[i].attributes[6].value; //Radius
+            this.scene.animations[i][7] = children[i].attributes[7].value; //StartAng
+            this.scene.animations[i][8] = children[i].attributes[8].value; //RotAng
 
-            this.scene.animations.push[i][3] = children[i].attributes[3].value; //CenterX
-            this.scene.animations.push[i][4] = children[i].attributes[4].value; //CenterY
-            this.scene.animations.push[i][5] = children[i].attributes[5].value; //CenterZ
-            this.scene.animations.push[i][6] = children[i].attributes[6].value; //Radius
-            this.scene.animations.push[i][7] = children[i].attributes[7].value; //StartAng
-            this.scene.animations.push[i][8] = children[i].attributes[8].value; //RotAng
+            //xxnew MyCir
         }
 
         //Linear or Bezier Animations
-        if (children[i].attributes[2].value == "linear" || children[i].attributes[2].value == "bezier")
+        if (children[i].attributes.getNamedItem("type").value == "linear" || children[i].attributes.getNamedItem("type").value == "bezier")
         {
             //Speed
             var speed = children[i].attributes.getNamedItem("speed").value;
@@ -1235,18 +1234,15 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode)
             //Type
             var type = children[i].attributes.getNamedItem("type").value;
             this.scene.animations[i][2] = type;
-            
+
             var controlPoints = [];
 
             //Control points
             for (let j = 0; j < children[i].children.length; j++)
-            {  
+            {
                 this.scene.animations[i][3*(j+1)] = children[i].children[j].attributes.getNamedItem("xx").value;
-                //console.log(this.scene.animations[i][3*(j+1)]);
                 this.scene.animations[i][3*(j+1)+1] = children[i].children[j].attributes.getNamedItem("yy").value;
-                //console.log(this.scene.animations[i][3*(j+1)+1]);
                 this.scene.animations[i][3*(j+1)+2] = children[i].children[j].attributes.getNamedItem("zz").value;
-                //console.log(this.scene.animations[i][3*(j+1)+2]);
 
                 controlPoints.push([parseFloat(this.scene.animations[i][3*(j+1)]),parseFloat(this.scene.animations[i][3*(j+1)+1]),parseFloat(this.scene.animations[i][3*(j+1)+2])]);
             }
@@ -1293,15 +1289,23 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
             if (this.nodes[nodeID] != null )
                 return "node ID must be unique (conflict: ID = " + nodeID + ")";
 
+            //Checks if selectable is true
+            if (this.reader.hasAttribute(children[i], 'selectable'))
+                var nodeSelectable = this.reader.getFloat(children[i], 'selectable');
+            else
+                var nodeSelectable = 0;
+
             this.log("Processing node "+nodeID);
 
             // Creates node.
             this.nodes[nodeID] = new MyGraphNode(this,nodeID);
+            if (nodeSelectable == 1)
+                this.nodes[nodeID].selectable = true;
 
             // Gathers child nodes.
             var nodeSpecs = children[i].children;
             var specsNames = [];
-            var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "DESCENDANTS"];
+            var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "DESCENDANTS", "ANIMATIONREFS"];
             for (var j = 0; j < nodeSpecs.length; j++) {
                 var name = nodeSpecs[j].nodeName;
                 specsNames.push(nodeSpecs[j].nodeName);
@@ -1415,6 +1419,35 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                         break;
                 }
             }
+
+            var textureIndex = specsNames.indexOf("TEXTURE");
+            if (textureIndex == -1)
+                return "texture must be defined (node ID = " + nodeID + ")";
+            var textureID = this.reader.getString(nodeSpecs[textureIndex], 'id');
+            if (textureID == null )
+                return "unable to parse texture ID (node ID = " + nodeID + ")";
+            if (textureID != "null" && textureID != "clear" && this.textures[textureID] == null )
+                return "ID does not correspond to a valid texture (node ID = " + nodeID + ")";
+
+            this.nodes[nodeID].textureID = textureID;
+
+            // Retrieves information about animations
+            var animationsIndex = specsNames.indexOf("ANIMATIONREFS");
+            if (animationsIndex != -1)
+            {
+                //Get AnimationRef Nodes
+                var animations = nodeSpecs[animationsIndex].children;
+
+                //Get all animations ID's
+                for (var j = 0; j < animations.length; j++)
+                {
+                    var curId = this.reader.getString(animations[j], 'id');
+                    this.nodes[nodeID].animations.push(curId);
+                }
+            }
+
+            console.log(this.nodes[nodeID].selectable);
+            console.log(this.nodes[nodeID].animations);
 
             // Retrieves information about children.
             var descendantsIndex = specsNames.indexOf("DESCENDANTS");
