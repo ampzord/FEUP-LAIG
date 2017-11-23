@@ -31,7 +31,7 @@ this.axisCoords['x'] = [1, 0, 0];
 this.axisCoords['y'] = [0, 1, 0];
 this.axisCoords['z'] = [0, 0, 1];
 
-// File reading 
+// File reading
 this.reader = new CGFXMLreader();
 
 /*
@@ -1234,12 +1234,12 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode)
             //Type
             var type = children[i].attributes.getNamedItem("type").value;
             this.scene.animations[i][2] = type;
-            
+
             var controlPoints = [];
 
             //Control points
             for (let j = 0; j < children[i].children.length; j++)
-            {  
+            {
                 this.scene.animations[i][3*(j+1)] = children[i].children[j].attributes.getNamedItem("xx").value;
                 this.scene.animations[i][3*(j+1)+1] = children[i].children[j].attributes.getNamedItem("yy").value;
                 this.scene.animations[i][3*(j+1)+2] = children[i].children[j].attributes.getNamedItem("zz").value;
@@ -1251,7 +1251,7 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode)
             //Instantiate object
             /*if (type == "bezier")
                 new MyBezierAnimation(scene,speed,controlPoints);
-            else   
+            else
                 new MyLinearAnimation(scene,speed,controlPoints);*/
         }
     }
@@ -1299,7 +1299,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
             // Creates node.
             this.nodes[nodeID] = new MyGraphNode(this,nodeID);
-            if (nodeSelectable == 1) 
+            if (nodeSelectable == 1)
                 this.nodes[nodeID].selectable = true;
 
             // Gathers child nodes.
@@ -1420,22 +1420,36 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                 }
             }
 
+            var textureIndex = specsNames.indexOf("TEXTURE");
+            if (textureIndex == -1)
+                return "texture must be defined (node ID = " + nodeID + ")";
+            var textureID = this.reader.getString(nodeSpecs[textureIndex], 'id');
+            if (textureID == null )
+                return "unable to parse texture ID (node ID = " + nodeID + ")";
+            if (textureID != "null" && textureID != "clear" && this.textures[textureID] == null )
+                return "ID does not correspond to a valid texture (node ID = " + nodeID + ")";
+
+            this.nodes[nodeID].textureID = textureID;
+
             // Retrieves information about animations
             var animationsIndex = specsNames.indexOf("ANIMATIONREFS");
-            if (animationsIndex != -1) 
+            if (animationsIndex != -1)
             {
-                console.log('HHHHHHHHHHHHHHHHHHHHHH');
-                console.log(specsNames[animationsIndex].children);
-            }
-            //var animationDescendants = nodeSpecs[animationsIndex].children;
-           // console.log(animationDescendants);
-
-            /*if (animationsIndex != -1)
-            {
+                //Get AnimationRef Nodes
                 var animations = nodeSpecs[animationsIndex].children;
-                console.log('HIIIIIIIIIIIIII');
-                console.log(animations);
-            }*/
+
+                //Get all animations ID's
+                for (var j = 0; j < animations.length; j++)
+                {
+                    var curId = this.reader.getString(animations[j], 'id');
+                    this.nodes[nodeID].animations.push(curId);
+                }
+
+
+            }
+
+            console.log(this.nodes[nodeID].selectable);
+            console.log(this.nodes[nodeID].animations);
 
             // Retrieves information about children.
             var descendantsIndex = specsNames.indexOf("DESCENDANTS");
