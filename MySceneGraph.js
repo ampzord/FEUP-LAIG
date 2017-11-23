@@ -1199,7 +1199,7 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode)
             this.scene.animations[i][1] = type;
 
             //Ids of animations
-            for (let j = 0; j < children[i].children.length; j++)
+            for (let j = 1; j < children[i].children.length; j++)
                 this.scene.animations[i][j] = children[i].children[j].attributes.getNamedItem("id").value;
         }
 
@@ -1444,8 +1444,6 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                     var curId = this.reader.getString(animations[j], 'id');
                     this.nodes[nodeID].animations.push(curId);
                 }
-
-
             }
 
             console.log(this.nodes[nodeID].selectable);
