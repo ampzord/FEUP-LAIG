@@ -1255,8 +1255,7 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode)
                 new MyLinearAnimation(scene,speed,controlPoints);*/
         }
     }
-    console.log('HHHHHHHHHHHHHHHHHHHHH');
-    console.log(this.scene.animations);
+
     console.log("Parsed animations");
 }
 
@@ -1448,6 +1447,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                 }
             }
 
+            //DEBUG
             console.log(this.nodes[nodeID].selectable);
             console.log(this.nodes[nodeID].animations);
 
