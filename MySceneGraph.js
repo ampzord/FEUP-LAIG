@@ -1199,8 +1199,8 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode)
             this.scene.animations[i][1] = type;
 
             //Ids of animations
-            for (let j = 1; j < children[i].children.length; j++)
-                this.scene.animations[i][j] = children[i].children[j].attributes.getNamedItem("id").value;
+            for (let j = 0; j < children[i].children.length; j++)
+                this.scene.animations[i][j+2] = children[i].children[j].attributes.getNamedItem("id").value;
         }
 
         //Circular Animation
@@ -1255,6 +1255,8 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode)
                 new MyLinearAnimation(scene,speed,controlPoints);*/
         }
     }
+    console.log('HHHHHHHHHHHHHHHHHHHHH');
+    console.log(this.scene.animations);
     console.log("Parsed animations");
 }
 
