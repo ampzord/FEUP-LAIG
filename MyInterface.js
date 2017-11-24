@@ -48,3 +48,11 @@ MyInterface.prototype.addLightsGroup = function(lights) {
     }
 }
 
+/**
+ * Adds a folder containing the IDs of the nodes that may be selected
+ */
+MyInterface.prototype.addSelectableNodes = function(nodes)
+{
+    var shadersGroup = this.gui.addFolder("Shaders");
+    this.gui.add(this.scene, "selectableNodes", nodes).name("Select Node");
+}

@@ -11,6 +11,9 @@ function XMLscene(interface) {
 
     this.lightValues = {};
     this.previousTime = 0;
+    this.selectableNodes = "None";
+    this.value = 2;
+    this.inc = 1;
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -21,6 +24,9 @@ XMLscene.prototype.constructor = XMLscene;
  */
 XMLscene.prototype.init = function(application) {
     CGFscene.prototype.init.call(this, application);
+
+    this.shader = new CGFshader(this.gl, "shaders/uScale.vert", "shaders/uScale.frag");
+    this.updateScaleFactor();
     
     this.initCameras();
 
@@ -37,6 +43,11 @@ XMLscene.prototype.init = function(application) {
     this.lastUpdateTime = 0;
     this.setUpdatePeriod(16); //desired delay between update periods 60 frames
 }
+
+XMLscene.prototype.updateScaleFactor = function()
+{
+    this.shader.setUniformsValues({normScale: this.value});
+};
 
 /**
  * Initializes the scene lights with the values read from the LSX file.
@@ -109,6 +120,9 @@ XMLscene.prototype.onGraphLoaded = function()
 
     // Adds lights group.
     this.interface.addLightsGroup(this.graph.lights);
+
+    //Add selectable nodes check boxes
+    this.interface.addSelectableNodes(this.graph.selectableNodes);
 }
 
 /**
@@ -153,6 +167,13 @@ XMLscene.prototype.display = function() {
                 i++;
             }
         }
+
+        if (this.value == 49 || this.value == 1){
+            this.inc *= -1;
+            this.value += this.inc;
+        }
+        else
+        this.value += this.inc;
 
         // Displays the scene.
         this.graph.displayScene();

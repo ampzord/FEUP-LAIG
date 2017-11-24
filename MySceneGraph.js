@@ -23,6 +23,7 @@ this.scene = scene;
 scene.graph = this;
 
 this.nodes = [];
+this.selectableNodes = ["None"];
 
 this.idRoot = null;                    // The id of the root element.
 
@@ -1736,7 +1737,12 @@ MySceneGraph.prototype.processNode = function(node, parTex, parAsp)
             textura.bind();
         }
 
+        if (this.scene.selectableNodes == node.nodeID) {
+            this.scene.setActiveShader(this.scene.shader);
+            this.scene.updateScaleFactor();
+        }
         node.leaves[j].display();
+        this.scene.setActiveShader(this.scene.defaultShader);
     }
 
     this.scene.popMatrix();
