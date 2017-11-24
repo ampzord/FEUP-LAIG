@@ -1345,8 +1345,10 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
             // Creates node.
             this.nodes[nodeID] = new MyGraphNode(this,nodeID);
-            if (nodeSelectable == 1)
+            if (nodeSelectable == 1){
                 this.nodes[nodeID].selectable = true;
+                this.selectableNodes.push(nodeID);
+            }
 
             // Gathers child nodes.
             var nodeSpecs = children[i].children;
@@ -1741,11 +1743,12 @@ MySceneGraph.prototype.processNode = function(node, parTex, parAsp)
             this.scene.setActiveShader(this.scene.shader);
             this.scene.updateScaleFactor();
         }
-        node.leaves[j].display();
-        this.scene.setActiveShader(this.scene.defaultShader);
-    }
 
+        node.leaves[j].display();
+    }
+    
     this.scene.popMatrix();
+    this.scene.setActiveShader(this.scene.defaultShader);
 }
 
 

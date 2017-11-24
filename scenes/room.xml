@@ -659,7 +659,7 @@
 	</NODE>
 
 
-    <NODE id="pcTower">
+    <NODE id="pcTower" selectable="1">
 	    <MATERIAL id="null" />
 	    <TEXTURE id="pc" />
 

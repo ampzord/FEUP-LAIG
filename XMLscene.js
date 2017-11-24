@@ -123,6 +123,7 @@ XMLscene.prototype.onGraphLoaded = function()
 
     //Add selectable nodes check boxes
     this.interface.addSelectableNodes(this.graph.selectableNodes);
+    
 }
 
 /**
