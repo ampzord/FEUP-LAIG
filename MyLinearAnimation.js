@@ -1,4 +1,42 @@
-function MyLinearAnimation(scene, speed, controlPoints) {
+
+/*
+class MyLinearAnimation extends MyAnimation {
+	constructor(scene, id, speed, controlPoints) {
+		//args
+		super(scene, id, speed);
+		this.controlPoints = controlPoints;
+
+		this.initValues = [];
+		this.totalDist = 0;
+
+		//check distance between the controlPoints
+		var i;
+		for(i = 1; i < controlPoints.length; i++) {
+			console.log("Ponto " + i-1 + " : ",  controlPoints[i-1][0]);
+			console.log("Ponto " + i + " : ", controlPoints[i][0]);
+
+			let dist = vec3.dist(vec3.fromValues(controlPoints[i-1][0],controlPoints[i-1][1],controlPoints[i-1][2]),vec3.fromValues(controlPoints[i][0],controlPoints[i][1],controlPoints[i][2]));
+			console.log('Distance : ');
+			console.log(dist);
+			totalDist += dist;
+		
+			let cosAlfa = (controlPoints[i][0] - controlPoints[i-1][0])/dist;
+			let senAlfa = (controlPoints[i][1] - controlPoints[i-1][1])/dist;
+			let dz = controlPoints[i][2] - controlPoints[i-1][2];
+			let alfa = Math.acos(cosAlfa);
+			this.secTimes.push(dist/this.speed);
+			values.push(speed * cosAlfa, speed * senAlfa, dz, alfa);
+			this.initValues.push(values);
+
+		}
+
+		this.totalTime = this.totalDist / this.speed;
+		this.transformMatrix = mat4.create();
+
+	}
+}*/
+	/*
+	
 	MyAnimation.call(this);
 
 	//arguments
@@ -24,8 +62,9 @@ function MyLinearAnimation(scene, speed, controlPoints) {
 		
 		this.controlPointDist.push(this.dist);
 
-		//delta t = distancia / velocidade
-		this.timeBetweenControlPoints = this.dist/this.speed;
+		// delta t = distancia / velocidade
+		// tempo de distancia entre cada troço
+		this.timeBetweenControlPoints = this.dist / this.speed;
 		this.controlPointTime.push(this.timeBetweenControlPoints);
 	}
 
@@ -107,4 +146,4 @@ MyLinearAnimation.prototype.update = function(time) {
 	console.log('DEBUG - Printing factors (x,y,z)');
 	console.log('FactorX: ' + factorX + 'FactorY: ' + factorY + 'FactorZ: ' + factorZ);
 }
-
+*/

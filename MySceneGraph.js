@@ -141,6 +141,7 @@ else {
         return error;
 }
 
+//NAO MEXI
 // <ANIMATIONS>
 if ((index = nodeNames.indexOf("ANIMATIONS")) == -1)
     return "tag <ANIMATIONS> missing";
@@ -1178,71 +1179,112 @@ console.log("Parsed materials");
 */
 MySceneGraph.prototype.parseAnimations = function(animationsNode)
 {
-    this.scene.animations = [];
+    //this.scene.animations = [];
+    this.animations = [];
     var children = animationsNode.children;
 
     //Animation Node
     for(var i = 0; i < children.length; i++)
     {
-        //2d Array
-        this.scene.animations[i] = [];
+        /*
+        //ID
+        var animationID = this.reader.getString(children[i], 'id');
+        if (animationID == null )
+            return "no ID defined for animation";
+
+        if (this.animations[animationID] != null )
+            return "ID must be unique for each animation (conflict: ID = " + animationID + ")";
+
+        //speed
+        var animationSpeed = this.reader.getString(children[i], 'speed');
+        if (animationSpeed == null )
+            return "no speed defined for animation";
+
+        //type
+        var animationType = this.reader.getString(children[i], 'type');
+        if (animationType == null )
+            return "no type defined for animation";
+        if (animationType != "linear" && animationType != "circular" && animationType != "bezier" && animationType != "combo")
+            return "unknown animation type";
+
+        //circular animations
+        if(animationType == "circular"){
+            var centerX = this.reader.getString(children[i], 'centerx');
+            var centerY = this.reader.getString(children[i], 'centery');
+            var centerZ = this.reader.getString(children[i], 'centerz');
+            var radius = this.reader.getString(children[i], 'radius');
+            var startAng = this.reader.getString(children[i], 'startang');
+            var rotAng = this.reader.getString(children[i], 'rotang');
+
+            this.animations[animationID] = new MyCircularAnimation(this.scene, animationID, animationSpeed, centerX, centerY, centerZ, radius, startAng * DEGREE_TO_RAD, rotAng * DEGREE_TO_RAD);
+
+            //QUANDO AS CLASSES DE ANIMACOES TIVEREM DEFINIDAS, CHAMAR AQUI O CONSTRUTOR
+            //this.animations[animationID] = [animationSpeed, animationType, centerX, centerY, centerZ, radius, startAng, rotAng];
+        }
+*/
+
+
+
+       //2d Array
+       //this.animations[i] = [];
 
         //id
         var id = children[i].attributes.getNamedItem("id").value;
-        this.scene.animations[i][0] = id;
+        //this.animations[i][0] = id;
 
+        /*
         //Combo Animation
         if (children[i].attributes.getNamedItem("type").value == "combo")
         {
             //Type
             var type = children[i].attributes.getNamedItem("type").value;
-            this.scene.animations[i][1] = type;
+           this.animations[i][1] = type;
 
             //Ids of animations
             for (let j = 0; j < children[i].children.length; j++)
-                this.scene.animations[i][j+2] = children[i].children[j].attributes.getNamedItem("id").value;
-        }
-
+               this.animations[i][j+2] = children[i].children[j].attributes.getNamedItem("id").value;
+        }*/
+        
         //Circular Animation
         if (children[i].attributes.getNamedItem("type").value == "circular")
         {
             //Speed
             var speed = children[i].attributes.getNamedItem("speed").value;
-            this.scene.animations[i][1] = speed;
+            //this.animations[i][1] = speed;
 
             //Type
             var type = children[i].attributes.getNamedItem("type").value;
-            this.scene.animations[i][2] = type;
+            //this.animations[i][2] = type;
 
-            this.scene.animations[i][3] = children[i].attributes[3].value; //CenterX
-            this.scene.animations[i][4] = children[i].attributes[4].value; //CenterY
-            this.scene.animations[i][5] = children[i].attributes[5].value; //CenterZ
-            this.scene.animations[i][6] = children[i].attributes[6].value; //Radius
-            this.scene.animations[i][7] = children[i].attributes[7].value; //StartAng
-            this.scene.animations[i][8] = children[i].attributes[8].value; //RotAng
+            let center_x = children[i].attributes[3].value; //CenterX
+            let center_y = children[i].attributes[4].value; //CenterY
+            let center_z = children[i].attributes[5].value; //CenterZ
+            let radious = children[i].attributes[6].value; //Radius
+            let startAngle = children[i].attributes[7].value; //StartAng
+            let rotAngle = children[i].attributes[8].value; //RotAng
 
-            //xxnew MyCir
+            this.animations[id] = new MyCircularAnimation(this.scene, id, speed, center_x, center_y, center_z, radious, startAngle * DEGREE_TO_RAD, rotAngle * DEGREE_TO_RAD);
         }
-
+        /*
         //Linear or Bezier Animations
         if (children[i].attributes.getNamedItem("type").value == "linear" || children[i].attributes.getNamedItem("type").value == "bezier")
         {
             //Speed
             var speed = children[i].attributes.getNamedItem("speed").value;
-            this.scene.animations[i][1] = speed;
+           this.animations[i][1] = speed;
 
             //Type
             var type = children[i].attributes.getNamedItem("type").value;
-            this.scene.animations[i][2] = type;
+           this.animations[i][2] = type;
 
             var controlPoints = [];
 
             //Control points
             for (let j = 0; j < children[i].children.length; j++)
             {
-                this.scene.animations[i][3*(j+1)] = children[i].children[j].attributes.getNamedItem("xx").value;
-                this.scene.animations[i][3*(j+1)+1] = children[i].children[j].attributes.getNamedItem("yy").value;
-                this.scene.animations[i][3*(j+1)+2] = children[i].children[j].attributes.getNamedItem("zz").value;
+               this.animations[i][3*(j+1)] = children[i].children[j].attributes.getNamedItem("xx").value;
+               this.animations[i][3*(j+1)+1] = children[i].children[j].attributes.getNamedItem("yy").value;
+               this.animations[i][3*(j+1)+2] = children[i].children[j].attributes.getNamedItem("zz").value;
 
                 controlPoints.push([parseFloat(this.scene.animations[i][3*(j+1)]),parseFloat(this.scene.animations[i][3*(j+1)+1]),parseFloat(this.scene.animations[i][3*(j+1)+2])]);
             }
@@ -1252,9 +1294,11 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode)
             /*if (type == "bezier")
                 new MyBezierAnimation(scene,speed,controlPoints);
             else
-                new MyLinearAnimation(scene,speed,controlPoints);*/
-        }
+                new MyLinearAnimation(scene,speed,controlPoints);
+    }*/
     }
+
+    console.log(this.animations);
 
     console.log("Parsed animations");
 }
@@ -1432,6 +1476,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
             this.nodes[nodeID].textureID = textureID;
 
+            /*
             // Retrieves information about animations
             var animationsIndex = specsNames.indexOf("ANIMATIONREFS");
             if (animationsIndex != -1)
@@ -1443,7 +1488,28 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                 for (var j = 0; j < animations.length; j++)
                 {
                     var curId = this.reader.getString(animations[j], 'id');
-                    this.nodes[nodeID].animations.push(curId);
+                    this.nodes[nodeID].animationsID.push(curId);
+                }
+            }*/
+
+            var animationsIndex = specsNames.indexOf("ANIMATIONREFS");
+            
+            if(animationsIndex > 0){
+                var animationDescendants = nodeSpecs[animationsIndex].children;
+
+                var animationChildren = 0;
+                for(var z = 0; z < animationDescendants.length; z++){
+                    if(animationDescendants[z].nodeName == "ANIMATIONREF"){
+                        var aniID = this.reader.getString(animationDescendants[z], 'id');
+                        this.log("    Descendant: " + aniID);
+
+                        if(aniID == null){
+                            this.onXMLMinorError("unable to parse animation id");
+                        }
+                        else{
+                            this.nodes[nodeID].animationsID.push(aniID);
+                        }
+                    }
                 }
             }
 
@@ -1626,6 +1692,7 @@ MySceneGraph.prototype.processNode = function(node, parTex, parAsp)
 
     this.scene.pushMatrix();
     this.scene.multMatrix(node.transformMatrix);
+    this.scene.multMatrix(node.animationMatrix);
 
     //Replaces heritage texture with new texture if it exits
     if (node.textureID != null)
@@ -1681,5 +1748,5 @@ MySceneGraph.prototype.processNode = function(node, parTex, parAsp)
 */
 MySceneGraph.prototype.displayScene = function()
 {
-this.processNode(this.nodes[this.idRoot], null, null);
+    this.processNode(this.nodes[this.idRoot], null, null);
 }

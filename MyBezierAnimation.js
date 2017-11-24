@@ -1,3 +1,5 @@
+
+/*
 function MyBezierAnimation(scene, speed, controlPoints) {
 	MyAnimation.call(this);
 
@@ -26,4 +28,4 @@ MyBezierAnimation.prototype.update = function(time) {
 		
 
 }
-
+*/

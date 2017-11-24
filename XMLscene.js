@@ -10,6 +10,7 @@ function XMLscene(interface) {
     this.interface = interface;
 
     this.lightValues = {};
+    this.previousTime = 0;
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -31,6 +32,10 @@ XMLscene.prototype.init = function(application) {
     this.gl.depthFunc(this.gl.LEQUAL);
     
     this.axis = new CGFaxis(this);
+
+    //Added
+    this.lastUpdateTime = 0;
+    this.setUpdatePeriod(16); //desired delay between update periods 60 frames
 }
 
 /**
@@ -72,6 +77,18 @@ XMLscene.prototype.initLights = function() {
  */
 XMLscene.prototype.initCameras = function() {
     this.camera = new CGFcamera(0.4,0.1,500,vec3.fromValues(15, 15, 15),vec3.fromValues(0, 0, 0));
+}
+
+/**
+ * Updates every node to their current animated matrix.
+ */
+XMLscene.prototype.update = function(currTime) {
+	var deltaTime = (currTime - this.lastUpdateTime) / 1000;
+    this.lastUpdateTime = currTime;
+    
+	for(var node in this.graph.nodes){
+		this.graph.nodes[node].updateAnimation(deltaTime);
+	}
 }
 
 /* Handler called when the graph is finally loaded. 
