@@ -229,8 +229,8 @@
     </NODE>
 
     <NODE id="floor" selectable="1">
-        <MATERIAL id="wood" />
-        <TEXTURE id="woodfloor" />
+        <MATERIAL id="wood"/>
+        <TEXTURE id="woodfloor"/>
 
         <SCALE sx="5" sy="0.8" sz="4" />
         <TRANSLATION x="0" y="0" z="4" />
@@ -241,7 +241,7 @@
 		</DESCENDANTS>
     </NODE>
 
-    <NODE id="chair">
+    <NODE id="chair" selectable="1">
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
         <TRANSLATION x="1" y="0" z="-3" />
@@ -507,7 +507,7 @@
         </DESCENDANTS>
 	</NODE>
 
-	<NODE id="table">
+	<NODE id="table" selectable="1">
     	<MATERIAL id="tablewood" />
     	<TEXTURE id="woodchair" />
         <TRANSLATION x="1.5" y="0" z="0" />
@@ -888,7 +888,7 @@
 	</NODE>
 
 
-	<NODE id="lamp1">
+	<NODE id="lamp1" selectable="1">
 	    <MATERIAL id="null" />
 	    <TEXTURE id="null" />
 
