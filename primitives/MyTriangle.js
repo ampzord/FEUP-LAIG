@@ -15,7 +15,7 @@ MyTriangle.prototype.constructor=MyTriangle;
 
 MyTriangle.prototype.initBuffers = function () {
 
-    var points = this.args.split(" ");
+    var points = this.args;
     this.a = Math.sqrt(Math.pow(points[0] - points[6], 2) + Math.pow(points[1] - points[7], 2) + Math.pow(points[2] - points[8], 2));
     this.b = Math.sqrt(Math.pow(points[3] - points[0], 2) + Math.pow(points[4] - points[1], 2) + Math.pow(points[5] - points[2], 2));
     this.c = Math.sqrt(Math.pow(points[6] - points[3], 2) + Math.pow(points[7] - points[4], 2) + Math.pow(points[8] - points[5], 2));
