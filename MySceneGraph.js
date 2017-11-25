@@ -1361,8 +1361,12 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
             // Creates node.
             this.nodes[nodeID] = new MyGraphNode(this,nodeID);
-            if (nodeSelectable == 1)
+            if (nodeSelectable == 1){
                 this.nodes[nodeID].selectable = true;
+                this.selectableNodes.push(nodeID);
+            }
+
+            console.log(this.nodes[nodeID].selectable);
 
             // Gathers child nodes.
             var nodeSpecs = children[i].children;
