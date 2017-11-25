@@ -12,8 +12,6 @@ function XMLscene(interface) {
     this.lightValues = {};
     this.previousTime = 0;
     this.selectableNodes = "None";
-    this.value = 2;
-    this.inc = 1;
 
     var date = new Date();
     this.sceneInitTime = date.getTime();

@@ -1266,18 +1266,32 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode)
 
             this.animations[id] = new MyCircularAnimation(this.scene, id, speed, center_x, center_y, center_z, radious, startAngle * DEGREE_TO_RAD, rotAngle * DEGREE_TO_RAD);
         }
-        /*
+        
         //Linear or Bezier Animations
         if (children[i].attributes.getNamedItem("type").value == "linear" || children[i].attributes.getNamedItem("type").value == "bezier")
         {
             //Speed
             var speed = children[i].attributes.getNamedItem("speed").value;
-           this.animations[i][1] = speed;
+            //this.animations[i][1] = speed;
 
             //Type
-            var type = children[i].attributes.getNamedItem("type").value;
-           this.animations[i][2] = type;
+            //var type = children[i].attributes.getNamedItem("type").value;
+            //this.animations[i][2] = type;
+            var controlPointsAux = [];
+            
+            //Control points
+            for (let j = 0; j < children[i].children.length; j++)
+            {
+                let x = children[i].children[j].attributes.getNamedItem("xx").value;
+                let y = children[i].children[j].attributes.getNamedItem("yy").value;
+                let z = children[i].children[j].attributes.getNamedItem("zz").value;
+      
+                controlPointsAux.push(new Array(x, y, z));
+            }
+            this.animations[id] = new MyLinearAnimation(this.scene, id, speed, controlPointsAux);
+        }
 
+            /*
             var controlPoints = [];
 
             //Control points
@@ -1287,21 +1301,23 @@ MySceneGraph.prototype.parseAnimations = function(animationsNode)
                this.animations[i][3*(j+1)+1] = children[i].children[j].attributes.getNamedItem("yy").value;
                this.animations[i][3*(j+1)+2] = children[i].children[j].attributes.getNamedItem("zz").value;
 
-                controlPoints.push([parseFloat(this.scene.animations[i][3*(j+1)]),parseFloat(this.scene.animations[i][3*(j+1)+1]),parseFloat(this.scene.animations[i][3*(j+1)+2])]);
+               controlPoints.push([parseFloat(this.scene.animations[i][3*(j+1)]),parseFloat(this.scene.animations[i][3*(j+1)+1]),parseFloat(this.scene.animations[i][3*(j+1)+2])]);
             }
-
+            this.animations[id] = new MyLinearAnimation(this.scene, id, speed, controlPoints)
+            */
             //Maybe need to store these objects somewhere, dont know where
             //Instantiate object
             /*if (type == "bezier")
                 new MyBezierAnimation(scene,speed,controlPoints);
             else
                 new MyLinearAnimation(scene,speed,controlPoints);
-    }*/
     }
-
+    }
+*/
     console.log(this.animations);
 
     console.log("Parsed animations");
+}
 }
 
 
@@ -1345,10 +1361,8 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
             // Creates node.
             this.nodes[nodeID] = new MyGraphNode(this,nodeID);
-            if (nodeSelectable == 1){
+            if (nodeSelectable == 1)
                 this.nodes[nodeID].selectable = true;
-                this.selectableNodes.push(nodeID);
-            }
 
             // Gathers child nodes.
             var nodeSpecs = children[i].children;
@@ -1719,7 +1733,6 @@ MySceneGraph.prototype.processNode = function(node, parTex, parAsp)
     else if (node.textureID == "clear")
         textura = null;
 
-
     if (this.scene.selectableNodes == node.nodeID) {
         this.scene.setActiveShader(this.scene.shader);
     }
@@ -1745,15 +1758,14 @@ MySceneGraph.prototype.processNode = function(node, parTex, parAsp)
             node.leaves[j].applyAf(ampS, ampT);
             textura.bind();
         }
-        
+
         node.leaves[j].display();
 
         if (this.scene.selectableNodes == node.nodeID && node.children.length == 0)
             this.scene.setActiveShader(this.scene.defaultShader);
     }
-    
+
     this.scene.popMatrix();
-    
 }
 
 
