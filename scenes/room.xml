@@ -189,14 +189,21 @@
 </MATERIALS>
 
 <ANIMATIONS>
+
     <ANIMATION id="linear1" speed="4" type="linear">
         <controlpoint xx="0" yy="0" zz="0" />
         <controlpoint xx="10" yy="0" zz="0" />
-        <controlpoint xx="10" yy="0" zz="10" />
-        <controlpoint xx="20" yy="0" zz="10" />
+    </ANIMATION>
+
+    <ANIMATION id="circular1" speed="1" type="circular"
+               centerx="8" centery="0" centerz="0"
+               radius="2" startang="0" rotang="180"/>
+
+   	<ANIMATION id="linear2" speed="4" type="linear">
+        <controlpoint xx="0" yy="0" zz="0" />
+        <controlpoint xx="-8" yy="0" zz="0" />
     </ANIMATION>
     
-	<!-- HERE> <!-->
     <ANIMATION id="bezier1" speed="2" type="bezier">
         <controlpoint xx="0" yy="0" zz="0" />
         <controlpoint xx="0" yy="10" zz="0" />
@@ -205,27 +212,11 @@
     </ANIMATION>
 
 	<ANIMATION id="bezier2" speed="2" type="bezier">
-        <controlpoint xx="10" yy="0" zz="0" />
+        <controlpoint xx="0" yy="0" zz="0" />
         <controlpoint xx="10" yy="10" zz="0" />
         <controlpoint xx="20" yy="10" zz="0" />
         <controlpoint xx="20" yy="0" zz="0" />
     </ANIMATION>
-
-	<ANIMATION id="linear2" speed="4" type="linear">
-        <controlpoint xx="0" yy="0" zz="0" />
-        <controlpoint xx="-10" yy="0" zz="0" />
-        <controlpoint xx="-10" yy="-8" zz="10" />
-    </ANIMATION>
-
-    <!--
-
-    <ANIMATION id="4thanim" type="combo">
-        <SPANREF id="1stanim"/>
-        <SPANREF id="2ndanim"/> -->
-
-    <ANIMATION id="3rdanim" speed="1" type="circular"
-               centerx="10" centery="0" centerz="5"
-               radius="0.5" startang="0" rotang="720"/>
 
 </ANIMATIONS>
 
@@ -1291,11 +1282,12 @@
 		<TRANSLATION x ="15" y="8" z="10" />
 		<ROTATION axis="y" angle="45"/>
 
-		<!--<ANIMATIONREFS>
+		<ANIMATIONREFS>
             <ANIMATIONREF id="bezier1"/>
+            <ANIMATIONREF id="linear2"/>
+            <ANIMATIONREF id="circular1"/>
 			<ANIMATIONREF id="bezier2"/>
-			<ANIMATIONREF id="linear2"/>
-        </ANIMATIONREFS> -->
+        </ANIMATIONREFS>
 		
     	<DESCENDANTS>
 			<NODEREF id="planeTop" />
@@ -1331,6 +1323,12 @@
 		<TRANSLATION x="10" y="0.2" z="14" />
 		<SCALE sx="0.3" sy="0.2" sz="0.3" />
 		<ROTATION axis="y" angle="90"/>
+
+		<ANIMATIONREFS>
+			<ANIMATIONREF id="linear1" />
+			<ANIMATIONREF id="circular1"/>
+			<ANIMATIONREF id="linear2"/>
+		</ANIMATIONREFS>
 
 		<DESCENDANTS>
 			<NODEREF id="body" />
