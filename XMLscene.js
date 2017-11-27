@@ -27,7 +27,7 @@ XMLscene.prototype.init = function(application) {
     CGFscene.prototype.init.call(this, application);
 
     this.shader = new CGFshader(this.gl, "shaders/shader.vert", "shaders/shader.frag");
-    this.shader.setUniformsValues({selectedRed: 1.0, selectedGreen: 0.0, selectedBlue: 0.0});
+    this.shader.setUniformsValues({selectedRed: 0, selectedGreen: 1, selectedBlue: 0});
     this.updateScaleFactor();
     
     this.initCameras();
@@ -41,14 +41,17 @@ XMLscene.prototype.init = function(application) {
     
     this.axis = new CGFaxis(this);
 
-    //Added
+    //Animations
     this.lastUpdateTime = 0;
-    this.setUpdatePeriod(16); //desired delay between update periods 60 frames
+    this.setUpdatePeriod(16); //desired delay between update periods - 60 frames
 }
 
+/**
+ * Updates the scale factors of shaders
+ */
 XMLscene.prototype.updateScaleFactor = function(date)
 {
-    this.shader.setUniformsValues({timeFactor: date});
+    this.shader.setUniformsValues({time: date});
 };
 
 /**
@@ -100,7 +103,7 @@ XMLscene.prototype.update = function(currTime) {
     this.lastUpdateTime = currTime;
     
 	for(var node in this.graph.nodes){
-		this.graph.nodes[node].updateAnimation(deltaTime);
+		this.graph.nodes[node].applyAnimation(deltaTime);
 	}
 }
 
@@ -125,7 +128,6 @@ XMLscene.prototype.onGraphLoaded = function()
 
     //Add selectable nodes check boxes
     this.interface.addSelectableNodes(this.graph.selectableNodes);
-    
 }
 
 /**

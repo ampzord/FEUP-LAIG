@@ -142,6 +142,17 @@
     	<file path="images/yellow.png" />
         <amplif_factor s="1" t="1" />
     </TEXTURE>
+
+	<TEXTURE id="raceTrack">
+    	<file path="images/race_track.jpg" />
+        <amplif_factor s="5" t="5" />
+    </TEXTURE>
+
+	<TEXTURE id="dartBoard">
+    	<file path="images/dart_board.jpg" />
+        <amplif_factor s="5" t="5" />
+    </TEXTURE>
+
 </TEXTURES>
 
 
@@ -190,33 +201,91 @@
 
 <ANIMATIONS>
 
-    <ANIMATION id="linear1" speed="4" type="linear">
-        <controlpoint xx="0" yy="0" zz="0" />
-        <controlpoint xx="10" yy="0" zz="0" />
-    </ANIMATION>
 
-    <ANIMATION id="circular1" speed="1" type="circular"
-               centerx="8" centery="0" centerz="0"
-               radius="2" startang="0" rotang="180"/>
-
-   	<ANIMATION id="linear2" speed="4" type="linear">
+	<ANIMATION id="dartpart1" speed="3" type="linear">
         <controlpoint xx="0" yy="0" zz="0" />
-        <controlpoint xx="-8" yy="0" zz="0" />
+        <controlpoint xx="0" yy="0" zz="10" />
     </ANIMATION>
     
-    <ANIMATION id="bezier1" speed="2" type="bezier">
-        <controlpoint xx="0" yy="0" zz="0" />
-        <controlpoint xx="0" yy="10" zz="0" />
-        <controlpoint xx="10" yy="10" zz="0" />
-        <controlpoint xx="10" yy="0" zz="0" />
+	<ANIMATION id="dartpart2" speed="3" type="bezier">
+        <controlpoint xx="0" yy="0" zz="10" />
+        <controlpoint xx="0" yy="0" zz="20" />
+        <controlpoint xx="10" yy="0" zz="20" />
+        <controlpoint xx="10" yy="0" zz="10" />
     </ANIMATION>
 
-	<ANIMATION id="bezier2" speed="2" type="bezier">
-        <controlpoint xx="0" yy="0" zz="0" />
-        <controlpoint xx="10" yy="10" zz="0" />
-        <controlpoint xx="20" yy="10" zz="0" />
-        <controlpoint xx="20" yy="0" zz="0" />
+	<ANIMATION id="dartpart3" speed="3" type="circular"
+			   centerx="5" centery="0" centerz="10"
+			   radius="5" startang="0" rotang="180"/>
+
+	<ANIMATION id="dartpart4" speed="3" type="linear">
+        <controlpoint xx="0" yy="0" zz="10" />
+        <controlpoint xx="0" yy="-5" zz="20" />
     </ANIMATION>
+
+	<ANIMATION id="dartpart5" speed="3" type="bezier">
+        <controlpoint xx="0" yy="-5" zz="20" />
+        <controlpoint xx="0" yy="-7" zz="20" />
+        <controlpoint xx="3" yy="-12" zz="0" />
+        <controlpoint xx="3" yy="-15" zz="0" />
+    </ANIMATION>
+
+
+
+    <ANIMATION id="dartMovement" type="combo">
+		<SPANREF id="dartpart1" /> <!-- LINEAR -->
+		<SPANREF id="dartpart2" /> <!-- bezier -->
+		<SPANREF id="dartpart3" /> <!-- circular -->
+		<SPANREF id="dartpart4" /> <!-- LINEAR -->
+		<SPANREF id="dartpart5" /> <!--  bezier -->
+	</ANIMATION>
+
+	<ANIMATION id="linear1" speed="5" type="linear">
+        <controlpoint xx="0" yy="0" zz="0" />
+        <controlpoint xx="10" yy="0" zz="-10" />
+    </ANIMATION>
+
+	<ANIMATION id="circularforever" speed="5" type="circular"
+			   centerx="0" centery="0" centerz="0"
+			   radius="7" startang="0" rotang="9999"/>
+
+
+	<ANIMATION id="part1" speed="5" type="linear">
+        <controlpoint xx="0" yy="0" zz="0" />
+        <controlpoint xx="0" yy="0" zz="-21" />
+    </ANIMATION>
+
+	<ANIMATION id="part2" speed="15" type="bezier">
+        <controlpoint xx="0" yy="0" zz="-21" />
+        <controlpoint xx="0" yy="0" zz="-31" />
+        <controlpoint xx="14" yy="0" zz="-33" />
+        <controlpoint xx="12" yy="0" zz="-21" />
+    </ANIMATION>
+
+	<ANIMATION id="part3" speed="5" type="circular"
+			   centerx="12" centery="0" centerz="-21"
+			   radius="5" startang="180" rotang="90"/>
+
+    <ANIMATION id="part4" speed="5" type="linear">
+        <controlpoint xx="12" yy="0" zz="-18" />
+        <controlpoint xx="20" yy="0" zz="-18" />
+    </ANIMATION>
+
+		<ANIMATION id="part5" speed="15" type="bezier">
+        <controlpoint xx="20" yy="0" zz="-18" />
+        <controlpoint xx="30" yy="0" zz="-28" />
+        <controlpoint xx="37" yy="0" zz="-18" />
+        <controlpoint xx="37" yy="0" zz="0" />
+    </ANIMATION>
+
+
+	<ANIMATION id="carMovement" type="combo">
+		<SPANREF id="part1" /> <!-- LINEAR -->
+		<SPANREF id="part2" /> <!-- BEZIER -->
+		<SPANREF id="part3" /> <!-- CIRC -->
+		<SPANREF id="part4" /> <!-- linear -->
+		<SPANREF id="part5" /> <!-- BEZIER -->
+	</ANIMATION>
 
 </ANIMATIONS>
 
@@ -247,9 +316,10 @@
             <NODEREF id="curvedTelevision" />
             <NODEREF id="frontWall" />
 			<NODEREF id="leftWall" />
-            <NODEREF id="testTower" />
-			<NODEREF id="paperPlane" />
-			<NODEREF id="car" />
+			<NODEREF id="cars" />
+			<NODEREF id="raceTrack"/>
+			<NODEREF id="dart"/>
+			<NODEREF id="dartBoard"/>
         </DESCENDANTS>
     </NODE>
 
@@ -257,7 +327,7 @@
         <MATERIAL id="wood"/>
         <TEXTURE id="woodfloor"/>
 
-        <SCALE sx="6" sy="0.8" sz="5" />
+        <SCALE sx="8" sy="0.8" sz="7" />
         <TRANSLATION x="0" y="0" z="4" />
         <ROTATION axis="x" angle="-90" />
 
@@ -1155,7 +1225,7 @@
         <TEXTURE id="wall" />
 
         <DESCENDANTS>
-			<LEAF  id ="rectangle1" type="rectangle" args="0 12 30 0" />
+			<LEAF  id ="rectangle1" type="rectangle" args="0 12 39 0" />
 		</DESCENDANTS>
     </NODE>
 
@@ -1163,131 +1233,27 @@
         <MATERIAL id="defaultMaterial" />
         <TEXTURE id="wall" />
 
-		<TRANSLATION x="0" y="0" z="20" />
+		<TRANSLATION x="0" y="0" z="28" />
 		<ROTATION axis="y" angle="90" />
 
         <DESCENDANTS>
-			<LEAF  id ="rectangle1" type="rectangle" args="0 12 20 0" />
+			<LEAF  id ="rectangle1" type="rectangle" args="0 12 28 0" />
 		</DESCENDANTS>
     </NODE>
-
-        <!-- TESTING PURPOSES -->
-
-     <NODE id="testTower">
-        <MATERIAL id="null" />
-        <TEXTURE id="pc" />
-
-        <TRANSLATION x="7" y="5" z="7" />
-        <SCALE sx="0.5" sy="0.5" sz="0.5" />
-
-        <ANIMATIONREFS>
-            <ANIMATIONREF id="linear1"/>
-        </ANIMATIONREFS>
-
-
-        <DESCENDANTS>
-            <NODEREF id="teste1" />
-            <NODEREF id="teste2" />
-            <NODEREF id="teste3" />
-            <NODEREF id="teste4" />
-            <NODEREF id="teste5" />
-            <NODEREF id="teste6" />
-        </DESCENDANTS>
-    </NODE>
-
-    <!-- LEFT SIDE -->
-    <NODE id="teste1">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <ROTATION axis="y" angle="-90"/>
-
-        <DESCENDANTS>
-            <LEAF  id ="rectangle1" type="rectangle" args="0 4 5 0" />
-        </DESCENDANTS>
-    </NODE>
-
-    <!-- RIGHT SIDE -->
-    <NODE id="teste2">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <TRANSLATION x="2" y="0" z="5" />
-        <ROTATION axis="y" angle="90"/>
-
-        <DESCENDANTS>
-            <LEAF  id ="rectangle1" type="rectangle" args="0 4 5 0" />
-        </DESCENDANTS>
-    </NODE>
-
-    <!-- FRONT FACE -->
-    <NODE id="teste3">
-        <MATERIAL id="null" />
-        <TEXTURE id="pc_front" />
-
-        <TRANSLATION x="0" y="0" z="5" />
-        <SCALE sx="0.8" sy="0.57" sz="0.9" />
-
-        <DESCENDANTS>
-            <LEAF  id ="rectangle1" type="rectangle" args="0 7 2.5 0" />
-        </DESCENDANTS>
-    </NODE>
-
-    <!-- BACK FACE-->
-    <NODE id="teste4">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <TRANSLATION x="0" y="4" z="0" />
-        <SCALE sx="0.8" sy="0.57" sz="1" />
-        <ROTATION axis="x" angle="180" />
-
-        <DESCENDANTS>
-            <LEAF  id ="rectangle1" type="rectangle" args="0 7 2.5 0" />
-        </DESCENDANTS>
-    </NODE>
-
-    <!-- BOTTTOM FACE -->
-    <NODE id="teste5">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <SCALE sx="0.4" sy="1" sz="1.275" />
-        <ROTATION axis="x" angle="90"/>
-
-        <DESCENDANTS>
-            <LEAF  id ="rectangle1" type="rectangle" args="0 4 5 0" />
-        </DESCENDANTS>
-    </NODE>
-
-    <!-- TOP FACE -->
-    <NODE id="teste6">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <TRANSLATION x="0" y="4" z="5" />
-        <SCALE sx="0.4" sy="1" sz="1.275" />
-        <ROTATION axis="x" angle="-90" />
-
-        <DESCENDANTS>
-            <LEAF  id ="rectangle1" type="rectangle" args="0 4 5 0" />
-        </DESCENDANTS>
-    </NODE>
-
-	<!-- HERE> <!-->
+<!--
 	<NODE id="paperPlane">
     	<MATERIAL id="null" />
     	<TEXTURE id="white" />
         
-		<TRANSLATION x ="15" y="8" z="10" />
+		<TRANSLATION x ="30" y="10" z="15" />
 		<ROTATION axis="y" angle="45"/>
-
+		
 		<ANIMATIONREFS>
-            <ANIMATIONREF id="bezier1"/>
-            <ANIMATIONREF id="linear2"/>
-            <ANIMATIONREF id="circular1"/>
-			<ANIMATIONREF id="bezier2"/>
-        </ANIMATIONREFS>
+			<ANIMATIONREF id="linear1"/>
+			<ANIMATIONREF id="circularforever"/>
+        </ANIMATIONREFS> 
+
+    
 		
     	<DESCENDANTS>
 			<NODEREF id="planeTop" />
@@ -1314,20 +1280,28 @@
         <DESCENDANTS>
             <LEAF id="triangle" type="triangle" args="2 0 3 3 0 2 0 0 0" />
         </DESCENDANTS>
-    </NODE>
+    </NODE> -->
 
-    <NODE id="car">
+	
+    <NODE id="cars">
+	    <MATERIAL id="null" />
+	    <TEXTURE id="null" />
+
+		<DESCENDANTS>
+			<NODEREF id="car1" />
+		</DESCENDANTS>
+	</NODE>
+
+
+    <NODE id="car1">
 	    <MATERIAL id="null" />
 	    <TEXTURE id="black" />
 
-		<TRANSLATION x="10" y="0.2" z="14" />
+		<TRANSLATION x="25.8" y="0.2" z="16.8" />
 		<SCALE sx="0.3" sy="0.2" sz="0.3" />
-		<ROTATION axis="y" angle="90"/>
 
 		<ANIMATIONREFS>
-			<ANIMATIONREF id="linear1" />
-			<ANIMATIONREF id="circular1"/>
-			<ANIMATIONREF id="linear2"/>
+			<ANIMATIONREF id="carMovement" />
 		</ANIMATIONREFS>
 
 		<DESCENDANTS>
@@ -1602,6 +1576,88 @@
 	        <LEAF  id ="cylinder" type="cylinder" args="4 1 1 20 20 1 1" />
 	    </DESCENDANTS>
 	</NODE>
+
+	<NODE id="raceTrack">
+        <MATERIAL id="null"/>
+        <TEXTURE id="raceTrack"/>
+
+        <SCALE sx="3" sy="1" sz="3" />
+        <TRANSLATION x="8" y="0.01" z="7" />
+        <ROTATION axis="x" angle="-90" />
+
+        <DESCENDANTS>
+			<LEAF  id ="rectangle1" type="rectangle" args="0 5 5 0" />
+		</DESCENDANTS>
+    </NODE>
+
+	<NODE id="dart">
+        <MATERIAL id="null"/>
+        <TEXTURE id="black"/>
+
+		<ANIMATIONREFS>
+			<ANIMATIONREF id="dartMovement" />
+		</ANIMATIONREFS>
+
+		<TRANSLATION x="20" y="15" z="15" />
+
+        <DESCENDANTS>
+		    <NODEREF id="dartBase" />
+		    <NODEREF id="dartHead" />
+			<NODEREF id="dartAss" />
+		</DESCENDANTS>
+    </NODE>
+
+	<NODE id="dartBase">
+        <MATERIAL id="null"/>
+        <TEXTURE id="null"/>
+
+		<SCALE sx="0.1" sy="0.05" sz="0.1" />
+		
+
+        <DESCENDANTS>
+		    <LEAF  id ="cylinder" type="cylinder" args="4 1 1 20 20 1 1" />
+		</DESCENDANTS>
+	</NODE>
+
+	<NODE id="dartHead">
+        <MATERIAL id="null"/>
+        <TEXTURE id="null"/>
+
+		<TRANSLATION x="0" y="0" z="0.22" />
+		<SCALE sx="0.1" sy="0.1" sz="0.1" />
+
+        <DESCENDANTS>
+		    <LEAF  id ="cylinder" type="cylinder" args="4 1 0 20 20 1 0" />
+		</DESCENDANTS>
+    </NODE>
+
+	<NODE id="dartAss">
+        <MATERIAL id="null"/>
+        <TEXTURE id="yellow"/>
+
+		<TRANSLATION x="0" y="0" z="-0.2" />
+		<SCALE sx="0.1" sy="0.1" sz="0.1" />
+
+        <DESCENDANTS>
+		    <LEAF  id ="cylinder" type="cylinder" args="4 1 1 20 20 1 1" />
+		</DESCENDANTS>
+    </NODE>
+
+
+
+	<NODE id="dartBoard">
+        <MATERIAL id="null"/>
+        <TEXTURE id="dartBoard"/>
+
+        <TRANSLATION x="0.3" y="10" z="19" />
+		<ROTATION axis="y" angle="90" />
+        <ROTATION axis="z" angle="-180" />
+
+        <DESCENDANTS>
+			<LEAF  id ="rectangle1" type="rectangle" args="0 5 5 0" />
+		</DESCENDANTS>
+    </NODE>
+
 
 </NODES>
 

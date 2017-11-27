@@ -2,21 +2,20 @@
 precision highp float;
 #endif
 
-varying vec2 vTextureCoord;
-uniform sampler2D uSampler;
-uniform float timeFactor;
 uniform float selectedRed;
 uniform float selectedGreen;
 uniform float selectedBlue;
+varying vec2 vTextureCoord;
+uniform sampler2D uSampler;
+uniform float time;
 
-void main() {
 
-    vec4 color = texture2D(uSampler, vTextureCoord);
-    float colorFactor = abs(cos(timeFactor));
-
-	color.r = colorFactor * selectedRed + (1.0 - colorFactor) * color.r;
-	color.g = colorFactor * selectedGreen + (1.0 - colorFactor) * color.g;
-	color.b = colorFactor * selectedBlue + (1.0 - colorFactor) * color.b;
-
-	gl_FragColor = color;
+void main() 
+{
+    vec4 newcolor = texture2D(uSampler, vTextureCoord);
+    float colorFactor = abs(cos(time));
+	newcolor.r = colorFactor * selectedRed + (1.0 - colorFactor) * newcolor.r;
+	newcolor.g = colorFactor * selectedGreen + (1.0 - colorFactor) * newcolor.g;
+	newcolor.b = colorFactor * selectedBlue + (1.0 - colorFactor) * newcolor.b;
+	gl_FragColor = newcolor;
 }
