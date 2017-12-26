@@ -90,6 +90,15 @@
         <DESCENDANTS>
         	<NODEREF id="chessBoard" />
 			<NODEREF id="table" />
+			<NODEREF id="pieces" />
+        </DESCENDANTS>
+    </NODE>
+
+	<NODE id="pieces">
+		<MATERIAL id="null" />
+		<TEXTURE id="null" />
+
+		<DESCENDANTS>
 			<NODEREF id="piece1"/>
 			<NODEREF id="piece2"/>
 			<NODEREF id="piece3"/>
@@ -154,8 +163,8 @@
 			<NODEREF id="piece62"/>
 			<NODEREF id="piece63"/>
 			<NODEREF id="piece64"/>
-        </DESCENDANTS>
-    </NODE>
+		</DESCENDANTS>
+	</NODE>
 
     <NODE id="chessBoard">
         <MATERIAL id="null"/>
