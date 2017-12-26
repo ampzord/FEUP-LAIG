@@ -1,0 +1,150 @@
+<SCENE>
+
+<INITIALS>
+    <frustum near="0.1" far="500"/>
+    <translation x="-1" y="1" z="0" />
+    <rotation axis="x" angle="0" />
+    <rotation axis="y" angle="0" />
+    <rotation axis="z" angle="0" />
+    <scale sx="0.25" sy="0.25" sz="0.25" />
+    <reference length="5" />
+</INITIALS>
+
+
+<ILLUMINATION>
+    <ambient r="0.2" g="0.2" b="0.2" a="1" />
+    <background r="0" g="0" b="0" a="1" />
+</ILLUMINATION>
+
+<LIGHTS>
+
+    <LIGHT id="light1">
+        <enable value ="1" />
+        <position  x="1" y="7" z="2" w="1" />
+        <ambient r="0.8" g="0.8" b="0.8" a="1.0" />
+        <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+        <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+    </LIGHT>
+
+    <LIGHT id="light2">
+        <enable value ="1" />
+        <position  x="23" y="7" z="2" w="1" />
+        <ambient r="0.8" g="0.8" b="0.8" a="1.0" />
+        <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+        <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+    </LIGHT>
+
+    <LIGHT id="light3">
+        <enable value ="1" />
+        <position  x="12" y="20" z="7" w="1" />
+        <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
+        <diffuse r="0.2" g="0.2" b="0.2" a="1.0" />
+        <specular r="0.2" g="0.2" b="0.2" a="1.0" />
+    </LIGHT>
+</LIGHTS>
+
+<TEXTURES>
+
+    <TEXTURE id="board">
+        <file path="images/board2.jpg" />
+        <amplif_factor s="2" t="2" />
+    </TEXTURE>
+
+	<TEXTURE id="wood">
+        <file path="images/wood_chair.jpg" />
+        <amplif_factor s="5" t="7" />
+  </TEXTURE>
+
+  <TEXTURE id="sky">
+      <file path="images/sky.jpg" />
+      <amplif_factor s="1" t="1" />
+  </TEXTURE>
+
+    <TEXTURE id="sand">
+      <file path="images/sand.png" />
+      <amplif_factor s="1" t="1" />
+  </TEXTURE>
+
+   <TEXTURE id="water">
+      <file path="images/water.png" />
+      <amplif_factor s="10" t="10" />
+  </TEXTURE>
+</TEXTURES>
+
+
+<MATERIALS>
+
+	<MATERIAL id="defaultMaterial">
+        <shininess value="1" />
+        <specular r="0.0" g="0.0" b="0.0" a="1" />
+        <diffuse r="0.4" g="0.4" b="0.4" a="1" />
+        <ambient r="0.4" g="0.4" b="0.4" a="1" />
+        <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+</MATERIALS>
+
+<ANIMATIONS>
+
+</ANIMATIONS>
+
+<LEAVES>
+</LEAVES>
+
+
+<NODES>
+    <ROOT id="root" />
+
+    <NODE id="root">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <DESCENDANTS>
+          <NODEREF id="background" />
+          <NODEREF id="floor" />
+          <NODEREF id="water" />
+        </DESCENDANTS>
+    </NODE>
+
+    <NODE id="background">      
+        <MATERIAL id="null" />    
+        <TEXTURE id="sky" />
+
+		<TRANSLATION x="0" y="500" z="0" />
+        <ROTATION axis="x" angle="90" />
+        <SCALE sx="-1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+            <LEAF type="cylinder" args="1000 200 200 20 20 1 1" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <NODE id="floor">
+        <MATERIAL id="null" />
+        <TEXTURE id="sand" />
+
+        <TRANSLATION x="-50" y="0" z="50" />
+        <ROTATION axis="x" angle="-90" />
+
+        <DESCENDANTS>
+		    <LEAF id ="floor" type="rectangle" args="0 100 100 0" />
+		</DESCENDANTS>
+    </NODE>
+
+    <NODE id="water">
+        <MATERIAL id="null" />
+        <TEXTURE id="water" />
+
+        <TRANSLATION x="-50" y="0.01" z="50" />
+        <ROTATION axis="x" angle="-90" />
+
+        <DESCENDANTS>
+		    <LEAF id ="water" type="rectangle" args="0 100 20 0" />
+		</DESCENDANTS>
+    </NODE>
+
+  
+</NODES>
+
+</SCENE>

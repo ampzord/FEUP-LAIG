@@ -1,0 +1,339 @@
+<SCENE>
+
+<INITIALS>
+    <frustum near="0.1" far="500"/>
+    <translation x="0" y="0" z="0" />
+    <rotation axis="x" angle="0" />
+    <rotation axis="y" angle="0" />
+    <rotation axis="z" angle="0" />
+    <scale sx="0.25" sy="0.25" sz="0.25" />
+    <reference length="5" />
+</INITIALS>
+
+
+<ILLUMINATION>
+    <ambient r="0.2" g="0.2" b="0.2" a="1" />
+    <background r="0" g="0" b="0" a="1" />
+</ILLUMINATION>
+
+<LIGHTS>
+
+    <LIGHT id="light1">
+        <enable value ="1" />
+        <position  x="1" y="7" z="2" w="1" />
+        <ambient r="0.8" g="0.8" b="0.8" a="1.0" />
+        <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+        <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+    </LIGHT>
+
+    <LIGHT id="light2">
+        <enable value ="1" />
+        <position  x="23" y="7" z="2" w="1" />
+        <ambient r="0.8" g="0.8" b="0.8" a="1.0" />
+        <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+        <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+    </LIGHT>
+
+    <LIGHT id="light3">
+        <enable value ="1" />
+        <position  x="12" y="20" z="7" w="1" />
+        <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
+        <diffuse r="0.2" g="0.2" b="0.2" a="1.0" />
+        <specular r="0.2" g="0.2" b="0.2" a="1.0" />
+    </LIGHT>
+</LIGHTS>
+
+<TEXTURES>
+
+    <TEXTURE id="board">
+        <file path="images/board2.jpg" />
+        <amplif_factor s="2" t="2" />
+    </TEXTURE>
+
+	<TEXTURE id="wood">
+        <file path="images/wood_chair.jpg" />
+        <amplif_factor s="5" t="7" />
+  </TEXTURE>
+
+  <TEXTURE id="sky">
+      <file path="images/sky.jpg" />
+      <amplif_factor s="128" t="256" />
+  </TEXTURE>
+
+    <TEXTURE id="grass">
+      <file path="images/grass.png" />
+      <amplif_factor s="1" t="1" />
+  </TEXTURE>
+
+     <TEXTURE id="tree_wood">
+      <file path="images/tree_wood.png" />
+      <amplif_factor s="1" t="1" />
+  </TEXTURE>
+
+  <TEXTURE id="tree_leaves">
+      <file path="images/tree_leaves.png" />
+      <amplif_factor s="1" t="1" />
+  </TEXTURE>
+</TEXTURES>
+
+
+<MATERIALS>
+
+	<MATERIAL id="defaultMaterial">
+        <shininess value="1" />
+        <specular r="0.0" g="0.0" b="0.0" a="1" />
+        <diffuse r="0.4" g="0.4" b="0.4" a="1" />
+        <ambient r="0.4" g="0.4" b="0.4" a="1" />
+        <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+</MATERIALS>
+
+<ANIMATIONS>
+
+</ANIMATIONS>
+
+<LEAVES>
+</LEAVES>
+
+
+<NODES>
+    <ROOT id="root" />
+
+    <NODE id="root">
+        <MATERIAL id="defaultMaterial" />
+        <TEXTURE id="null" />
+
+        <DESCENDANTS>
+          <NODEREF id="background" />
+          <NODEREF id="floor" />
+          <NODEREF id="arvores" />
+        </DESCENDANTS>
+    </NODE>
+
+    <NODE id="background">      
+        <MATERIAL id="null" />    
+        <TEXTURE id="sky" />
+
+		<TRANSLATION x="0" y="500" z="0" />
+        <ROTATION axis="x" angle="90" />
+        <SCALE sx="-1" sy="1" sz="1" />
+
+        <DESCENDANTS>
+            <LEAF type="cylinder" args="1000 200 200 20 20 1 1" />
+        </DESCENDANTS>
+    </NODE>
+
+    <NODE id="floor">
+        <MATERIAL id="null" />
+        <TEXTURE id="grass" />
+
+        <TRANSLATION x="-50" y="0" z="50" />
+        <ROTATION axis="x" angle="-90" />
+
+        <DESCENDANTS>
+		    <LEAF id ="floor" type="rectangle" args="0 100 100 0" />
+		</DESCENDANTS>
+    </NODE>
+
+        <!-- Trees -->
+    <NODE id="arvores">       
+        <MATERIAL id="null" />     
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="-0.5" z="0" /> 
+        <SCALE sx="2.5" sy="2.5" sz="2.5" />       			
+
+        <DESCENDANTS>
+            <NODEREF id="arvore1" />
+            <NODEREF id="arvore2" />
+            <NODEREF id="arvore3" />   
+            <NODEREF id="arvore4" />       	
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- One tree -->
+    <NODE id="arvore1">       
+        <MATERIAL id="null" />    
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="-15" y="0" z="7"/>			
+
+        <DESCENDANTS>
+            <NODEREF id="arvore" />     	    
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Another tree -->
+    <NODE id="arvore2">       
+        <MATERIAL id="null" />     
+        <TEXTURE id="null" />    
+
+        <TRANSLATION x="-15" y="0" z="-15" />   			
+
+        <DESCENDANTS>
+            <NODEREF id="arvore" />     	    
+        </DESCENDANTS>
+
+    </NODE>
+
+        <!-- Another tree -->
+    <NODE id="arvore3">       
+        <MATERIAL id="null" />     
+        <TEXTURE id="null" />       			
+
+        <TRANSLATION x="11" y="0" z="7" />
+
+        <DESCENDANTS>
+            <NODEREF id="arvore" />     	    
+        </DESCENDANTS>
+
+    </NODE>
+
+        <!-- Another tree -->
+    <NODE id="arvore4">       
+        <MATERIAL id="null" />     
+        <TEXTURE id="null" />       			
+
+        <TRANSLATION x="11" y="0" z="-15" />
+
+        <DESCENDANTS>
+            <NODEREF id="arvore" />     	    
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Generic tree -->
+    <NODE id="arvore">       
+        <MATERIAL id="null" />    
+        <TEXTURE id="null" />       			
+
+        <DESCENDANTS>
+            <NODEREF id="troncoArvore" />
+            <NODEREF id="folhasArvore" />     	    
+        </DESCENDANTS>
+
+    </NODE>
+
+    
+    <!-- Tree trunk -->
+    <NODE id="troncoArvore">       
+        <MATERIAL id="null" />     
+        <TEXTURE id="tree_wood" />       			
+
+        <ROTATION axis="x" angle="90" />
+        <TRANSLATION x="5" y="5" z="-4" />
+
+        <DESCENDANTS>
+					<LEAF type="cylinder" args="4 1 1 20 20" /> 
+        </DESCENDANTS>
+
+    </NODE>
+
+    
+    <!-- Tree leaves -->
+     <NODE id="folhasArvore">       
+        <MATERIAL id="null" />     
+        <TEXTURE id="tree_leaves" />       			
+
+        <DESCENDANTS>
+       		<NODEREF id="faceCubo1" />
+            <NODEREF id="faceCubo2" />
+            <NODEREF id="faceCubo3" />
+            <NODEREF id="faceCubo4" />
+            <NODEREF id="faceCubo5" />
+            <NODEREF id="faceCubo6" />      
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- A cube face -->
+    <NODE id="faceCubo1">       
+        <MATERIAL id="null" />     
+        <TEXTURE id="null" />       			
+
+        <TRANSLATION x="2.5" y="4" z="7.5" />
+
+        <DESCENDANTS>
+					<LEAF  type="rectangle" args="0 4 5 0" />        
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Another cube face -->
+     <NODE id="faceCubo2">      
+        <MATERIAL id="null" />     
+        <TEXTURE id="null" />       			
+
+        <TRANSLATION x="2.5" y="4" z="2.5" />
+		<ROTATION axis="y" angle="-90" />
+
+        <DESCENDANTS>
+					<LEAF  type="rectangle" args="0 4 5 0" />        
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Another cube face -->
+    <NODE id="faceCubo3">       
+        <MATERIAL id="null" />     
+        <TEXTURE id="null" />       			
+
+        <TRANSLATION x="7.5" y="4" z="7.5" />
+		<ROTATION axis="y" angle="90" />
+
+        <DESCENDANTS>
+					<LEAF  type="rectangle" args="0 4 5 0" />        
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Another cube face -->
+    <NODE id="faceCubo4">       
+        <MATERIAL id="null" />    
+        <TEXTURE id="null" />       			
+
+        <TRANSLATION x="7.5" y="4" z="2.5" />
+        <ROTATION axis="y" angle="180" />
+
+        <DESCENDANTS>
+					<LEAF  type="rectangle" args="0 4 5 0" />        
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Another cube face -->
+    <NODE id="faceCubo5">       
+        <MATERIAL id="null" />    
+        <TEXTURE id="null" />       			
+
+        <ROTATION axis="x" angle="-90" />
+        <TRANSLATION x="2.5" y="-7.5" z="8" />
+        <SCALE sx="1" sy="1.25" sz="1" />
+
+        <DESCENDANTS>
+ 					<LEAF  type="rectangle" args="0 4 5 0" />        
+       </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Another cube face -->
+    <NODE id="faceCubo6">       
+        <MATERIAL id="null" />     
+        <TEXTURE id="null" />       			
+
+        <TRANSLATION x="2.5" y="4" z="2.5" />
+        <ROTATION axis="x" angle="90" />
+        <SCALE sx="1" sy="1.25" sz="1" />
+
+        <DESCENDANTS>
+					<LEAF  type="rectangle" args="0 4 5 0" />        
+        </DESCENDANTS>
+
+    </NODE>
+
+</NODES>
+
+</SCENE>
