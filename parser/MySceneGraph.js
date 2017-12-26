@@ -24,6 +24,7 @@ scene.graph = this;
 
 this.nodes = [];
 this.selectableNodes = ["None"];
+this.pickableNodes = [];
 
 this.idRoot = null;                    // The id of the root element.
 
@@ -1324,16 +1325,26 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
             else
                 var nodeSelectable = 0;
 
-            this.log("Processing node "+nodeID);
+            //Checks if picking is true
+            if (this.reader.hasAttribute(children[i], 'picking'))
+            var nodePickable = this.reader.getFloat(children[i], 'picking');
+                else
+            var nodePickable = 0;
+
+            this.log("Processing node " + nodeID);
 
             // Creates node.
             this.nodes[nodeID] = new MyGraphNode(this,nodeID);
+
             if (nodeSelectable == 1){
                 this.nodes[nodeID].selectable = true;
                 this.selectableNodes.push(nodeID);
             }
 
-            console.log(this.nodes[nodeID].selectable);
+            if (nodePickable == 1){
+                this.nodes[nodeID].pickable = true;
+                this.pickableNodes.push(nodeID);
+            }
 
             // Gathers child nodes.
             var nodeSpecs = children[i].children;
@@ -1648,7 +1659,7 @@ MySceneGraph.generateRandomString = function(length) {
 /**
  * function that processes each Node giving each Node their correct texture and material according to heritage
  */
-MySceneGraph.prototype.processNode = function(node, parTex, parAsp)
+MySceneGraph.prototype.processNode = function(node, parTex, parAsp,i)
 {
     var textura = parTex;
     var material = parAsp;
@@ -1679,6 +1690,12 @@ MySceneGraph.prototype.processNode = function(node, parTex, parAsp)
     else if (node.textureID == "clear")
         textura = null;
 
+    if (node.pickable){
+            //console.log(i);
+            this.scene.registerForPicking(i-1, node);
+            i++;
+    }
+
     if (this.scene.selectableNodes == node.nodeID) {
         this.scene.setActiveShader(this.scene.shader);
     }
@@ -1686,7 +1703,7 @@ MySceneGraph.prototype.processNode = function(node, parTex, parAsp)
     //process each child of tree
     for (var i = 0; i < node.children.length; i++)
     {
-        this.processNode(this.nodes[node.children[i]], textura, material);
+        this.processNode(this.nodes[node.children[i]], textura, material, i);
     }
 
     if (this.scene.selectableNodes == node.nodeID && node.children.length != 0) {
@@ -1720,5 +1737,5 @@ MySceneGraph.prototype.processNode = function(node, parTex, parAsp)
 */
 MySceneGraph.prototype.displayScene = function()
 {
-    this.processNode(this.nodes[this.idRoot], null, null);
+    this.processNode(this.nodes[this.idRoot], null, null, 0);
 }

@@ -26,6 +26,9 @@ function MyGraphNode(graph, nodeID) {
     //Selectable field in LSX File
     this.selectable = false;
 
+    //Picking field in LSX File
+    this.pickable = false;
+
     // Transform Matrix
     this.transformMatrix = mat4.create();
     mat4.identity(this.transformMatrix);
