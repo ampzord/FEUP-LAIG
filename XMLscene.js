@@ -10,8 +10,11 @@ function XMLscene(interface) {
     this.interface = interface;
 
     this.lightValues = {};
-    this.previousTime = 0;
     this.selectableNodes = "None";
+    this.Type = 0;
+    this.Camera = 0;
+    this.Difficulty = 0;
+    this.TimeElapsed = 0;
 
     var date = new Date();
     this.sceneInitTime = date.getTime();
@@ -154,6 +157,9 @@ XMLscene.prototype.onGraphLoaded = function()
 
     //Add selectable nodes check boxes
     this.interface.addSelectableNodes(this.graph.selectableNodes);
+
+    this.interface.addOptions();
+   
 }
 
 /**
@@ -207,7 +213,9 @@ XMLscene.prototype.display = function() {
         if(this.SceneinitTime == null) {
             this.SceneinitTime = currTime;
         }
+
         dT = (currTime - this.sceneInitTime)/1000;
+        this.TimeElapsed = Math.floor(dT);
         this.updateScaleFactor(dT);
 
         // Displays the scene.

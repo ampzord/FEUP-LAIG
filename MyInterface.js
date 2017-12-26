@@ -24,8 +24,7 @@ MyInterface.prototype.init = function(application) {
     
     this.gui = new dat.GUI();
 
-    // add a group of controls (and open/expand by defult)
-    
+    this.guiControls = new dat.GUI();
     return true;
 };
 
@@ -56,3 +55,30 @@ MyInterface.prototype.addSelectableNodes = function(nodes)
     var shadersGroup = this.gui.addFolder("Shaders");
     this.gui.add(this.scene, "selectableNodes", nodes).name("Select Node");
 }
+
+MyInterface.prototype.addOptions = function() 
+{
+    this.options = this.guiControls.addFolder("Game Options");
+    this.options.open();
+    this.options.add(this.scene, 'Difficulty', { Easy: 0, Medium: 1, Hard: 2 });
+    this.options.add(this.scene, 'Type', { HumanVsHuman: 0, HumanVsBot: 1, BotVsBot: 2 });
+    this.options.add(this.scene, 'Camera', { Player1: 0, Player2: 2 , Right: 1,  Left: 3});
+    this.options.add(this.scene, 'TimeElapsed').listen();
+    
+}
+
+/**
+ * processKeyboard
+ * @param event {Event}
+ */
+MyInterface.prototype.processKeyDown = function(event) 
+{ 
+    CGFinterface.prototype.processKeyboard.call(this,event);
+	switch (event.keyCode)
+	{
+		case (85): //'u' letter
+			console.log('UNDO');
+			break;
+		
+	};
+};
