@@ -90,6 +90,7 @@
         <DESCENDANTS>
         	<NODEREF id="chessBoard" />
 			<NODEREF id="table" />
+			<NODEREF id="piece1">
         </DESCENDANTS>
     </NODE>
 
@@ -97,7 +98,7 @@
         <MATERIAL id="null"/>
         <TEXTURE id="null"/>
 
-		<TRANSLATION x="9.2" y="3.2" z="2.4" />
+		<TRANSLATION x="0" y="3.2" z="0" />
 
 		<DESCENDANTS>
         	<NODEREF id="boardTop" />
@@ -205,7 +206,7 @@
     	<TEXTURE id="wood" />
 
 		<SCALE sx="0.6" sy="1" sz="0.9" />
-        <TRANSLATION x="4" y="0" z="0" />
+        <TRANSLATION x="-11.25" y="0" z="-2.75" />
 
     	<DESCENDANTS>
 			<NODEREF id="tabletop" />
@@ -352,7 +353,6 @@
 			<LEAF id="cylinder4" type="cylinder" args="4 1 1 20 20 0 0" />
         </DESCENDANTS>
 	</NODE>
-
 
 </NODES>
 
