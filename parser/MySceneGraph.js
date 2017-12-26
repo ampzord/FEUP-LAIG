@@ -1691,7 +1691,6 @@ MySceneGraph.prototype.processNode = function(node, parTex, parAsp,i)
         textura = null;
 
     if (node.pickable){
-            //console.log(i);
             this.scene.registerForPicking(i-1, node);
             i++;
     }
