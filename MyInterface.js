@@ -62,9 +62,11 @@ MyInterface.prototype.addOptions = function()
     this.options.open();
     this.options.add(this.scene, 'Difficulty', { Easy: 0, Medium: 1, Hard: 2 });
     this.options.add(this.scene, 'Type', { HumanVsHuman: 0, HumanVsBot: 1, BotVsBot: 2 });
-    this.options.add(this.scene, 'Camera', { Player1: 0, Player2: 2 , Right: 1,  Left: 3});
+    this.options.add(this.scene, 'CameraChosen', { Player1: 0, Player2: 1 , Right: 2,  Left: 3, Top: 4});
     this.options.add(this.scene, 'TimeElapsed').listen();
-    
+    this.options.add(this.scene, 'startingPlayer', { Player1: 0, Player2: 1 });
+    this.options.add(this.scene, 'startGame').name('Start Game');
+    this.options.add(this.scene, 'pauseGame').name('Pause Game');
 }
 
 /**

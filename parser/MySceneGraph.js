@@ -1698,10 +1698,10 @@ MySceneGraph.prototype.processNode = function(node, parTex, parAsp,i)
 
     if (node.pickable)
     {
-        //if (i > 0){
+        if (this.scene.gameStarted && !this.scene.pauseGame) {
             this.scene.registerForPicking(i+1, node);
-        //}
-        i++;
+            i++;
+        }
     }
 
     if (this.scene.selectableNodes == node.nodeID) {

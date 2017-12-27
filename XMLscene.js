@@ -12,9 +12,13 @@ function XMLscene(interface) {
     this.lightValues = {};
     this.selectableNodes = "None";
     this.Type = 0;
-    this.Camera = 0;
+    this.CameraChosen = 0;
     this.Difficulty = 0;
     this.TimeElapsed = 0;
+    this.gameStarted = false;
+    this.pauseGame = false;
+    this.startingPlayer = 0;
+    this.cameras = [];
 
     var date = new Date();
     this.sceneInitTime = date.getTime();
@@ -34,6 +38,7 @@ XMLscene.prototype.init = function(application) {
     this.updateScaleFactor();
     
     this.initCameras();
+    this.startCams();
 
     this.enableTextures(true);
     
@@ -51,21 +56,30 @@ XMLscene.prototype.init = function(application) {
     this.setPickEnabled(true);
 }
 
+XMLscene.prototype.updateCamera = function ()
+{
+    this.camera = this.cameras[this.CameraChosen];
+}
+
 XMLscene.prototype.logPicking = function()
 {   
-	if (this.pickMode == false) {
+    if (!this.gameStarted || this.pauseGame)
+        return;
+
+    if (this.pickMode == false) {
 		if (this.pickResults != null && this.pickResults.length > 0) {
 			for (var i=0; i< this.pickResults.length; i++) {
 				var obj = this.pickResults[i][0];
 				if (obj)
 				{
+                    this.selectableNodes =  this.pickResults[0][0].nodeID;
                     var customId = this.pickResults[i][1];
                     /*console.log('Column: ' + this.pickResults[0][0].column);
                     console.log('Line: ' + this.pickResults[0][0].line);
                     console.log('X: ' + this.pickResults[0][0].positionX);
                     console.log('Y: ' + this.pickResults[0][0].positionY);
-                    console.log('Z: ' + this.pickResults[0][0].positionZ);
-					console.log("Picked object with id " + customId);*/
+                    console.log('Z: ' + this.pickResults[0][0].positionZ);*/
+					console.log("Picked object with id " + customId);
 				}
 			}
 			this.pickResults.splice(0,this.pickResults.length);
@@ -167,14 +181,37 @@ XMLscene.prototype.onGraphLoaded = function()
    
 }
 
+XMLscene.prototype.startGame = function ()
+{
+    this.gameStarted = true;
+
+    // TODO
+
+}
+
+XMLscene.prototype.startCams = function()
+{
+    this.cameras[0] = new CGFcamera(0.4,0.1,500,vec3.fromValues(0.186868, 7.508605, 6.870955),vec3.fromValues(0.210242, 0.971526, -0.737233));
+    this.cameras[1] = new CGFcamera(0.4,0.1,500,vec3.fromValues(0.628311038017273, -15.167302131652832, 8.596643447875977),vec3.fromValues(0.5653669834136963, 0.049721427261829376, -0.08002768456935883));
+    this.cameras[2] = new CGFcamera(0.4,0.1,500,vec3.fromValues(15, 15, 0),vec3.fromValues(0, 0, 0));
+    this.cameras[3] = new CGFcamera(0.4,0.1,500,vec3.fromValues(-15, 15, 0),vec3.fromValues(0, 0, 0));
+    this.cameras[4] = new CGFcamera(0.4,0.1,500,vec3.fromValues(-15, 15, 0),vec3.fromValues(0, 0, 0));
+    this.camera = this.cameras[0];
+}
+
 /**
  * Displays the scene.
  */
 XMLscene.prototype.display = function() {
     // ---- BEGIN Background, camera and axis setup
     
-    this.logPicking();
-	this.clearPickRegistration();
+    if (this.gameStarted || !this.pauseGame){
+        this.logPicking();
+        this.clearPickRegistration();
+        //this.updateCamera();
+    }
+
+    console.log(this.camera);
 
     // Clear image and depth buffer everytime we update the scene
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
@@ -195,7 +232,7 @@ XMLscene.prototype.display = function() {
         this.multMatrix(this.graph.initialTransforms);
 
 		// Draw axis
-		this.axis.display();
+		//this.axis.display();
 
         var i = 0;
         for (var key in this.lightValues) {
@@ -219,8 +256,20 @@ XMLscene.prototype.display = function() {
             this.SceneinitTime = currTime;
         }
 
+        if (this.gameStarted) //&& !this.pauseGame) 
+        {
+            var newDateElapsedTime = new Date();
+            currTimeElapsed = newDateElapsedTime.getTime();
+            if(this.SceneinitTimeElapsed == null) 
+            {
+                this.SceneinitTimeElapsed = currTimeElapsed;
+            }
+            time = (currTimeElapsed - this.SceneinitTimeElapsed)/1000;
+            this.TimeElapsed = Math.floor(time);
+        }
+
         dT = (currTime - this.sceneInitTime)/1000;
-        this.TimeElapsed = Math.floor(dT);
+
         this.updateScaleFactor(dT);
 
         // Displays the scene.
