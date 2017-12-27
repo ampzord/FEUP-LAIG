@@ -195,10 +195,10 @@ XMLscene.prototype.startCams = function()
 {
     this.cameras[0] = new CGFcamera(0.4,0.1,500,vec3.fromValues(0.186868, 7.508605, 6.870955),vec3.fromValues(0.210242, 0.971526, -0.737233));
     this.cameras[1] = new CGFcamera(0.4,0.1,500,vec3.fromValues(0.628311038017273, -15.167302131652832, 8.596643447875977),vec3.fromValues(0.5653669834136963, 0.049721427261829376, -0.08002768456935883));
-    this.cameras[2] = new CGFcamera(0.4,0.1,500,vec3.fromValues(15, 15, 0),vec3.fromValues(0, 0, 0));
+    this.cameras[2] = new CGFcamera(0.4,0.1,500,vec3.fromValues(6.682511, 8.287736, -0.134647),vec3.fromValues(-0.251071, 1.676248, -0.218512));
     this.cameras[3] = new CGFcamera(0.4,0.1,500,vec3.fromValues(-15, 15, 0),vec3.fromValues(0, 0, 0));
     this.cameras[4] = new CGFcamera(0.4,0.1,500,vec3.fromValues(-15, 15, 0),vec3.fromValues(0, 0, 0));
-    this.camera = this.cameras[0];
+    this.camera = this.cameras[2];
 }
 
 /**
