@@ -193,11 +193,18 @@ XMLscene.prototype.startGame = function ()
 
 XMLscene.prototype.startCams = function()
 {
+    /*
+    [-0.22546859085559845, 11.476879119873047, -0.07995477318763733, 0]
+
+Float32Array(4) [-0.06460171937942505, 1.8973388671875, -0.09417065978050232, 0]*/
+
+
     this.cameras[0] = new CGFcamera(0.4,0.1,500,vec3.fromValues(0.186868, 7.508605, 6.870955),vec3.fromValues(0.210242, 0.971526, -0.737233));
-    this.cameras[1] = new CGFcamera(0.4,0.1,500,vec3.fromValues(0.628311038017273, -15.167302131652832, 8.596643447875977),vec3.fromValues(0.5653669834136963, 0.049721427261829376, -0.08002768456935883));
-    this.cameras[2] = new CGFcamera(0.4,0.1,500,vec3.fromValues(6.682511, 8.287736, -0.134647),vec3.fromValues(-0.251071, 1.676248, -0.218512));
-    this.cameras[3] = new CGFcamera(0.4,0.1,500,vec3.fromValues(-15, 15, 0),vec3.fromValues(0, 0, 0));
-    this.cameras[4] = new CGFcamera(0.4,0.1,500,vec3.fromValues(-15, 15, 0),vec3.fromValues(0, 0, 0));
+    this.cameras[1] = new CGFcamera(0.4,0.1,500,vec3.fromValues(0.186868, -7.508605, -6.870955),vec3.fromValues(0.210242, 0.971526, -0.737233));
+    this.cameras[2] = new CGFcamera(0.4,0.1,500,vec3.fromValues(6.284444, 8.675453, -0.100106),vec3.fromValues(-0.495502, 1.905979, -0.097830));
+    this.cameras[3] = new CGFcamera(0.4,0.1,500,vec3.fromValues(-6.411424, 9.708138, -0.134511),vec3.fromValues(0.025432, 2.612264, -0.053629));
+
+    this.cameras[4] = new CGFcamera(0.4,0.1,500,vec3.fromValues(-0.225468, 11.476879, -0.079954),vec3.fromValues(-0.064601, 1.897338, -0.094170));
     this.camera = this.cameras[2];
 }
 
@@ -210,7 +217,7 @@ XMLscene.prototype.display = function() {
     if (this.gameStarted || !this.pauseGame){
         this.logPicking();
         this.clearPickRegistration();
-        //this.updateCamera();
+        this.updateCamera();
     }
 
     console.log(this.camera);
