@@ -53,6 +53,8 @@ XMLscene.prototype.init = function(application) {
     this.lastUpdateTime = 0;
     this.setUpdatePeriod(16); //desired delay between update periods - 60 frames
 
+    this.gameBoard = new MyGameBoard(this);
+    
     this.setPickEnabled(true);
 }
 
