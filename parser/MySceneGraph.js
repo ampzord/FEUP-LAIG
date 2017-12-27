@@ -1335,6 +1335,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
             // Creates node.
             this.nodes[nodeID] = new MyGraphNode(this,nodeID);
+            
 
             if (nodeSelectable == 1){
                 this.nodes[nodeID].selectable = true;
@@ -1491,6 +1492,8 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                 }
             }
 
+            this.nodes[nodeID].assignInitialPositions();
+
             // Retrieves information about children.
             var descendantsIndex = specsNames.indexOf("DESCENDANTS");
             if (descendantsIndex == -1)
@@ -1588,6 +1591,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                     }
                     this.nodes[nodeID].addLeaf(new MyGraphLeaf(this, type, argsParsed));
                     sizeChildren++;
+                    
                 }
                 else
                     this.onXMLMinorError("unknown tag <" + descendants[j].nodeName + ">");
@@ -1598,6 +1602,8 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
         }
         else
             this.onXMLMinorError("unknown tag name <" + nodeName);
+
+        
     }
 
     console.log("Parsed nodes");
@@ -1690,9 +1696,12 @@ MySceneGraph.prototype.processNode = function(node, parTex, parAsp,i)
     else if (node.textureID == "clear")
         textura = null;
 
-    if (node.pickable){
-            this.scene.registerForPicking(i-1, node);
-            i++;
+    if (node.pickable)
+    {
+        //if (i > 0){
+            this.scene.registerForPicking(i+1, node);
+        //}
+        i++;
     }
 
     if (this.scene.selectableNodes == node.nodeID) {

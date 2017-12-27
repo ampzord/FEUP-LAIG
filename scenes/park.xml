@@ -105,6 +105,7 @@
         <TEXTURE id="null" />
 
         <DESCENDANTS>
+            <NODEREF id="dummy" />
           <NODEREF id="background" />
           <NODEREF id="floor" />
           <NODEREF id="arvores" />
@@ -112,6 +113,16 @@
           <NODEREF id="table" />
 	      <NODEREF id="pieces" />
         </DESCENDANTS>
+    </NODE>
+
+    <NODE id="dummy" picking="1">      
+        <MATERIAL id="null" />    
+        <TEXTURE id="null" />
+
+        <DESCENDANTS>
+            <LEAF type="rectangle" args="0 0 0 0" />
+        </DESCENDANTS>
+
     </NODE>
 
     <NODE id="background">      

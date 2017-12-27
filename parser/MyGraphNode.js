@@ -29,6 +29,18 @@ function MyGraphNode(graph, nodeID) {
     //Picking field in LSX File
     this.pickable = false;
 
+    //Column Position (Prolog)
+    this.column = null;
+
+    //Line Position
+    this.line = null;
+
+    this.positionX = null;
+
+    this.positionY = null;
+
+    this.positionZ = null;
+
     // Transform Matrix
     this.transformMatrix = mat4.create();
     mat4.identity(this.transformMatrix);
@@ -84,6 +96,366 @@ MyGraphNode.prototype.applyAnimation = function(deltaTime) {
             }
             this.animationCurrentSection++;
         }
+    }
+}
+
+/**
+ * Updates the position of the node (Prolog)
+ * @param {*} newColumn 
+ * @param {*} newLine 
+ */
+MyGraphNode.prototype.updateLineColumn = function (newColumn, newLine)
+{
+    this.column = newColumn;
+    this.line = newLine;
+}
+
+/**
+ * Updates the node position
+ * @param {*} newX 
+ * @param {*} newY 
+ * @param {*} newZ 
+ */
+MyGraphNode.prototype.updatePositions = function (newX, newY, newZ)
+{
+    this.positionX = newX;
+    this.positionY = newY;
+    this.positionZ = newZ;
+}
+
+/**
+ * Initially assigns the position to nodes
+ */
+MyGraphNode.prototype.assignInitialPositions = function ()
+{
+    this.positionX = this.transformMatrix[12];
+    this.positionY = this.transformMatrix[13];
+    this.positionZ = this.transformMatrix[14];
+
+    switch (this.nodeID)
+    {
+        case "piece1":
+            this.column = "'A'";
+            this.line = 1.
+            break;
+
+        case "piece2":
+            this.column = "'B'";
+            this.line = 1.
+            break;
+        
+        case "piece3":
+            this.column = "'C'";
+            this.line = 1.
+            break;
+
+        case "piece4":
+            this.column = "'D'";
+            this.line = 1.
+            break;
+        
+        case "piece5":
+            this.column = "'E'";
+            this.line = 1.
+            break;
+
+        case "piece6":
+            this.column = "'F'";
+            this.line = 1.
+            break;
+
+        case "piece7":
+            this.column = "'G'";
+            this.line = 1.
+            break;
+        
+        case "piece8":
+            this.column = "'H'";
+            this.line = 1.
+            break;
+
+        case "piece9":
+            this.column = "'A'";
+            this.line = 2.
+            break;
+
+        case "piece10":
+            this.column = "'B'";
+            this.line = 2.
+            break;
+
+        case "piece11":
+            this.column = "'C'";
+            this.line = 2.
+            break;
+
+        case "piece12":
+            this.column = "'D'";
+            this.line = 2.
+            break;
+            
+        case "piece13":
+            this.column = "'E'";
+            this.line = 2.
+            break;
+
+        case "piece14":
+            this.column = "'F'";
+            this.line = 2.
+            break;
+
+        case "piece15":
+            this.column = "'G'";
+            this.line = 2.
+            break;
+
+        case "piece16":
+            this.column = "'H'";
+            this.line = 2.
+            break;
+
+        case "piece17":
+            this.column = "'A'";
+            this.line = 3.
+            break;
+
+        case "piece18":
+            this.column = "'B'";
+            this.line = 3.
+            break;
+
+        case "piece19":
+            this.column = "'C'";
+            this.line = 3.
+            break;
+
+        case "piece20":
+            this.column = "'D'";
+            this.line = 3.
+            break;
+            
+        case "piece21":
+            this.column = "'E'";
+            this.line = 3.
+            break;
+
+        case "piece22":
+            this.column = "'F'";
+            this.line = 3.
+            break;
+
+        case "piece23":
+            this.column = "'G'";
+            this.line = 3.
+            break;
+
+        case "piece24":
+            this.column = "'H'";
+            this.line = 3.
+            break;
+
+        case "piece25":
+            this.column = "'A'";
+            this.line = 4.
+            break;
+
+        case "piece26":
+            this.column = "'B'";
+            this.line = 4.
+            break;
+
+        case "piece27":
+            this.column = "'C'";
+            this.line = 4.
+            break;
+
+        case "piece28":
+            this.column = "'D'";
+            this.line = 4.
+            break;
+            
+        case "piece29":
+            this.column = "'E'";
+            this.line = 4.
+            break;
+
+        case "piece30":
+            this.column = "'F'";
+            this.line = 4.
+            break;
+
+        case "piece31":
+            this.column = "'G'";
+            this.line = 4.
+            break;
+
+        case "piece32":
+            this.column = "'H'";
+            this.line = 4.
+            break;
+
+        case "piece33":
+            this.column = "'A'";
+            this.line = 5.
+            break;
+
+        case "piece34":
+            this.column = "'B'";
+            this.line = 5.
+            break;
+
+        case "piece35":
+            this.column = "'C'";
+            this.line = 5.
+            break;
+
+        case "piece36":
+            this.column = "'D'";
+            this.line = 5.
+            break;
+            
+        case "piece37":
+            this.column = "'E'";
+            this.line = 5.
+            break;
+
+        case "piece38":
+            this.column = "'F'";
+            this.line = 5.
+            break;
+
+        case "piece39":
+            this.column = "'G'";
+            this.line = 5.
+            break;
+
+        case "piece40":
+            this.column = "'H'";
+            this.line = 5.
+            break;
+
+        case "piece41":
+            this.column = "'A'";
+            this.line = 6.
+            break;
+
+        case "piece42":
+            this.column = "'B'";
+            this.line = 6.
+            break;
+
+        case "piece43":
+            this.column = "'C'";
+            this.line = 6.
+            break;
+
+        case "piece44":
+            this.column = "'D'";
+            this.line = 6.
+            break;
+            
+        case "piece45":
+            this.column = "'E'";
+            this.line = 6.
+            break;
+
+        case "piece46":
+            this.column = "'F'";
+            this.line = 6.
+            break;
+
+        case "piece47":
+            this.column = "'G'";
+            this.line = 6.
+            break;
+
+        case "piece48":
+            this.column = "'H'";
+            this.line = 6.
+            break;
+
+        case "piece49":
+            this.column = "'A'";
+            this.line = 7.
+            break;
+
+        case "piece50":
+            this.column = "'B'";
+            this.line = 7.
+            break;
+
+        case "piece51":
+            this.column = "'C'";
+            this.line = 7.
+            break;
+
+        case "piece52":
+            this.column = "'D'";
+            this.line = 7.
+            break;
+            
+        case "piece53":
+            this.column = "'E'";
+            this.line = 7.
+            break;
+
+        case "piece54":
+            this.column = "'F'";
+            this.line = 7.
+            break;
+
+        case "piece55":
+            this.column = "'G'";
+            this.line = 7.
+            break;
+
+        case "piece56":
+            this.column = "'H'";
+            this.line = 7.
+            break;
+
+        case "piece57":
+            this.column = "'A'";
+            this.line = 8.
+            break;
+
+        case "piece58":
+            this.column = "'B'";
+            this.line = 8.
+            break;
+
+        case "piece59":
+            this.column = "'C'";
+            this.line = 8.
+            break;
+
+        case "piece60":
+            this.column = "'D'";
+            this.line = 8.
+            break;
+            
+        case "piece61":
+            this.column = "'E'";
+            this.line = 8.
+            break;
+
+        case "piece62":
+            this.column = "'F'";
+            this.line = 8.
+            break;
+
+        case "piece63":
+            this.column = "'G'";
+            this.line = 8.
+            break;
+
+        case "piece64":
+            this.column = "'H'";
+            this.line = 8.
+            break;
+
+        default:
+            break;
     }
 }
 

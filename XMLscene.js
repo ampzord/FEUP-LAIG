@@ -60,7 +60,12 @@ XMLscene.prototype.logPicking = function()
 				if (obj)
 				{
                     var customId = this.pickResults[i][1];
-					console.log("Picked object with id " + customId);
+                    /*console.log('Column: ' + this.pickResults[0][0].column);
+                    console.log('Line: ' + this.pickResults[0][0].line);
+                    console.log('X: ' + this.pickResults[0][0].positionX);
+                    console.log('Y: ' + this.pickResults[0][0].positionY);
+                    console.log('Z: ' + this.pickResults[0][0].positionZ);
+					console.log("Picked object with id " + customId);*/
 				}
 			}
 			this.pickResults.splice(0,this.pickResults.length);
@@ -121,7 +126,7 @@ XMLscene.prototype.initCameras = function() {
 
 XMLscene.prototype.registerForPicking = function(id,object)
 {
-    this.registerForPick(id,object);
+    this.registerForPick(id, object);
 };
 
 /**

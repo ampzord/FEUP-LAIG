@@ -100,6 +100,7 @@
         <TEXTURE id="null" />
 
         <DESCENDANTS>
+        	<!--<NODEREF id="dummy" />-->
           <NODEREF id="background" />
           <NODEREF id="floor" />
           <NODEREF id="water" />
@@ -108,6 +109,16 @@
 	      <NODEREF id="pieces" />
         </DESCENDANTS>
     </NODE>
+
+   	<!--<NODE id="dummy" picking="1">      
+        <MATERIAL id="null" />    
+        <TEXTURE id="null" />
+
+        <DESCENDANTS>
+            <LEAF type="rectangle" args="0 0 0 0" />
+        </DESCENDANTS>
+
+    </NODE>-->
 
     <NODE id="background">      
         <MATERIAL id="null" />    
@@ -118,7 +129,7 @@
         <SCALE sx="-1" sy="1" sz="1" />
 
         <DESCENDANTS>
-            <LEAF type="cylinder" args="1000 200 200 20 20 1 1" />
+            <LEAF id="cylinder1" type="cylinder" args="1000 200 200 20 20 1 1" />
         </DESCENDANTS>
 
     </NODE>
