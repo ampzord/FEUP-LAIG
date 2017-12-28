@@ -23,7 +23,6 @@ function XMLscene(interface) {
     this.firstPickedNode = null;
     this.secondPickedNode = null;
 
-
     var date = new Date();
     this.sceneInitTime = date.getTime();
 }
@@ -57,7 +56,7 @@ XMLscene.prototype.init = function(application) {
     this.lastUpdateTime = 0;
     this.setUpdatePeriod(16); //desired delay between update periods - 60 frames
 
-    this.gameBoard = new MyGameBoard(this);
+    this.game = new MyGameBoard(this);
 
     this.setPickEnabled(true);
 }
@@ -93,7 +92,8 @@ XMLscene.prototype.logPicking = function()
                         this.secondPickedNode = this.pickResults[0][0];
                         //TODO: chamar funçao de verificar/mover peça, etc...
                         //moverPeça(this.firstPickedNode,this.secondPickedNode);
-
+                        this.game.checkValidPlay(this.firstPickedNode.column,this.firstPickedNode.line,this.secondPickedNode.column,this.secondPickedNode.line);
+                        
                         this.firstPickedNode = null;
                         this.secondPickedNode = null;
                         this.selectableNodes = "None";

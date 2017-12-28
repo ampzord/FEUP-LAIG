@@ -112,5 +112,15 @@ parse_input(quit, goodbye).
 test(_,[],N) :- N =< 0.
 test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
 
-parse_input(getInitialBoard, X):-
+
+parse_input(generalBoard, X):-
 	generalBoard(X).
+
+parse_input(checkValidPlay(Board,Player,ColumnOrigin,LineOrigin,ColumnDest,LineDest)).
+
+parse_input(gameOver(Board,Winner)).
+
+parse_input(movePieceInitial(Board, ColumnOrigin, LineOrigin,' ', RetBoard)):-
+	movePiece(Board, ColumnOrigin, LineOrigin,' ', RetBoard)
+
+parse_input(movePiece(RetBoard,ColumnDest,LineDest,PieceOrigin,RetRetBoard)).
