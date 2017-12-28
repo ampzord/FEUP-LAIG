@@ -20,6 +20,7 @@ function XMLscene(interface) {
     this.startingPlayer = 0;
     this.cameras = [];
 
+    this.pickedNode = null;
     var date = new Date();
     this.sceneInitTime = date.getTime();
 }
@@ -54,7 +55,7 @@ XMLscene.prototype.init = function(application) {
     this.setUpdatePeriod(16); //desired delay between update periods - 60 frames
 
     this.gameBoard = new MyGameBoard(this);
-    
+
     this.setPickEnabled(true);
 }
 
@@ -74,21 +75,26 @@ XMLscene.prototype.logPicking = function()
 				var obj = this.pickResults[i][0];
 				if (obj)
 				{
+                    if (this.pickedNode != null && obj.nodeID == this.pickedNode.nodeID)
+                    {
+                        this.pickedNode = null;
+                        this.selectableNodes = "None";
+                        this.clearPickRegistration();
+                        this.pickMode = true;
+                        return; 
+                    }
+                    
                     this.selectableNodes =  this.pickResults[0][0].nodeID;
                     var customId = this.pickResults[i][1];
-                    /*console.log('Column: ' + this.pickResults[0][0].column);
-                    console.log('Line: ' + this.pickResults[0][0].line);
-                    console.log('X: ' + this.pickResults[0][0].positionX);
-                    console.log('Y: ' + this.pickResults[0][0].positionY);
-                    console.log('Z: ' + this.pickResults[0][0].positionZ);*/
-					console.log("Picked object with id " + customId);
+                    this.pickedNode = this.pickResults[0][0];
+                    
+                    console.log("Picked object with id " + customId);
 				}
 			}
 			this.pickResults.splice(0,this.pickResults.length);
 		}		
 	}
 }
-
 
 /**
  * Updates the scale factors of shaders
@@ -97,7 +103,6 @@ XMLscene.prototype.updateScaleFactor = function(date)
 {
     this.shader.setUniformsValues({time: date});
 };
-
 
 /**
  * Initializes the scene lights with the values read from the LSX file.
@@ -183,29 +188,30 @@ XMLscene.prototype.onGraphLoaded = function()
    
 }
 
+/**
+ * Handles the starting of the game
+ */
 XMLscene.prototype.startGame = function ()
 {
+    if (this.gameStarted)
+        return;
+    
     this.gameStarted = true;
 
-    // TODO
-
+    //var b = this.gameBoard.getPrologRequest("getInitialBoard");
+    /*console.log('in scene');
+    console.log(this.gameBoard.boardActual);
+    console.log(this.board);*/
 }
 
 XMLscene.prototype.startCams = function()
 {
-    /*
-    [-0.22546859085559845, 11.476879119873047, -0.07995477318763733, 0]
-
-Float32Array(4) [-0.06460171937942505, 1.8973388671875, -0.09417065978050232, 0]*/
-
-
     this.cameras[0] = new CGFcamera(0.4,0.1,500,vec3.fromValues(0.186868, 7.508605, 6.870955),vec3.fromValues(0.210242, 0.971526, -0.737233));
     this.cameras[1] = new CGFcamera(0.4,0.1,500,vec3.fromValues(0.186868, -7.508605, -6.870955),vec3.fromValues(0.210242, 0.971526, -0.737233));
     this.cameras[2] = new CGFcamera(0.4,0.1,500,vec3.fromValues(6.284444, 8.675453, -0.100106),vec3.fromValues(-0.495502, 1.905979, -0.097830));
-    this.cameras[3] = new CGFcamera(0.4,0.1,500,vec3.fromValues(-6.411424, 9.708138, -0.134511),vec3.fromValues(0.025432, 2.612264, -0.053629));
-
-    this.cameras[4] = new CGFcamera(0.4,0.1,500,vec3.fromValues(-0.225468, 11.476879, -0.079954),vec3.fromValues(-0.064601, 1.897338, -0.094170));
-    this.camera = this.cameras[2];
+    this.cameras[3] = new CGFcamera(0.4,0.1,500,vec3.fromValues(-7.650352, 8.345042, -0.149275),vec3.fromValues(0.025431, 2.612263, -0.053628));
+    this.cameras[4] = new CGFcamera(0.4,0.1,500,vec3.fromValues(0.094776, 11.472537, 0.392229),vec3.fromValues(-0.016847, 1.898517, -0.046128));
+    //this.camera = this.cameras[4];
 }
 
 /**
@@ -217,10 +223,8 @@ XMLscene.prototype.display = function() {
     if (this.gameStarted || !this.pauseGame){
         this.logPicking();
         this.clearPickRegistration();
-        this.updateCamera();
+        //this.updateCamera();
     }
-
-    console.log(this.camera);
 
     // Clear image and depth buffer everytime we update the scene
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
