@@ -20,7 +20,10 @@ function XMLscene(interface) {
     this.startingPlayer = 0;
     this.cameras = [];
 
-    this.pickedNode = null;
+    this.firstPickedNode = null;
+    this.secondPickedNode = null;
+
+
     var date = new Date();
     this.sceneInitTime = date.getTime();
 }
@@ -75,19 +78,32 @@ XMLscene.prototype.logPicking = function()
 				var obj = this.pickResults[i][0];
 				if (obj)
 				{
-                    if (this.pickedNode != null && obj.nodeID == this.pickedNode.nodeID)
+                    if (this.firstPickedNode != null && obj.nodeID == this.firstPickedNode.nodeID)
                     {
-                        this.pickedNode = null;
+                        this.firstPickedNode = null;
+                        this.secondPickedNode = null;
                         this.selectableNodes = "None";
                         this.clearPickRegistration();
                         this.pickMode = true;
                         return; 
                     }
-                    
+
+                    if(this.secondPickedNode == null && this.firstPickedNode != null)
+                    {
+                        this.secondPickedNode = this.pickResults[0][0];
+                        //TODO: chamar funçao de verificar/mover peça, etc...
+                        //moverPeça(this.firstPickedNode,this.secondPickedNode);
+
+                        this.firstPickedNode = null;
+                        this.secondPickedNode = null;
+                        this.selectableNodes = "None";
+                        this.clearPickRegistration();
+                        this.pickMode = true;
+                        return;
+                    }
                     this.selectableNodes =  this.pickResults[0][0].nodeID;
                     var customId = this.pickResults[i][1];
-                    this.pickedNode = this.pickResults[0][0];
-                    
+                    this.firstPickedNode = this.pickResults[0][0];
                     console.log("Picked object with id " + customId);
 				}
 			}
