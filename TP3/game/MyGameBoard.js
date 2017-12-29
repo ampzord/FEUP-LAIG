@@ -3,6 +3,7 @@ function MyGameBoard(scene){
   this.scene = scene;
 
   this.prologBoard = "placeholder";
+  this.prologBoardRegex = "placeholder";
   this.boardString;
   this.boardString2;
   this.currentPlayer = 1;
@@ -34,12 +35,12 @@ MyGameBoard.prototype.getPrologRequest = function(requestString, onSuccess, onEr
     }
 
     //valid play
-    if (requestString.substring(0,14) == "checkValidPlay" && response == "1") {
+    if (requestString.substring(0,15) == "checkValidPlays" && response == "1") {
       console.log('entrei na valid play bota jgr');
     }
 
     //not valid play
-    if (requestString.substring(0,14) == "checkValidPlay" && response == "0") {
+    if (requestString.substring(0,15) == "checkValidPlays" && response == "0") {
       console.log('nao pode comer');
     }
 
@@ -64,8 +65,6 @@ MyGameBoard.prototype.getPrologRequest = function(requestString, onSuccess, onEr
     if(requestString.substring(0,8) == "gameOver" && response == "1") {
       //
     }
-
-
   }
     
   request.onerror = onError || function(){console.log("Error waiting for response");};
@@ -80,8 +79,9 @@ MyGameBoard.prototype.getInitialBoard = function() {
 
 //checkValidPlay(Board,Player,ColumnOrigin,LineOrigin,ColumnDest,LineDest)
 MyGameBoard.prototype.checkValidPlay = function(ColumnOrigin,LineOrigin,ColumnDest,LineDest) {
-  var requestString = 'checkValidPlay(' + this.prologBoard + ',' + this.currentPlayer + ',' + ColumnOrigin + ','
+  var requestString = 'checkValidPlays(' + this.prologBoard + ',' + this.currentPlayer + ',' + ColumnOrigin + ','
   + LineOrigin + ',' + ColumnDest + ',' + LineDest + ')'; 
+  console.log(requestString);
   this.getPrologRequest(requestString);
 }
 
@@ -123,7 +123,7 @@ MyGameBoard.prototype.parseBoard = function(plBoard){
   }
   
   var find = ["H","T","Q","B","h","t","q","b"];
-  var replace = ["'H'","'T'","'Q'","'B'","'h'","'t'","'q'","'b'"];
+  var replace = ["'H'","'T'","'Q'","'B'","h","t","q","b"];
   this.prologBoard = replaceStr(plBoard, find, replace);
 
   console.log('After parsing prolog Board :' + this.prologBoard);

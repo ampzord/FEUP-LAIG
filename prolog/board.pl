@@ -49,7 +49,7 @@ startGame(Board) :- gameCycle(Board,1).
 gameCycle(Board,Player) :-
 	repeat,
 	once(printBoard(Board)),
-	\+gameOver(Board,Winner),
+	\+gameOver(Board,Winner,Ret),
 	%gameOverByMoves(Board,Player,Winner),
 	(
 		Player == 1 -> write('Player '),  write(Player), write(' (Uppercase letters) choose a piece'), nl;
@@ -60,7 +60,7 @@ gameCycle(Board,Player) :-
 	write('Choose the destination'), nl,
 	write('Column = '), read(ColumnDest), nl,
 	write('Line = '), read(LineDest), isDigit(LineDest), nl,
-	checkValidPlay(Board,Player,ColumnOrigin,LineOrigin,ColumnDest,LineDest),
+	checkValidPlay(Board,Player,ColumnOrigin,LineOrigin,ColumnDest,LineDest,Ret),
 	charToInt(ColumnOrigin,ColOrigin),
 	getPiece(Board,LineOrigin/ColOrigin,PieceOrigin),
 	movePiece(Board, ColumnOrigin, LineOrigin,' ', RetBoard),
@@ -75,11 +75,14 @@ gameOverByMoves(Board,Player,Winner):-
 	getPiecesThroughBoardLine(Board,1,Value),
 	write('Game ended because player cant kill the enemy'), nl.
 
-checkValidPlay(Board,Player,ColumnOrigin,LineOrigin,ColumnDest,LineDest) :-
+checkValidPlay(Board,Player,ColumnOrigin,LineOrigin,ColumnDest,LineDest,Ret) :-
 	checkDestinationPiece(Board,Player,ColumnDest,LineDest),
 	checkOwnPiece(Board,Player,ColumnOrigin,LineOrigin,Piece),
 	checkDestination(Board,Piece,ColumnOrigin,LineOrigin,ColumnDest,LineDest,Poss), !,
-	charToInt(ColumnDest,Col), member([Col,LineDest],Poss).
+	charToInt(ColumnDest,Col), 
+	(	member([Col,LineDest],Poss) -> Ret is 1;
+		Ret is 0
+	).
 
 checkOwnPiece(Board,Player,ColumnOrigin,LineOrigin,Piece) :-
 (
@@ -108,11 +111,18 @@ swapFirstPiece([Board|Rest],CurrLine,Col,Line,PieceToReplace,[Board|RetBoard]) :
 NextLine is CurrLine+1,
 swapFirstPiece(Rest,NextLine,Col,Line,PieceToReplace,RetBoard).
 
-gameOver(Board,Winner):-
-		\+checkIfBlackPlayerHasPieces(Board), write('Winner is Player 2 (White Pieces, lower case).'), nl, Winner is 2, abort.
 
-gameOver(Board,Winner):-
-		\+checkIfWhitePlayerHasPieces(Board), write('Winner is Player 1 (Black Pieces, upper case).'), nl, Winner is 1, abort.
+gameOverWhite(Board,Winner,Ret):-
+		(
+			checkIfBlackPlayerHasPieces(Board) -> Ret is 0;
+			Ret is 1, Winner is 2
+		).
+
+gameOverBlack(Board,Winner,Ret):-
+		(
+			checkIfWhitePlayerHasPieces(Board) -> Ret is 0;
+			Ret is 1, Winner is 1
+		).
 
 checkIfBlackPlayerHasPieces(Board):-
 				pieceExistsOnBoard('Q', Board);

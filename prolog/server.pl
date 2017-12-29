@@ -116,9 +116,12 @@ test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
 parse_input(generalBoard, X):-
 	generalBoard(X).
 
-parse_input(checkValidPlay(Board,Player,ColumnOrigin,LineOrigin,ColumnDest,LineDest)).
+parse_input(checkValidPlays(Board,Player,ColumnOrigin,LineOrigin,ColumnDest,LineDest),Ret):-
+	checkValidPlay(Board,Player,ColumnOrigin,LineOrigin,ColumnDest,LineDest,Ret).
 
 parse_input(gameOver(Board,Winner)).
+
+parse_input(isQueen(Cha),Ret).
 
 parse_input(movePieceInitial(Board, ColumnOrigin, LineOrigin,' ', RetBoard)):-
 	movePiece(Board, ColumnOrigin, LineOrigin,' ', RetBoard).
