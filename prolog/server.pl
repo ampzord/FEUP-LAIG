@@ -119,11 +119,14 @@ parse_input(generalBoard, X):-
 parse_input(checkValidPlays(Board,Player,ColumnOrigin,LineOrigin,ColumnDest,LineDest),Ret):-
 	checkValidPlay(Board,Player,ColumnOrigin,LineOrigin,ColumnDest,LineDest,Ret).
 
-parse_input(gameOver(Board,Winner)).
+parse_input(gameOverByBlack(Board,Winner),Ret):-
+	gameOverBlack(Board,Winner,Ret).
 
-parse_input(isQueen(Cha),Ret).
+parse_input(gameOverByWhite(Board,Winner),Ret):-
+	gameOverWhite(Board,Winner,Ret).
 
-parse_input(movePieceInitial(Board, ColumnOrigin, LineOrigin,' ', RetBoard)):-
+parse_input(movePieceInitial(Board, ColumnOrigin, LineOrigin,' '), RetBoard):-
 	movePiece(Board, ColumnOrigin, LineOrigin,' ', RetBoard).
 
-parse_input(movePiece(RetBoard,ColumnDest,LineDest,PieceOrigin,RetRetBoard)).
+parse_input(movePeca(Board,ColumnDest,LineDest,PieceOrigin), RetBoard):-
+	movePiece(Board,ColumnDest,LineDest,PieceOrigin,RetBoard).

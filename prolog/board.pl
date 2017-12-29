@@ -84,6 +84,8 @@ checkValidPlay(Board,Player,ColumnOrigin,LineOrigin,ColumnDest,LineDest,Ret) :-
 		Ret is 0
 	).
 
+checkValidPlay(_,_,_,_,_,_,0).
+
 checkOwnPiece(Board,Player,ColumnOrigin,LineOrigin,Piece) :-
 (
 	Player == 1 -> charToInt(ColumnOrigin,N), getPiece(Board,LineOrigin/N,Piece), member(Piece,['Q','T','B','H']);
