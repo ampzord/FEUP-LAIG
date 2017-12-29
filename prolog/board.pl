@@ -5,7 +5,7 @@
 :- consult(bot).
 :- use_module(library(random)).
 
-start :- emptyBoard(X), startGame(X).
+start :- generalBoard(X), startGame(X).
 
 printBoard(Board):-
 write('  | A | B | C | D | E | F | G | H |'), nl,

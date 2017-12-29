@@ -13,22 +13,22 @@ boardHalfMade([
 ]).
 
 generalBoard([
-['Q','T','t','T','B','T','b','B'],
-['T','H','t','h','T','h','b','Q'],
-['q','h','H','B','h','q','T','Q'],
-['q','B','B','q','b','Q','H','Q'],
-['h','h','T','t','h','B','h','B'],
-['B','H','t','t','b','Q','T','b'],
-['t','q','H','b','q','q','H','Q'],
-['H','b','Q','H','q','t','t','b']
+['Q','T',t,'T','B','T',b,'B'],
+['T','H',t,h,'T',h,b,'Q'],
+[q,h,'H','B',h,q,'T','Q'],
+[q,'B','B',q,b,'Q','H','Q'],
+[h,h,'T',t,'h','B','h','B'],
+['B','H',t,t,b,'Q','T',b],
+[t,q,'H',b,q,q,'H','Q'],
+['H',b,'Q','H',q,t,t,b]
 ]).
 
 isSpace(Cha) :- Cha == ' '.
-isQueen(Cha) :- Cha == 'Q' ; Cha == 'q'.
-isTower(Cha) :- Cha == 'T' ; Cha == 't'.
-isHorse(Cha) :- Cha == 'H' ; Cha == 'h'.
-isBishop(Cha) :- Cha == 'B' ; Cha == 'b'.
-isWhitePiece(Cha):- Cha == 'b'; Cha == 't'; Cha == 'q'; Cha == 'h'.
+isQueen(Cha) :- Cha == 'Q' ; Cha == q.
+isTower(Cha) :- Cha == 'T' ; Cha == t.
+isHorse(Cha) :- Cha == 'H' ; Cha == h.
+isBishop(Cha) :- Cha == 'B' ; Cha == b.
+isWhitePiece(Cha):- Cha == b; Cha == t; Cha == q; Cha == h.
 isBlackPiece(Cha):- Cha == 'B'; Cha == 'T'; Cha == 'Q'; Cha == 'H'.
 
 isDigit(X) :- number(X), X >= 1, X =< 8, !; fail.
@@ -72,10 +72,10 @@ isBlackTower(Cha) :- Cha == 'T'.
 isBlackBishop(Cha) :- Cha == 'B'.
 isBlackHorse(Cha) :- Cha == 'H'.
 
-isWhiteQueen(Cha) :- Cha == 'q'.
-isWhiteTower(Cha) :- Cha == 't'.
-isWhiteBishop(Cha) :- Cha == 'b'.
-isWhiteHorse(Cha) :- Cha == 'h'.
+isWhiteQueen(Cha) :- Cha == q.
+isWhiteTower(Cha) :- Cha == t.
+isWhiteBishop(Cha) :- Cha == b.
+isWhiteHorse(Cha) :- Cha == h.
 
 ifThenElse(Cond,Then,_Else) :-
   Cond,

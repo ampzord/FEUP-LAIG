@@ -121,6 +121,6 @@ parse_input(checkValidPlay(Board,Player,ColumnOrigin,LineOrigin,ColumnDest,LineD
 parse_input(gameOver(Board,Winner)).
 
 parse_input(movePieceInitial(Board, ColumnOrigin, LineOrigin,' ', RetBoard)):-
-	movePiece(Board, ColumnOrigin, LineOrigin,' ', RetBoard)
+	movePiece(Board, ColumnOrigin, LineOrigin,' ', RetBoard).
 
 parse_input(movePiece(RetBoard,ColumnDest,LineDest,PieceOrigin,RetRetBoard)).
