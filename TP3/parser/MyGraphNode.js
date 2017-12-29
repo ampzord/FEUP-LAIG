@@ -29,16 +29,13 @@ function MyGraphNode(graph, nodeID) {
     //Picking field in LSX File
     this.pickable = false;
 
-    //Column Position (Prolog)
+    //Useful for PROLOG
     this.column = null;
-
-    //Line Position
     this.line = null;
-
+    this.piece = null;
+    this.team = null;
     this.positionX = null;
-
     this.positionY = null;
-
     this.positionZ = null;
 
     // Transform Matrix
@@ -137,321 +134,449 @@ MyGraphNode.prototype.assignInitialPositions = function ()
         case "piece1":
             this.column = "'A'";
             this.line = 1.
+            this.piece = "'Q'";
+            this.team = "black";
             break;
 
         case "piece2":
             this.column = "'B'";
             this.line = 1.
+            this.piece = "'T'";
+            this.team = "black";
             break;
         
         case "piece3":
             this.column = "'C'";
             this.line = 1.
+            this.piece = "'t'";
+            this.team = "white";
             break;
 
         case "piece4":
             this.column = "'D'";
             this.line = 1.
+            this.piece = "'T'";
+            this.team = "black";
             break;
         
         case "piece5":
             this.column = "'E'";
             this.line = 1.
+            this.piece = "'B'";
+            this.team = "black";
             break;
 
         case "piece6":
             this.column = "'F'";
             this.line = 1.
+            this.piece = "'T'";
+            this.team = "black";
             break;
 
         case "piece7":
             this.column = "'G'";
             this.line = 1.
+            this.piece = "'b'";
+            this.team = "white";
             break;
         
         case "piece8":
             this.column = "'H'";
             this.line = 1.
+            this.piece = "'B'";
+            this.team = "black";
             break;
 
         case "piece9":
             this.column = "'A'";
             this.line = 2.
+            this.piece = "'T'";
+            this.team = "black";
             break;
 
         case "piece10":
             this.column = "'B'";
             this.line = 2.
+            this.piece = "'H'";
+            this.team = "black";
             break;
 
         case "piece11":
             this.column = "'C'";
             this.line = 2.
+            this.piece = "'t'";
+            this.team = "white";
             break;
 
         case "piece12":
             this.column = "'D'";
             this.line = 2.
+            this.piece = "'h'";
+            this.team = "white";
             break;
             
         case "piece13":
             this.column = "'E'";
             this.line = 2.
+            this.piece = "'T'";
+            this.team = "black";
             break;
 
         case "piece14":
             this.column = "'F'";
             this.line = 2.
+            this.piece = "'h'";
+            this.team = "white";
             break;
 
         case "piece15":
             this.column = "'G'";
             this.line = 2.
+            this.piece = "'b'";
+            this.team = "white";
             break;
 
         case "piece16":
             this.column = "'H'";
             this.line = 2.
+            this.piece = "'Q'";
+            this.team = "black";
             break;
 
         case "piece17":
             this.column = "'A'";
             this.line = 3.
+            this.piece = "'q'";
+            this.team = "white";
             break;
 
         case "piece18":
             this.column = "'B'";
             this.line = 3.
+            this.piece = "'h'";
+            this.team = "white";
             break;
 
         case "piece19":
             this.column = "'C'";
             this.line = 3.
+            this.piece = "'H'";
+            this.team = "black";
             break;
 
         case "piece20":
             this.column = "'D'";
             this.line = 3.
+            this.piece = "'B'";
+            this.team = "black";
             break;
             
         case "piece21":
             this.column = "'E'";
             this.line = 3.
+            this.piece = "'h'";
+            this.team = "white";
             break;
 
         case "piece22":
             this.column = "'F'";
             this.line = 3.
+            this.piece = "'q'";
+            this.team = "white";
             break;
 
         case "piece23":
             this.column = "'G'";
             this.line = 3.
+            this.piece = "'T'";
+            this.team = "black";
             break;
 
         case "piece24":
             this.column = "'H'";
             this.line = 3.
+            this.piece = "'Q'";
+            this.team = "black";
             break;
 
         case "piece25":
             this.column = "'A'";
             this.line = 4.
+            this.piece = "'q'";
+            this.team = "white";
             break;
 
         case "piece26":
             this.column = "'B'";
             this.line = 4.
+            this.piece = "'B'";
+            this.team = "black";
             break;
 
         case "piece27":
             this.column = "'C'";
             this.line = 4.
+            this.piece = "'B'";
+            this.team = "black";
             break;
 
         case "piece28":
             this.column = "'D'";
             this.line = 4.
+            this.piece = "'q'";
+            this.team = "white";
             break;
             
         case "piece29":
             this.column = "'E'";
             this.line = 4.
+            this.piece = "'b'";
+            this.team = "white";
             break;
 
         case "piece30":
             this.column = "'F'";
             this.line = 4.
+            this.piece = "'Q'";
+            this.team = "black";
             break;
 
         case "piece31":
             this.column = "'G'";
             this.line = 4.
+            this.piece = "'H'";
+            this.team = "black";
             break;
 
         case "piece32":
             this.column = "'H'";
             this.line = 4.
+            this.piece = "'Q'";
+            this.team = "black";
             break;
 
         case "piece33":
             this.column = "'A'";
             this.line = 5.
+            this.piece = "'h'";
+            this.team = "white";
             break;
 
         case "piece34":
             this.column = "'B'";
             this.line = 5.
+            this.piece = "'h'";
+            this.team = "white";
             break;
 
         case "piece35":
             this.column = "'C'";
             this.line = 5.
+            this.piece = "'T'";
+            this.team = "black";
             break;
 
         case "piece36":
             this.column = "'D'";
             this.line = 5.
+            this.piece = "'t'";
+            this.team = "white";
             break;
             
         case "piece37":
             this.column = "'E'";
             this.line = 5.
+            this.piece = "'h'";
+            this.team = "white";
             break;
 
         case "piece38":
             this.column = "'F'";
             this.line = 5.
+            this.piece = "'B'";
+            this.team = "black";
             break;
 
         case "piece39":
             this.column = "'G'";
             this.line = 5.
+            this.piece = "'h'";
+            this.team = "white";
             break;
 
         case "piece40":
             this.column = "'H'";
             this.line = 5.
+            this.piece = "'B'";
+            this.team = "black";
             break;
 
         case "piece41":
             this.column = "'A'";
             this.line = 6.
+            this.piece = "'B'";
+            this.team = "black";
             break;
 
         case "piece42":
             this.column = "'B'";
             this.line = 6.
+            this.piece = "'H'";
+            this.team = "black";
             break;
 
         case "piece43":
             this.column = "'C'";
             this.line = 6.
+            this.piece = "'t'";
+            this.team = "white";
             break;
 
         case "piece44":
             this.column = "'D'";
             this.line = 6.
+            this.piece = "'t'";
+            this.team = "white";
             break;
             
         case "piece45":
             this.column = "'E'";
             this.line = 6.
+            this.piece = "'b'";
+            this.team = "white";
             break;
 
         case "piece46":
             this.column = "'F'";
             this.line = 6.
+            this.piece = "'Q'";
+            this.team = "black";
             break;
 
         case "piece47":
             this.column = "'G'";
             this.line = 6.
+            this.piece = "'T'";
+            this.team = "black";
             break;
 
         case "piece48":
             this.column = "'H'";
             this.line = 6.
+            this.piece = "'b'";
+            this.team = "white";
             break;
 
         case "piece49":
             this.column = "'A'";
             this.line = 7.
+            this.piece = "'t'";
+            this.team = "white";
             break;
 
         case "piece50":
             this.column = "'B'";
             this.line = 7.
+            this.piece = "'q'";
+            this.team = "white";
             break;
 
         case "piece51":
             this.column = "'C'";
             this.line = 7.
+            this.piece = "'H'";
+            this.team = "black";
             break;
 
         case "piece52":
             this.column = "'D'";
             this.line = 7.
+            this.piece = "'b'";
+            this.team = "white";
             break;
             
         case "piece53":
             this.column = "'E'";
             this.line = 7.
+            this.piece = "'q'";
+            this.team = "white";
             break;
 
         case "piece54":
             this.column = "'F'";
             this.line = 7.
+            this.piece = "'q'";
+            this.team = "white";
             break;
 
         case "piece55":
             this.column = "'G'";
             this.line = 7.
+            this.piece = "'H'";
+            this.team = "black";
             break;
 
         case "piece56":
             this.column = "'H'";
             this.line = 7.
+            this.piece = "'Q'";
+            this.team = "black";
             break;
 
         case "piece57":
             this.column = "'A'";
             this.line = 8.
+            this.piece = "'H'";
+            this.team = "black";
             break;
 
         case "piece58":
             this.column = "'B'";
             this.line = 8.
+            this.piece = "'b'";
+            this.team = "white";
             break;
 
         case "piece59":
             this.column = "'C'";
             this.line = 8.
+            this.piece = "'Q'";
+            this.team = "black";
             break;
 
         case "piece60":
             this.column = "'D'";
             this.line = 8.
+            this.piece = "'H'";
+            this.team = "black";
             break;
             
         case "piece61":
             this.column = "'E'";
             this.line = 8.
+            this.piece = "'q'";
+            this.team = "white";
             break;
 
         case "piece62":
             this.column = "'F'";
             this.line = 8.
+            this.piece = "'t'";
+            this.team = "white";
             break;
 
         case "piece63":
             this.column = "'G'";
             this.line = 8.
+            this.piece = "'t'";
+            this.team = "white";
             break;
 
         case "piece64":
             this.column = "'H'";
             this.line = 8.
+            this.piece = "'b'";
+            this.team = "white";
             break;
 
         default:
