@@ -66,6 +66,15 @@ XMLscene.prototype.updateCamera = function ()
     this.camera = this.cameras[this.CameraChosen];
 }
 
+function sleep(milliseconds) {
+    var start = new Date().getTime();
+    for (var i = 0; i < 1e7; i++) {
+      if ((new Date().getTime() - start) > milliseconds){
+        break;
+      }
+    }
+  }
+
 XMLscene.prototype.logPicking = function()
 {   
     if (!this.gameStarted || this.pauseGame)
@@ -93,7 +102,12 @@ XMLscene.prototype.logPicking = function()
                         //TODO: chamar funçao de verificar/mover peça, etc...
                         //moverPeça(this.firstPickedNode,this.secondPickedNode);
                         this.game.checkValidPlay(this.firstPickedNode.column,this.firstPickedNode.line,this.secondPickedNode.column,this.secondPickedNode.line);
-                        
+                        sleep(3000);
+                        if (this.game.checkValidPlayAux == 1) {
+                            this.game.clearInitialPosition(this.firstPickedNode.column,this.firstPickedNode.line);
+                        }
+
+
                         this.firstPickedNode = null;
                         this.secondPickedNode = null;
                         this.selectableNodes = "None";
@@ -175,7 +189,7 @@ XMLscene.prototype.update = function(currTime) {
     
 	for(var node in this.graph.nodes){
 		this.graph.nodes[node].applyAnimation(deltaTime);
-	}
+    }
 }
 
 /* Handler called when the graph is finally loaded. 

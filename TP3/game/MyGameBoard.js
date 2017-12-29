@@ -74,9 +74,6 @@ MyGameBoard.prototype.getPrologRequest = function(requestString, onSuccess, onEr
   request.send();
 };
 
-MyGameBoard.prototype.getInitialBoard = function() {
-  this.getPrologRequest("generalBoard");
-}
 
 //checkValidPlay(Board,Player,ColumnOrigin,LineOrigin,ColumnDest,LineDest)
 MyGameBoard.prototype.checkValidPlay = function(ColumnOrigin,LineOrigin,ColumnDest,LineDest) {
@@ -96,7 +93,6 @@ MyGameBoard.prototype.movePiece = function(ColumnDest,LineDest,PieceOrigin,RetRe
 //limpar espaco onde estava a peca antes
 //movePiece(Board, ColumnOrigin, LineOrigin,' ', RetBoard).
 MyGameBoard.prototype.clearInitialPosition = function(ColumnOrigin, LineOrigin) {
-  var auxprologBoard;
   var requestString = 'movePieceInitial(' + this.prologBoard + ',' + ColumnOrigin + ',' + LineOrigin + ',' + "' '" + ')'; 
   this.getPrologRequest(requestString);
 }
@@ -119,11 +115,13 @@ MyGameBoard.prototype.parseBoard = function(plBoard){
   }
   
   var find = ["H","T","Q","B","h","t","q","b"];
-  var replace = ["'H'","'T'","'Q'","'B'","h","t","q","b"];
+  var replace = ["'H'","'T'","'Q'","'B'","'h'","'t'","'q'","'b'"];
   this.prologBoard = replaceStr(plBoard, find, replace);
 
   console.log('After parsing prolog Board :' + this.prologBoard);
 }
 
-
+MyGameBoard.prototype.cycle = function() {
+  
+}
 
