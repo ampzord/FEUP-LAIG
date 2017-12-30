@@ -51,6 +51,8 @@ MyGameBoard.prototype.getPrologRequest = function(requestString, onSuccess, onEr
       game.movePiece(game.destinationPiece.column, game.destinationPiece.line, game.initialPiece.column, game.initialPiece.line, game.initialPiece.piece);
       
       //TODO UPDATE EM MYGRAPHNODE
+      game.initialPiece.column = game.destinationPiece.column;
+      game.initialPiece.line = game.destinationPiece.line;
     }
 
     

@@ -41,6 +41,7 @@ function MyGraphNode(graph, nodeID) {
     this.positionX = null;
     this.positionY = null;
     this.positionZ = null;
+    this.dead = null;
 
     // Transform Matrix
     this.transformMatrix = mat4.create();
