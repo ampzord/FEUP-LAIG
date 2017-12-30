@@ -8,8 +8,6 @@ function MyGraphNode(graph, nodeID) {
 
     this.nodeID = nodeID;
 
-    this.moving = false;
-
     // IDs of child nodes.
     this.children = [];
 
@@ -30,8 +28,6 @@ function MyGraphNode(graph, nodeID) {
 
     //Picking field in LSX File
     this.pickable = false;
-
-    this.animationInc = 17;
 
     //Useful for PROLOG
     this.column = null;
@@ -71,13 +67,17 @@ MyGraphNode.prototype.addLeaf = function(leaf) {
     this.leaves.push(leaf);
 }
 
+MyGraphNode.prototype.removeAnimID = function (id)
+{
+
+}
+
 /**
  * Applies the animations periodically through a deltatime
  */
 MyGraphNode.prototype.applyAnimation = function(deltaTime) {
 
     this.animationElapsedTime = deltaTime + this.animationElapsedTime;
-    //console.log(this.animationElapsedTime);
 
     if(this.animationIndex < this.animationsID.length) {
         
@@ -88,7 +88,8 @@ MyGraphNode.prototype.applyAnimation = function(deltaTime) {
         if(this.animationElapsedTime >= animation.getAnimationTotalTime()) {
             this.animationCurrentSection = 0;
             this.animationElapsedTime = 0;
-            this.animationIndex++;
+            //this.animationIndex++;
+            this.animationsID.splice(this.animationIndex,0);
         }
         
         // Check if animation between sections ended (combo or linear)

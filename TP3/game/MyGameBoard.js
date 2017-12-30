@@ -152,6 +152,10 @@ MyGameBoard.prototype.givePickedNodes = function(firstNode,secondNode) {
   this.destinationPiece = secondNode;
 }
 
+MyGameBoard.prototype.givePickedNodes = function(firstNode,secondNode) {
+  
+}
+
 
 MyGameBoard.prototype.cycle = function() {
   /*this.initialPiece = firstNode;
