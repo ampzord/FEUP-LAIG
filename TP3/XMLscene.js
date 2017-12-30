@@ -66,8 +66,28 @@ XMLscene.prototype.updateCamera = function ()
     this.camera = this.cameras[this.CameraChosen];
 }
 
-XMLscene.prototype.animatePieces = function(node1, node2)
+XMLscene.prototype.animatePieces = function(node1, node2, animationName)
 {
+    console.log(node1);
+    console.log(node2);
+
+    var destX = node2.positionX;
+    var destY = node2.positionY;
+    var destZ = node2.positionZ;
+    
+    var controlPoints = [];
+    controlPoints.push(new Array(node1.positionX, node1.positionY, node1.positionZ));
+    controlPoints.push(new Array(node1.positionX, 15, node1.positionZ));
+    controlPoints.push(new Array(destX, 15, destZ));
+    controlPoints.push(new Array(destX-7, destY, destZ));
+
+    var animation1 = new MyBezierAnimation(this, animationName, "bezier", 10, controlPoints);
+    this.graph.animations[animationName] = animation1;
+    this.graph.nodes[node1.nodeID].animationsID.push(animationName);
+    this.graph.nodes[node1.nodeID].animationElapsedTime = 0;
+
+    //--------------------------------------------
+
     var controlPoints2 = [];
     controlPoints2.push(new Array(node2.positionX, node2.positionY, node2.positionZ));
     controlPoints2.push(new Array(node2.positionX, 20, node2.positionZ));
@@ -78,18 +98,16 @@ XMLscene.prototype.animatePieces = function(node1, node2)
     this.graph.animations["secondMove"] = animation2;
     this.graph.nodes[node2.nodeID].animationsID.push("secondMove");
     this.graph.nodes[node2.nodeID].animationElapsedTime = 0;
+}
 
-    //--------------------------------------------
-
-    var controlPoints = [];
-    controlPoints.push(new Array(node1.positionX, node1.positionY, node1.positionZ));
-    controlPoints.push(new Array(node2.positionX-7, node2.positionY, node2.positionZ));
-    controlPoints.push(new Array(node2.positionX-7, node2.positionY, node2.positionZ+1));
-
-    var animation1 = new MyLinearAnimation(this, "firstMove", "linear", 5, controlPoints);
-    this.graph.animations["firstMove"] = animation1;
-    this.graph.nodes[node1.nodeID].animationsID.push("firstMove");
-    this.graph.nodes[node1.nodeID].animationElapsedTime = 0;
+XMLscene.prototype.randomName = function() {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  
+    for (var i = 0; i < 5; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+  
+    return text;
 }
 
 
@@ -121,7 +139,7 @@ XMLscene.prototype.logPicking = function()
                         this.game.giveNodes(this.firstPickedNode,this.secondPickedNode);
                         this.game.cycle();
 
-                        this.animatePieces(this.firstPickedNode, this.secondPickedNode);
+                        this.animatePieces(this.firstPickedNode, this.secondPickedNode,this.randomName());
 
                         this.firstPickedNode = null;
                         this.secondPickedNode = null;
