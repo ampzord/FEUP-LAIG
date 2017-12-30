@@ -99,19 +99,21 @@ checkDestinationPiece(Board,Player,ColumnDest,LineDest) :-
 ).
 
 
-gameUpdate(Board,Player,ColumnDest,LineDest,ColumnOrigin,LineOrigin, RetBoard):-
+gameUpdate(Board,Player,ColumnDest,LineDest,ColumnOrigin,LineOrigin,RetBoard):-
 	checkValidPlay(Board,Player,ColumnOrigin,LineOrigin,ColumnDest,LineDest,Ret),
 	Ret == 1,
-	makePlay(Board,ColumnDest,LineDest,ColumnOrigin,LineOrigin, RetBoard).
+	makePlay(Board,ColumnDest,LineDest,ColumnOrigin,LineOrigin,RetBoard).
 
 gameUpdate(_,_,_,_,_,_,_,_).
 
-makePlay(Board,ColumnDest,LineDest,ColumnIni,LineIni, RetRetBoard):-
-	getPiece(Board,LineIni/ColumnIni,Piece),
+makePlay(Board,ColumnDest,LineDest,ColumnIni,LineIni,Piece,RetRetBoard,RetValue):-
 	movePieceWhite(Board, ColumnIni,LineIni, RetBoard),
-	movePiece(RetBoard, ColumnDest, LineDest, Piece, RetRetBoard).
+	movePiece(RetBoard, ColumnDest, LineDest, Piece, RetRetBoard),
+	RetValue is 1.
 
-movePieceWhite(Board, Column,Line, RetBoard):- movePiece(Board, Column, Line, ' ', RetBoard).
+makePlay(_,_,_,_,_,_,0).
+
+movePieceWhite(Board, Column,Line, RetBoard):- movePiece(Board, Column, Line, '', RetBoard).
 
 movePiece(Board, Column, Line, Piece, RetBoard) :-
 charToInt(Column,Col),
@@ -128,17 +130,18 @@ swapFirstPiece([Board|Rest],CurrLine,Col,Line,PieceToReplace,[Board|RetBoard]) :
 NextLine is CurrLine+1,
 swapFirstPiece(Rest,NextLine,Col,Line,PieceToReplace,RetBoard).
 
-
-gameOverWhite(Board,Winner,Ret):-
+%ganhou player white
+gameOverWhite(Board,Ret):-
 		(
 			checkIfBlackPlayerHasPieces(Board) -> Ret is 0;
-			Ret is 1, Winner is 2
+			Ret is 1
 		).
 
-gameOverBlack(Board,Winner,Ret):-
+%ganhou player black
+gameOverBlack(Board,Ret):-
 		(
 			checkIfWhitePlayerHasPieces(Board) -> Ret is 0;
-			Ret is 1, Winner is 1
+			Ret is 1
 		).
 
 checkIfBlackPlayerHasPieces(Board):-

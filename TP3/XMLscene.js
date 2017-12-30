@@ -118,15 +118,8 @@ XMLscene.prototype.logPicking = function()
                     {
                         this.secondPickedNode = this.pickResults[0][0];
                         
-                        //this.game.initialPiece = this.firstPickedNode;
-                        //this.game.destinationPiece = this.secondPickedNode;
-                        /*
-                        this.game.checkValidPlay(this.firstPickedNode.column,this.firstPickedNode.line,this.secondPickedNode.column,this.secondPickedNode.line);
-                        if (this.game.checkValidPlayAux == 1) {
-                            this.game.clearInitialPosition(this.firstPickedNode.column,this.firstPickedNode.line);
-                        }*/
-
-                        this.game.cycle(this.firstPickedNode, this.secondPickedNode);
+                        this.game.giveNodes(this.firstPickedNode,this.secondPickedNode);
+                        this.game.cycle();
 
                         this.animatePieces(this.firstPickedNode, this.secondPickedNode);
 
