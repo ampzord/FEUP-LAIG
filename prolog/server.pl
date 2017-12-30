@@ -119,11 +119,14 @@ parse_input(generalBoard, X):-
 parse_input(checkValidPlays(Board,Player,ColumnOrigin,LineOrigin,ColumnDest,LineDest),Ret):-
 	checkValidPlay(Board,Player,ColumnOrigin,LineOrigin,ColumnDest,LineDest,Ret).
 
-parse_input(gameOverByBlack(Board,Winner),Ret):-
-	gameOverBlack(Board,Winner,Ret).
+parse_input(makePlays(Board,ColumnDest,LineDest,ColumnOrigin,LineOrigin,Piece),RetBoard-RetValue):-
+	makePlay(Board,ColumnDest,LineDest,ColumnOrigin,LineOrigin,Piece,RetBoard,RetValue).
 
-parse_input(gameOverByWhite(Board,Winner),Ret):-
-	gameOverWhite(Board,Winner,Ret).
+parse_input(gameOverByBlack(Board),Ret):-
+	gameOverBlack(Board,Ret).
+
+parse_input(gameOverByWhite(Board),Ret):-
+	gameOverWhite(Board,Ret).
 /*
 parse_input(movePieceInitial(Board, ColumnOrigin, LineOrigin), RetBoard):-
 	movePieceWhite(Board, ColumnOrigin, LineOrigin, RetBoard).
@@ -131,8 +134,7 @@ parse_input(movePieceInitial(Board, ColumnOrigin, LineOrigin), RetBoard):-
 parse_input(movePeca(Board,ColumnDest,LineDest,PieceOrigin), RetBoard):-
 	movePiece(Board,ColumnDest,LineDest,PieceOrigin,RetBoard).*/
 
-parse_input(makePlays(Board2,ColumnDest,LineDest,ColumnOrigin,LineOrigin,Piece), RetBoard):-
-	makePlay(Board2,ColumnDest,LineDest,ColumnOrigin,LineOrigin, Piece, RetBoard).
+
 
 /*
 parse_input(checkValidPlays(Board,Player,ColumnDest,LineDest,ColumnOrigin,LineOrigin),RetBoard):-

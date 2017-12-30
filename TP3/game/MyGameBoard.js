@@ -3,29 +3,20 @@ function MyGameBoard(scene){
   this.scene = scene;
 
   this.prologBoard = "placeholder";
-  this.prologBoardRegex = "placeholder";
-  this.boardString;
-  this.boardString2;
   this.currentPlayer = 1;
 
-  
-  this.board = "placeholder";
+
   this.getPrologRequest("generalBoard");
+
 
   this.winner = null;
 
   this.initialPiece = null;
   this.destinationPiece = null;
 
-}
+  this.playIsValidAux = null;
 
-function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
+  this.cycle();
 }
 
 MyGameBoard.prototype = Object.create(CGFobject.prototype);
@@ -46,13 +37,6 @@ MyGameBoard.prototype.getPrologRequest = function(requestString, onSuccess, onEr
       game.prologBoard = response;
       game.parseBoard(game.prologBoard);
     }
-/*
-    if (requestString.substring(0,15) == "checkValidPlays") {
-      console.log(response);
-      //game.clearInitialPosition(game.initialPiece.column, game.initialPiece.line);
-      //sleep(1000);
-    }
-*/
 
     //not valid play
     if (requestString.substring(0,15) == "checkValidPlays" && response == "0") {
@@ -62,33 +46,46 @@ MyGameBoard.prototype.getPrologRequest = function(requestString, onSuccess, onEr
     //valid play
     if (requestString.substring(0,15) == "checkValidPlays" && response == "1") {
       console.log('Can eat piece');
-      //game.clearInitialPosition(game.initialPiece.column, game.initialPiece.line);
-      //sleep(1000);
 
+      game.playIsValidAux = 1;
       game.movePiece(game.destinationPiece.column, game.destinationPiece.line, game.initialPiece.column, game.initialPiece.line, game.initialPiece.piece);
+      
+      //TODO UPDATE EM MYGRAPHNODE
     }
-/* 
-    if(requestString.substring(0,16) == "movePieceInitial") {
-      //game.prologBoard = response;
-      //game.parseBo
-      //console.log('meter peca a branco' + game.prologBoard);
-      game.parseBoard(response);
-      console.log('after parse do meter preca a branco' + game.prologBoard);
-    }*/
 
+    
     if(requestString.substring(0,9) == "makePlays") {
-      game.prologBoard = response;
-      console.log('Board do makePlays - ' + response);
-      game.parseBoard(game.prologBoard);
-     
+      console.log('Resposta Board-RetValue (makePlays) ' + response);
+      var list = response.split("-");
+      
+      //error ocorred - board is not valid
+      if (list[1] == "0") {
+        this.initialPiece = null;
+        this.destinationPiece = null;
+      }
+      //Good value
+     else {
+        game.prologBoard = list[0];
+        game.parseBoard(game.prologBoard);
+     }
     }
 
-    if(requestString.substring(0,8) == "gameOver" && response == "0") {
-      //
+    if(requestString.substring(0,15) == "gameOverByBlack" && response == "0") {
+      console.log('Ninguem ganhou x1.');
     }
 
-    if(requestString.substring(0,8) == "gameOver" && response == "1") {
-      //
+    if(requestString.substring(0,15) == "gameOverByBlack" && response == "1") {
+      this.winner = 1;
+      console.log('Winner is Black, white player has no pieces.');
+    }
+
+    if(requestString.substring(0,15) == "gameOverByWhite" && response == "1") {
+      this.winner = 2;
+      console.log('Winner is Black, white player has no pieces.');
+    }
+
+    if(requestString.substring(0,15) == "gameOverByWhite" && response == "0") {
+      console.log('Ninguem ganhou x2.');
     }
   }
     
@@ -98,40 +95,26 @@ MyGameBoard.prototype.getPrologRequest = function(requestString, onSuccess, onEr
   request.send();
 };
 
-/*
-//checkValidPlay(Board,Player,ColumnOrigin,LineOrigin,ColumnDest,LineDest)
-MyGameBoard.prototype.checkValidPlay = function(ColumnOrigin,LineOrigin,ColumnDest,LineDest) {
-  var requestString = 'checkValidPlays(' + this.prologBoard + ',' + this.currentPlayer + ',' + ColumnOrigin + ','
-  + LineOrigin + ',' + ColumnDest + ',' + LineDest + ')'; 
-  this.getPrologRequest(requestString);
-}*/
-
 MyGameBoard.prototype.checkValidPlay = function(ColumnOrigin,LineOrigin,ColumnDest,LineDest) {
   var requestString = 'checkValidPlays(' + this.prologBoard + ',' + this.currentPlayer + ',' + ColumnOrigin + ','
   + LineOrigin + ',' + ColumnDest + ',' + LineDest + ')'; 
   this.getPrologRequest(requestString);
 }
 
-//movePiece(RetBoard,ColumnDest,LineDest,PieceOrigin,RetRetBoard)
-MyGameBoard.prototype.movePiece = function(ColumnDest,LineDest,ColumnOrigin,LineOrigin,PieceOrigin) {
+MyGameBoard.prototype.movePiece = function(ColumnDest,LineDest,ColumnOrigin,LineOrigin,Piece) {
   var requestString = 'makePlays(' + this.prologBoard + ',' + ColumnDest + ',' + LineDest + ',' + ColumnOrigin + ','
-   + LineOrigin + ',' + PieceOrigin + ')';
+   + LineOrigin + ',' + Piece + ')';
   this.getPrologRequest(requestString);
 }
 
-//limpar espaco onde estava a peca antes
-//movePiece(Board, ColumnOrigin, LineOrigin,' ', RetBoard).
-MyGameBoard.prototype.clearInitialPosition = function(ColumnOrigin, LineOrigin) {
-  var requestString = 'movePieceInitial(' + this.prologBoard + ',' + ColumnOrigin + ',' + LineOrigin +  ')'; 
-  this.getPrologRequest(requestString);
-}
-
-
-//gameOver(Board,Winner)
 MyGameBoard.prototype.checkEndGame = function() {
-  var requestString = 'gameOver(' + this.prologBoard + ',' + this.winner + ')';
+  var requestString = 'gameOverByWhite(' + this.prologBoard + ')';
+  this.getPrologRequest(requestString);
+  var requestString = 'gameOverByBlack(' + this.prologBoard + ')';
   this.getPrologRequest(requestString);
 }
+
+
 
 MyGameBoard.prototype.parseBoard = function(plBoard){
   //console.log('Board do prolog :' + plBoard);
@@ -143,22 +126,57 @@ MyGameBoard.prototype.parseBoard = function(plBoard){
     return str;
   }
   
-  var find = ["H","T","Q","B","h","t","q","b"];
-  var replace = ["'H'","'T'","'Q'","'B'","'h'","'t'","'q'","'b'"];
+  var find = ["H","T","Q","B","h","t","q","b"," "];
+  var replace = ["'H'","'T'","'Q'","'B'","'h'","'t'","'q'","'b'",""];
   this.prologBoard = replaceStr(plBoard, find, replace);
 
   //console.log('After parsing prolog Board :' + this.prologBoard);
 }
 
-MyGameBoard.prototype.cycle = function(firstPiece,secondPiece) {
-  this.initialPiece = firstPiece;
-  this.destinationPiece = secondPiece;
+MyGameBoard.prototype.startGame = function() {
+  if (this.initialPiece != null &&  this.destinationPiece != null) {
+
+  }
+}
+
+MyGameBoard.prototype.startGame = function() {
+  if (this.initialPiece != null &&  this.destinationPiece != null) {
+
+  }
+}
+
+MyGameBoard.prototype.giveNodes = function(firstNode,secondNode) {
+  this.initialPiece = firstNode;
+  this.destinationPiece = secondNode;
+  
+}
+
+
+MyGameBoard.prototype.cycle = function() {
+  //this.initialPiece = firstPiece;
+  //this.destinationPiece = secondPiece;
 
   //console.log(this.initialPiece);
   //console.log(this.destinationPiece);
 
   if (this.initialPiece != null &&  this.destinationPiece != null) {
     this.checkValidPlay(this.initialPiece.column, this.initialPiece.line, this.destinationPiece.column, this.destinationPiece.line);
+    
+    if (this.playIsValidAux == 1)
+    {
+      this.checkEndGame();
+
+      if (this.currentPlayer == 1) {
+        this.currentPlayer = 2;
+      }
+      else {
+        this.currentPlayer = 1;
+      }
+      this.initialPiece = null;
+      this.destinationPiece = null;
+    }
   }
+
+  this.playIsValidAux = 0;
 }
 
