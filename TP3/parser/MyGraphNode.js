@@ -8,6 +8,8 @@ function MyGraphNode(graph, nodeID) {
 
     this.nodeID = nodeID;
 
+    this.moving = false;
+
     // IDs of child nodes.
     this.children = [];
 
@@ -28,6 +30,8 @@ function MyGraphNode(graph, nodeID) {
 
     //Picking field in LSX File
     this.pickable = false;
+
+    this.animationInc = 17;
 
     //Useful for PROLOG
     this.column = null;
@@ -72,6 +76,7 @@ MyGraphNode.prototype.addLeaf = function(leaf) {
 MyGraphNode.prototype.applyAnimation = function(deltaTime) {
 
     this.animationElapsedTime = deltaTime + this.animationElapsedTime;
+    //console.log(this.animationElapsedTime);
 
     if(this.animationIndex < this.animationsID.length) {
         

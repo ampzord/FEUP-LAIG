@@ -109,7 +109,7 @@
           <NODEREF id="floor" />
           <NODEREF id="arvores" />
           <NODEREF id="chessBoard" />
-          <NODEREF id="table" />
+          <!--<NODEREF id="table" />-->
 	      <NODEREF id="pieces" />
         </DESCENDANTS>
     </NODE>
@@ -416,7 +416,7 @@
         <TEXTURE id="null"/>
 
         <SCALE sx="2.5" sy="2.5" sz="2.5" />
-		<TRANSLATION x="0" y="3.2" z="0" />
+		<TRANSLATION x="0" y="0.01" z="0" />
 
 		<DESCENDANTS>
         	<NODEREF id="boardTop" />
@@ -677,7 +677,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-1.625" y="3.2" z="-1.375" />
+		<TRANSLATION x="-1.625" y="0.01" z="-1.375" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -750,7 +750,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-1.2" y="3.2" z="-1.375" />
+		<TRANSLATION x="-1.2" y="0.01" z="-1.375" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -766,7 +766,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-0.78" y="3.2" z="-1.375" />
+		<TRANSLATION x="-0.78" y="0.01" z="-1.375" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -782,7 +782,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-0.33" y="3.2" z="-1.375" />
+		<TRANSLATION x="-0.33" y="0.01" z="-1.375" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -798,7 +798,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="0.1" y="3.2" z="-1.375" />
+		<TRANSLATION x="0.1" y="0.01" z="-1.375" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -814,7 +814,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="0.5" y="3.2" z="-1.375" />
+		<TRANSLATION x="0.5" y="0.01" z="-1.375" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -830,7 +830,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="0.95" y="3.2" z="-1.375" />
+		<TRANSLATION x="0.95" y="0.01" z="-1.375" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -846,7 +846,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="1.35" y="3.2" z="-1.375" />
+		<TRANSLATION x="1.35" y="0.01" z="-1.375" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -864,7 +864,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-1.625" y="3.2" z="-0.975" />
+		<TRANSLATION x="-1.625" y="0.01" z="-0.975" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -880,7 +880,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-1.2" y="3.2" z="-0.975" />
+		<TRANSLATION x="-1.2" y="0.01" z="-0.975" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -896,7 +896,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-0.78" y="3.2" z="-0.975" />
+		<TRANSLATION x="-0.78" y="0.01" z="-0.975" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -912,7 +912,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-0.33" y="3.2" z="-0.975" />
+		<TRANSLATION x="-0.33" y="0.01" z="-0.975" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -928,7 +928,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="0.1" y="3.2" z="-0.975" />
+		<TRANSLATION x="0.1" y="0.01" z="-0.975" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -944,7 +944,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="0.5" y="3.2" z="-0.975" />
+		<TRANSLATION x="0.5" y="0.01" z="-0.975" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -960,7 +960,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="0.95" y="3.2" z="-0.975" />
+		<TRANSLATION x="0.95" y="0.01" z="-0.975" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -976,7 +976,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="1.35" y="3.2" z="-0.975" />
+		<TRANSLATION x="1.35" y="0.01" z="-0.975" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -994,7 +994,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-1.625" y="3.2" z="-0.54" />
+		<TRANSLATION x="-1.625" y="0.01" z="-0.54" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1010,7 +1010,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-1.2" y="3.2" z="-0.54" />
+		<TRANSLATION x="-1.2" y="0.01" z="-0.54" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1026,7 +1026,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-0.78" y="3.2" z="-0.54" />
+		<TRANSLATION x="-0.78" y="0.01" z="-0.54" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1043,7 +1043,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-0.33" y="3.2" z="-0.54" />
+		<TRANSLATION x="-0.33" y="0.01" z="-0.54" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1060,7 +1060,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="0.1" y="3.2" z="-0.54" />
+		<TRANSLATION x="0.1" y="0.01" z="-0.54" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1077,7 +1077,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="0.5" y="3.2" z="-0.54" />
+		<TRANSLATION x="0.5" y="0.01" z="-0.54" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1093,7 +1093,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="0.95" y="3.2" z="-0.54" />
+		<TRANSLATION x="0.95" y="0.01" z="-0.54" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1109,7 +1109,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="1.35" y="3.2" z="-0.54" />
+		<TRANSLATION x="1.35" y="0.01" z="-0.54" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1127,7 +1127,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-1.625" y="3.2" z="-0.1" />
+		<TRANSLATION x="-1.625" y="0.01" z="-0.1" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1143,7 +1143,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-1.2" y="3.2" z="-0.1" />
+		<TRANSLATION x="-1.2" y="0.01" z="-0.1" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1159,7 +1159,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-0.78" y="3.2" z="-0.1" />
+		<TRANSLATION x="-0.78" y="0.01" z="-0.1" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1175,7 +1175,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-0.33" y="3.2" z="-0.1" />
+		<TRANSLATION x="-0.33" y="0.01" z="-0.1" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1191,7 +1191,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="0.1" y="3.2" z="-0.1" />
+		<TRANSLATION x="0.1" y="0.01" z="-0.1" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1207,7 +1207,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="0.5" y="3.2" z="-0.1" />
+		<TRANSLATION x="0.5" y="0.01" z="-0.1" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1223,7 +1223,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="0.95" y="3.2" z="-0.1" />
+		<TRANSLATION x="0.95" y="0.01" z="-0.1" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1239,7 +1239,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="1.35" y="3.2" z="-0.1" />
+		<TRANSLATION x="1.35" y="0.01" z="-0.1" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1258,7 +1258,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-1.625" y="3.2" z="0.32" />
+		<TRANSLATION x="-1.625" y="0.01" z="0.32" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1274,7 +1274,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-1.2" y="3.2" z="0.32" />
+		<TRANSLATION x="-1.2" y="0.01" z="0.32" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1290,7 +1290,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-0.78" y="3.2" z="0.32" />
+		<TRANSLATION x="-0.78" y="0.01" z="0.32" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1306,7 +1306,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-0.33" y="3.2" z="0.32" />
+		<TRANSLATION x="-0.33" y="0.01" z="0.32" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1322,7 +1322,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="0.1" y="3.2" z="0.32" />
+		<TRANSLATION x="0.1" y="0.01" z="0.32" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1338,7 +1338,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="0.5" y="3.2" z="0.32" />
+		<TRANSLATION x="0.5" y="0.01" z="0.32" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1354,7 +1354,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="0.95" y="3.2" z="0.32" />
+		<TRANSLATION x="0.95" y="0.01" z="0.32" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1370,7 +1370,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="1.35" y="3.2" z="0.32" />
+		<TRANSLATION x="1.35" y="0.01" z="0.32" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1389,7 +1389,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-1.625" y="3.2" z="0.76" />
+		<TRANSLATION x="-1.625" y="0.01" z="0.76" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1405,7 +1405,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-1.2" y="3.2" z="0.76" />
+		<TRANSLATION x="-1.2" y="0.01" z="0.76" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1421,7 +1421,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-0.78" y="3.2" z="0.76" />
+		<TRANSLATION x="-0.78" y="0.01" z="0.76" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1437,7 +1437,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-0.33" y="3.2" z="0.76" />
+		<TRANSLATION x="-0.33" y="0.01" z="0.76" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1453,7 +1453,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="0.1" y="3.2" z="0.76" />
+		<TRANSLATION x="0.1" y="0.01" z="0.76" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1469,7 +1469,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="0.5" y="3.2" z="0.76" />
+		<TRANSLATION x="0.5" y="0.01" z="0.76" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1485,7 +1485,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="0.95" y="3.2" z="0.76" />
+		<TRANSLATION x="0.95" y="0.01" z="0.76" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1501,7 +1501,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="1.35" y="3.2" z="0.76" />
+		<TRANSLATION x="1.35" y="0.01" z="0.76" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1519,7 +1519,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-1.625" y="3.2" z="1.2" />
+		<TRANSLATION x="-1.625" y="0.01" z="1.2" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1535,7 +1535,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-1.2" y="3.2" z="1.2" />
+		<TRANSLATION x="-1.2" y="0.01" z="1.2" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1551,7 +1551,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-0.78" y="3.2" z="1.2" />
+		<TRANSLATION x="-0.78" y="0.01" z="1.2" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1567,7 +1567,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-0.33" y="3.2" z="1.2" />
+		<TRANSLATION x="-0.33" y="0.01" z="1.2" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1583,7 +1583,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="0.1" y="3.2" z="1.2" />
+		<TRANSLATION x="0.1" y="0.01" z="1.2" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1599,7 +1599,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="0.5" y="3.2" z="1.2" />
+		<TRANSLATION x="0.5" y="0.01" z="1.2" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1615,7 +1615,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="0.95" y="3.2" z="1.2" />
+		<TRANSLATION x="0.95" y="0.01" z="1.2" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1631,7 +1631,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="1.35" y="3.2" z="1.2" />
+		<TRANSLATION x="1.35" y="0.01" z="1.2" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1649,7 +1649,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-1.625" y="3.2" z="1.62" />
+		<TRANSLATION x="-1.625" y="0.01" z="1.62" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1665,7 +1665,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-1.2" y="3.2" z="1.62" />
+		<TRANSLATION x="-1.2" y="0.01" z="1.62" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1681,7 +1681,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-0.78" y="3.2" z="1.62" />
+		<TRANSLATION x="-0.78" y="0.01" z="1.62" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1697,7 +1697,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="-0.33" y="3.2" z="1.62" />
+		<TRANSLATION x="-0.33" y="0.01" z="1.62" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1713,7 +1713,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="0.1" y="3.2" z="1.62" />
+		<TRANSLATION x="0.1" y="0.01" z="1.62" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1729,7 +1729,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="0.5" y="3.2" z="1.62" />
+		<TRANSLATION x="0.5" y="0.01" z="1.62" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1745,7 +1745,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="0.95" y="3.2" z="1.62" />
+		<TRANSLATION x="0.95" y="0.01" z="1.62" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
@@ -1761,7 +1761,7 @@
     	<MATERIAL id="null" />
     	<TEXTURE id="null" />
 
-		<TRANSLATION x="1.35" y="3.2" z="1.62" />
+		<TRANSLATION x="1.35" y="0.01" z="1.62" />
 		<SCALE sx="0.05" sy="0.1" sz="0.05" />
 		
     	<DESCENDANTS>
