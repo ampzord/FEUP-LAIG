@@ -66,6 +66,32 @@ XMLscene.prototype.updateCamera = function ()
     this.camera = this.cameras[this.CameraChosen];
 }
 
+XMLscene.prototype.animatePieces = function(node1, node2)
+{
+    var controlPoints2 = [];
+    controlPoints2.push(new Array(node2.positionX, node2.positionY, node2.positionZ));
+    controlPoints2.push(new Array(node2.positionX, 20, node2.positionZ));
+    controlPoints2.push(new Array(100, 20, 0));
+    controlPoints2.push(new Array(100, node2.positionY, 0));
+
+    var animation2 = new MyBezierAnimation(this, "secondMove", "bezier", 50, controlPoints2);
+    this.graph.animations["secondMove"] = animation2;
+    this.graph.nodes[node2.nodeID].animationsID.push("secondMove");
+    this.graph.nodes[node2.nodeID].animationElapsedTime = 0;
+
+    //--------------------------------------------
+
+    var controlPoints = [];
+    controlPoints.push(new Array(node1.positionX, node1.positionY, node1.positionZ));
+    controlPoints.push(new Array(node2.positionX-7, node2.positionY, node2.positionZ));
+    controlPoints.push(new Array(node2.positionX-7, node2.positionY, node2.positionZ+1));
+
+    var animation1 = new MyLinearAnimation(this, "firstMove", "linear", 5, controlPoints);
+    this.graph.animations["firstMove"] = animation1;
+    this.graph.nodes[node1.nodeID].animationsID.push("firstMove");
+    this.graph.nodes[node1.nodeID].animationElapsedTime = 0;
+}
+
 
 XMLscene.prototype.logPicking = function()
 {   
@@ -102,6 +128,7 @@ XMLscene.prototype.logPicking = function()
 
                         this.game.cycle(this.firstPickedNode, this.secondPickedNode);
 
+                        this.animatePieces(this.firstPickedNode, this.secondPickedNode);
 
                         this.firstPickedNode = null;
                         this.secondPickedNode = null;
@@ -293,7 +320,6 @@ XMLscene.prototype.display = function() {
         if(this.SceneinitTime == null) {
             this.SceneinitTime = currTime;
         }
-
         if (this.gameStarted) //&& !this.pauseGame) 
         {
             var newDateElapsedTime = new Date();

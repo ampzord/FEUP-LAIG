@@ -16,7 +16,11 @@ class MyLinearAnimation extends MyAnimation{
         this.animationTotalTime = this.finalDistance / this.speed;
 
 	}
-	
+    
+    isComplete(currTime){
+		return this.animationTime > (this.timeSpan - this.waitTime);
+	}
+
 	getSectionValues() {
         for(let i = 0; i < this.controlPoints.length - 1; i++) {
 			
@@ -69,7 +73,7 @@ class MyLinearAnimation extends MyAnimation{
            mat4.identity(this.animationMatrix);
            mat4.translate(this.animationMatrix, this.animationMatrix, [delta_x, delta_y, delta_z]);
            mat4.translate(this.animationMatrix, this.animationMatrix, [this.controlPoints[section][0], this.controlPoints[section][1], this.controlPoints[section][2]]);
-           mat4.rotate(this.animationMatrix, this.animationMatrix, newAngle, [0, 1, 0]);
+           //mat4.rotate(this.animationMatrix, this.animationMatrix, newAngle, [0, 1, 0]);
        }
        else {
           this.animationFinished = true;
