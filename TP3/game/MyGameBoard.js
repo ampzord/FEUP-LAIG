@@ -5,9 +5,7 @@ function MyGameBoard(scene){
   this.prologBoard = "placeholder";
   this.currentPlayer = 1;
 
-
   this.getPrologRequest("generalBoard");
-
 
   this.winner = null;
 
@@ -15,8 +13,16 @@ function MyGameBoard(scene){
   this.destinationPiece = null;
 
   this.playIsValidAux = null;
+  this.i = 0;
+}
 
-  this.cycle();
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
 }
 
 MyGameBoard.prototype = Object.create(CGFobject.prototype);
@@ -47,12 +53,17 @@ MyGameBoard.prototype.getPrologRequest = function(requestString, onSuccess, onEr
     if (requestString.substring(0,15) == "checkValidPlays" && response == "1") {
       console.log('Can eat piece');
 
-      game.playIsValidAux = 1;
       game.movePiece(game.destinationPiece.column, game.destinationPiece.line, game.initialPiece.column, game.initialPiece.line, game.initialPiece.piece);
       
+      game.scene.animatePieces(game.initialPiece,game.destinationPiece);
       //TODO UPDATE EM MYGRAPHNODE
-      game.initialPiece.column = game.destinationPiece.column;
-      game.initialPiece.line = game.destinationPiece.line;
+
+  
+      
+      console.log(game.scene.graph.nodes[game.initialPiece.nodeID].column);
+      game.scene.graph.nodes[game.initialPiece.nodeID].column = game.destinationPiece.column;
+      game.scene.graph.nodes[game.initialPiece.nodeID].line = game.destinationPiece.line;
+      game.scene.graph.nodes[game.destinationPiece.nodeID].dead = true;
     }
 
     
@@ -62,8 +73,8 @@ MyGameBoard.prototype.getPrologRequest = function(requestString, onSuccess, onEr
       
       //error ocorred - board is not valid
       if (list[1] == "0") {
-        this.initialPiece = null;
-        this.destinationPiece = null;
+        //game.initialPiece = null;
+        //game.destinationPiece = null;
       }
       //Good value
      else {
@@ -77,12 +88,12 @@ MyGameBoard.prototype.getPrologRequest = function(requestString, onSuccess, onEr
     }
 
     if(requestString.substring(0,15) == "gameOverByBlack" && response == "1") {
-      this.winner = 1;
+      game.winner = 1;
       console.log('Winner is Black, white player has no pieces.');
     }
 
     if(requestString.substring(0,15) == "gameOverByWhite" && response == "1") {
-      this.winner = 2;
+      game.winner = 2;
       console.log('Winner is Black, white player has no pieces.');
     }
 
@@ -128,57 +139,42 @@ MyGameBoard.prototype.parseBoard = function(plBoard){
     return str;
   }
   
-  var find = ["H","T","Q","B","h","t","q","b"," "];
-  var replace = ["'H'","'T'","'Q'","'B'","'h'","'t'","'q'","'b'",""];
+  var find = ["H","T","Q","B","h","t","q","b"];
+  var replace = ["'H'","'T'","'Q'","'B'","'h'","'t'","'q'","'b'"];
   this.prologBoard = replaceStr(plBoard, find, replace);
 
   //console.log('After parsing prolog Board :' + this.prologBoard);
 }
 
-MyGameBoard.prototype.startGame = function() {
-  if (this.initialPiece != null &&  this.destinationPiece != null) {
 
-  }
-}
-
-MyGameBoard.prototype.startGame = function() {
-  if (this.initialPiece != null &&  this.destinationPiece != null) {
-
-  }
-}
-
-MyGameBoard.prototype.giveNodes = function(firstNode,secondNode) {
+MyGameBoard.prototype.givePickedNodes = function(firstNode,secondNode) {
   this.initialPiece = firstNode;
   this.destinationPiece = secondNode;
-  
 }
 
 
 MyGameBoard.prototype.cycle = function() {
-  //this.initialPiece = firstPiece;
-  //this.destinationPiece = secondPiece;
+  /*this.initialPiece = firstNode;
+  this.destinationPiece = secondNode;*/
 
-  //console.log(this.initialPiece);
-  //console.log(this.destinationPiece);
+  if (this.initialPiece != null && this.destinationPiece != null) {
+    console.log('Peca Origem,  Col: ' + this.initialPiece.column + ' Linha: ' + this.initialPiece.line);
+    console.log('Peca Destino, Col: ' + this.destinationPiece.column + ' Linha: ' + this.destinationPiece.line);
 
-  if (this.initialPiece != null &&  this.destinationPiece != null) {
+
     this.checkValidPlay(this.initialPiece.column, this.initialPiece.line, this.destinationPiece.column, this.destinationPiece.line);
-    
-    if (this.playIsValidAux == 1)
-    {
-      this.checkEndGame();
+    this.checkEndGame();
 
-      if (this.currentPlayer == 1) {
-        this.currentPlayer = 2;
-      }
-      else {
-        this.currentPlayer = 1;
-      }
-      this.initialPiece = null;
-      this.destinationPiece = null;
+    if (this.currentPlayer == 1) {
+      this.currentPlayer = 2;
     }
+    else {
+      this.currentPlayer = 1;
+    }
+    //TINHA E FODEU O QE TAVA ANTES
+    //this.initialPiece = null;
+    //this.destinationPiece = null;
   }
-
-  this.playIsValidAux = 0;
+  console.log('game cycle counter : ' + this.i++ + ' Current Player: ' + this.currentPlayer);
 }
 

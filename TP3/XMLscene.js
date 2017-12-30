@@ -57,6 +57,7 @@ XMLscene.prototype.init = function(application) {
     this.setUpdatePeriod(16); //desired delay between update periods - 60 frames
 
     this.game = new MyGameBoard(this);
+    this.game.currentPlayer = 1;
 
     this.setPickEnabled(true);
 }
@@ -104,6 +105,19 @@ XMLscene.prototype.logPicking = function()
 				var obj = this.pickResults[i][0];
 				if (obj)
 				{
+
+                    if (this.pickResults[0][0].dead)
+                        return;
+/*
+                    //black
+                    if (this.game.currentPlayer == 1 && this.pickResults[0][0].team == "white")
+                        return;
+
+                    //white
+                    if (this.game.currentPlayer == 2 && this.pickResults[0][0].team == "black")
+                        return;*/
+
+
                     if (this.firstPickedNode != null && obj.nodeID == this.firstPickedNode.nodeID)
                     {
                         this.firstPickedNode = null;
@@ -118,10 +132,11 @@ XMLscene.prototype.logPicking = function()
                     {
                         this.secondPickedNode = this.pickResults[0][0];
                         
-                        this.game.giveNodes(this.firstPickedNode,this.secondPickedNode);
+                        this.game.givePickedNodes(this.firstPickedNode, this.secondPickedNode);
+                       
                         this.game.cycle();
 
-                        this.animatePieces(this.firstPickedNode, this.secondPickedNode);
+                        //this.animatePieces(this.firstPickedNode, this.secondPickedNode);
 
                         this.firstPickedNode = null;
                         this.secondPickedNode = null;
@@ -243,10 +258,6 @@ XMLscene.prototype.startGame = function ()
     
     this.gameStarted = true;
 
-    //var b = this.gameBoard.getPrologRequest("getInitialBoard");
-    /*console.log('in scene');
-    console.log(this.gameBoard.boardActual);
-    console.log(this.board);*/
 }
 
 XMLscene.prototype.startCams = function()
