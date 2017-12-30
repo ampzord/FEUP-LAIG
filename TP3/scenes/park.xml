@@ -46,7 +46,7 @@
 <TEXTURES>
 
     <TEXTURE id="board">
-        <file path="images/board2.jpg" />
+        <file path="images/board2.png" />
         <amplif_factor s="2" t="2" />
     </TEXTURE>
 
@@ -74,6 +74,50 @@
       <file path="images/tree_leaves.png" />
       <amplif_factor s="1" t="1" />
   </TEXTURE>
+
+	<!-- Chess Pieces -->
+
+	<TEXTURE id="whitetower">
+      <file path="images/whitetower.jpg" />
+      <amplif_factor s="5" t="5" />
+  </TEXTURE>
+
+   <TEXTURE id="blacktower">
+      <file path="images/blacktower.png" />
+      <amplif_factor s="5" t="5" />
+  </TEXTURE>
+
+  <TEXTURE id="blackqueen">
+      <file path="images/blackqueen.png" />
+      <amplif_factor s="5" t="5" />
+  </TEXTURE>
+
+  <TEXTURE id="whitequeen">
+      <file path="images/whitequeen.png" />
+      <amplif_factor s="5" t="5" />
+  </TEXTURE>
+
+  <TEXTURE id="whitebishop">
+      <file path="images/whitebishop.png" />
+      <amplif_factor s="5" t="5" />
+  </TEXTURE>
+
+  <TEXTURE id="blackbishop">
+      <file path="images/blackbishop.png" />
+      <amplif_factor s="5" t="5" />
+  </TEXTURE>
+
+  <TEXTURE id="whitehorse">
+      <file path="images/whitehorse.png" />
+      <amplif_factor s="5" t="5" />
+  </TEXTURE>
+
+  <TEXTURE id="blackhorse">
+      <file path="images/blackhorse.png" />
+      <amplif_factor s="5" t="5" />
+  </TEXTURE>
+
+
 </TEXTURES>
 
 
@@ -433,17 +477,12 @@
         <MATERIAL id="null"/>
         <TEXTURE id="board"/>
 
+		<TRANSLATION x="-2" y="0" z="2" />
+		<ROTATION axis="x" angle="-90" />
+		<SCALE sx="2" sy="2" sz="2"/>
+
 		<DESCENDANTS>
-			<LEAF id="patch1" type="patch" args="50 50" >
-               	<CPLINE>
-                    <CPOINT xx="2" yy="0" zz="-2" ww="1" />
-                    <CPOINT xx="2" yy="0" zz="2" ww="1" />
-                </CPLINE>
-                <CPLINE>
-                    <CPOINT xx="-2" yy="0" zz="-2" ww="1" />
-                    <CPOINT xx="-2" yy="0" zz="2" ww="1" />
-                </CPLINE>
-            </LEAF>
+			<LEAF id ="rectangle1" type="rectangle" args="0 2 2 0" />
 		</DESCENDANTS>
     </NODE>
 
@@ -695,7 +734,7 @@
 
 	<NODE id="piece1" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blackqueen" />
 
 		<TRANSLATION x="-1.625" y="0.2" z="-1.375" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -768,7 +807,7 @@
 
 	<NODE id="piece2" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blacktower" />
 
 		<TRANSLATION x="-1.2" y="0.2" z="-1.375" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -784,7 +823,7 @@
 
 	<NODE id="piece3" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitetower" />
 
 		<TRANSLATION x="-0.775" y="0.2" z="-1.375" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -800,7 +839,7 @@
 
 	<NODE id="piece4" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blacktower" />
 
 		<TRANSLATION x="-0.35" y="0.2" z="-1.375" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -816,7 +855,7 @@
 
 	<NODE id="piece5" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blackbishop" />
 
 		<TRANSLATION x="0.075" y="0.2" z="-1.375" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -832,7 +871,7 @@
 
 	<NODE id="piece6" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blacktower" />
 
 		<TRANSLATION x="0.5" y="0.2" z="-1.375" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -848,7 +887,7 @@
 
 	<NODE id="piece7" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitebishop" />
 
 		<TRANSLATION x="0.925" y="0.2" z="-1.375" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -864,7 +903,7 @@
 
 	<NODE id="piece8" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blackbishop" />
 
 		<TRANSLATION x="1.35" y="0.2" z="-1.375" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -882,7 +921,7 @@
 
 	<NODE id="piece9" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blacktower" />
 
 		<TRANSLATION x="-1.625" y="0.2" z="-0.95" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -898,7 +937,7 @@
 
 	<NODE id="piece10" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blackhorse" />
 
 		<TRANSLATION x="-1.2" y="0.2" z="-0.95" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -914,7 +953,7 @@
 
 	<NODE id="piece11" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitetower" />
 
 		<TRANSLATION x="-0.775" y="0.2" z="-0.95" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -930,7 +969,7 @@
 
 	<NODE id="piece12" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitehorse" />
 
 		<TRANSLATION x="-0.35" y="0.2" z="-0.95" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -946,7 +985,7 @@
 
 	<NODE id="piece13" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blacktower" />
 
 		<TRANSLATION x="0.075" y="0.2" z="-0.95" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -962,7 +1001,7 @@
 
 	<NODE id="piece14" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitehorse" />
 
 		<TRANSLATION x="0.5" y="0.2" z="-0.95" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -978,7 +1017,7 @@
 
 	<NODE id="piece15" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitebishop" />
 
 		<TRANSLATION x="0.925" y="0.2" z="-0.95" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -994,7 +1033,7 @@
 
 	<NODE id="piece16" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blackqueen" />
 
 		<TRANSLATION x="1.35" y="0.2" z="-0.95" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1012,7 +1051,7 @@
 
 	<NODE id="piece17" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitequeen" />
 
 		<TRANSLATION x="-1.625" y="0.2" z="-0.525" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1028,7 +1067,7 @@
 
 	<NODE id="piece18" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitehorse" />
 
 		<TRANSLATION x="-1.2" y="0.2" z="-0.525" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1044,7 +1083,7 @@
 
 	<NODE id="piece19" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blackhorse" />
 
 		<TRANSLATION x="-0.775" y="0.2" z="-0.525" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1061,7 +1100,7 @@
 
 	<NODE id="piece20" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blackbishop" />
 
 		<TRANSLATION x="-0.35" y="0.2" z="-0.525" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1078,7 +1117,7 @@
 
 	<NODE id="piece21" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitehorse" />
 
 		<TRANSLATION x="0.075" y="0.2" z="-0.525" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1094,7 +1133,7 @@
 
 	<NODE id="piece22" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitequeen" />
 
 		<TRANSLATION x="0.5" y="0.2" z="-0.525" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1110,7 +1149,7 @@
 
 	<NODE id="piece23" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blacktower" />
 
 		<TRANSLATION x="0.925" y="0.2" z="-0.525" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1126,7 +1165,7 @@
 
 	<NODE id="piece24" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blackqueen" />
 
 		<TRANSLATION x="1.35" y="0.2" z="-0.525" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1144,7 +1183,7 @@
 
 	<NODE id="piece25" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitequeen" />
 
 		<TRANSLATION x="-1.625" y="0.2" z="-0.1" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1160,7 +1199,7 @@
 
 	<NODE id="piece26" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blackbishop" />
 
 		<TRANSLATION x="-1.2" y="0.2" z="-0.1" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1176,7 +1215,7 @@
 
 	<NODE id="piece27" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blackbishop" />
 
 		<TRANSLATION x="-0.775" y="0.2" z="-0.1" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1192,7 +1231,7 @@
 
 	<NODE id="piece28" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitequeen" />
 
 		<TRANSLATION x="-0.35" y="0.2" z="-0.1" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1208,7 +1247,7 @@
 
 	<NODE id="piece29" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitebishop" />
 
 		<TRANSLATION x="0.075" y="0.2" z="-0.1" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1224,7 +1263,7 @@
 
 	<NODE id="piece30" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blackqueen" />
 
 		<TRANSLATION x="0.5" y="0.2" z="-0.1" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1240,7 +1279,7 @@
 
 	<NODE id="piece31" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blackhorse" />
 
 		<TRANSLATION x="0.925" y="0.2" z="-0.1" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1256,7 +1295,7 @@
 
 	<NODE id="piece32" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blackqueen" />
 
 		<TRANSLATION x="1.35" y="0.2" z="-0.1" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1275,7 +1314,7 @@
 
 	<NODE id="piece33" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitehorse" />
 
 		<TRANSLATION x="-1.625" y="0.2" z="0.325" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1291,7 +1330,7 @@
 
 	<NODE id="piece34" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitehorse" />
 
 		<TRANSLATION x="-1.2" y="0.2" z="0.325" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1307,7 +1346,7 @@
 
 	<NODE id="piece35" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blacktower" />
 
 		<TRANSLATION x="-0.775" y="0.2" z="0.325" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1323,7 +1362,7 @@
 
 	<NODE id="piece36" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitetower" />
 
 		<TRANSLATION x="-0.35" y="0.2" z="0.325" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1339,7 +1378,7 @@
 
 	<NODE id="piece37" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitehorse" />
 
 		<TRANSLATION x="0.075" y="0.2" z="0.325" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1355,7 +1394,7 @@
 
 	<NODE id="piece38" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blackbishop" />
 
 		<TRANSLATION x="0.5" y="0.2" z="0.325" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1371,7 +1410,7 @@
 
 	<NODE id="piece39" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitehorse" />
 
 		<TRANSLATION x="0.925" y="0.2" z="0.325" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1387,7 +1426,7 @@
 
 	<NODE id="piece40" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blackbishop" />
 
 		<TRANSLATION x="1.35" y="0.2" z="0.325" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1406,7 +1445,7 @@
 
 	<NODE id="piece41" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blackbishop" />
 
 		<TRANSLATION x="-1.625" y="0.2" z="0.75" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1422,7 +1461,7 @@
 
 	<NODE id="piece42" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blackhorse" />
 
 		<TRANSLATION x="-1.2" y="0.2" z="0.75" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1438,7 +1477,7 @@
 
 	<NODE id="piece43" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitetower" />
 
 		<TRANSLATION x="-0.775" y="0.2" z="0.75" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1454,7 +1493,7 @@
 
 	<NODE id="piece44" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitetower" />
 
 		<TRANSLATION x="-0.35" y="0.2" z="0.75" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1470,7 +1509,7 @@
 
 	<NODE id="piece45" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitebishop" />
 
 		<TRANSLATION x="0.075" y="0.2" z="0.75" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1486,7 +1525,7 @@
 
 	<NODE id="piece46" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blackqueen" />
 
 		<TRANSLATION x="0.5" y="0.2" z="0.75" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1502,7 +1541,7 @@
 
 	<NODE id="piece47" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blacktower" />
 
 		<TRANSLATION x="0.925" y="0.2" z="0.75" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1518,7 +1557,7 @@
 
 	<NODE id="piece48" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitebishop" />
 
 		<TRANSLATION x="1.35" y="0.2" z="0.75" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1536,7 +1575,7 @@
 
 	<NODE id="piece49" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitetower" />
 
 		<TRANSLATION x="-1.625" y="0.2" z="1.175" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1552,7 +1591,7 @@
 
 	<NODE id="piece50" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitequeen" />
 
 		<TRANSLATION x="-1.2" y="0.2" z="1.175" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1568,7 +1607,7 @@
 
 	<NODE id="piece51" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blackhorse" />
 
 		<TRANSLATION x="-0.775" y="0.2" z="1.175" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1584,7 +1623,7 @@
 
 	<NODE id="piece52" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitebishop" />
 
 		<TRANSLATION x="-0.35" y="0.2" z="1.175" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1600,7 +1639,7 @@
 
 	<NODE id="piece53" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitequeen" />
 
 		<TRANSLATION x="0.075" y="0.2" z="1.175" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1616,7 +1655,7 @@
 
 	<NODE id="piece54" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitequeen" />
 
 		<TRANSLATION x="0.5" y="0.2" z="1.175" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1632,7 +1671,7 @@
 
 	<NODE id="piece55" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blackhorse" />
 
 		<TRANSLATION x="0.925" y="0.2" z="1.175" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1648,7 +1687,7 @@
 
 	<NODE id="piece56" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blackqueen" />
 
 		<TRANSLATION x="1.35" y="0.2" z="1.175" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1666,7 +1705,7 @@
 
 	<NODE id="piece57" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blackhorse" />
 
 		<TRANSLATION x="-1.625" y="0.2" z="1.6" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1682,7 +1721,7 @@
 
 	<NODE id="piece58" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitebishop" />
 
 		<TRANSLATION x="-1.2" y="0.2" z="1.6" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1698,7 +1737,7 @@
 
 	<NODE id="piece59" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blackqueen" />
 
 		<TRANSLATION x="-0.775" y="0.2" z="1.6" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1714,7 +1753,7 @@
 
 	<NODE id="piece60" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="blackhorse" />
 
 		<TRANSLATION x="-0.35" y="0.2" z="1.6" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1730,7 +1769,7 @@
 
 	<NODE id="piece61" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitequeen" />
 
 		<TRANSLATION x="0.075" y="0.2" z="1.6" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1746,7 +1785,7 @@
 
 	<NODE id="piece62" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitetower" />
 
 		<TRANSLATION x="0.5" y="0.2" z="1.6" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1762,7 +1801,7 @@
 
 	<NODE id="piece63" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitetower" />
 
 		<TRANSLATION x="0.925" y="0.2" z="1.6" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />
@@ -1778,7 +1817,7 @@
 
 	<NODE id="piece64" picking="1">
     	<MATERIAL id="null" />
-    	<TEXTURE id="null" />
+    	<TEXTURE id="whitebishop" />
 
 		<TRANSLATION x="1.35" y="0.2" z="1.6" />
 		<SCALE sx="0.05" sy="0.07" sz="0.05" />

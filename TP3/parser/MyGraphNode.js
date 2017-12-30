@@ -89,7 +89,7 @@ MyGraphNode.prototype.applyAnimation = function(deltaTime) {
             this.animationCurrentSection = 0;
             this.animationElapsedTime = 0;
             //this.animationIndex++;
-            this.animationsID.splice(this.animationIndex,0);
+            this.animationsID = [];
         }
         
         // Check if animation between sections ended (combo or linear)
