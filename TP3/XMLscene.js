@@ -66,14 +66,6 @@ XMLscene.prototype.updateCamera = function ()
     this.camera = this.cameras[this.CameraChosen];
 }
 
-function sleep(milliseconds) {
-    var start = new Date().getTime();
-    for (var i = 0; i < 1e7; i++) {
-      if ((new Date().getTime() - start) > milliseconds){
-        break;
-      }
-    }
-  }
 
 XMLscene.prototype.logPicking = function()
 {   
@@ -99,13 +91,16 @@ XMLscene.prototype.logPicking = function()
                     if(this.secondPickedNode == null && this.firstPickedNode != null)
                     {
                         this.secondPickedNode = this.pickResults[0][0];
-                        //TODO: chamar funçao de verificar/mover peça, etc...
-                        //moverPeça(this.firstPickedNode,this.secondPickedNode);
+                        
+                        //this.game.initialPiece = this.firstPickedNode;
+                        //this.game.destinationPiece = this.secondPickedNode;
+                        /*
                         this.game.checkValidPlay(this.firstPickedNode.column,this.firstPickedNode.line,this.secondPickedNode.column,this.secondPickedNode.line);
-                        sleep(3000);
                         if (this.game.checkValidPlayAux == 1) {
                             this.game.clearInitialPosition(this.firstPickedNode.column,this.firstPickedNode.line);
-                        }
+                        }*/
+
+                        this.game.cycle(this.firstPickedNode, this.secondPickedNode);
 
 
                         this.firstPickedNode = null;

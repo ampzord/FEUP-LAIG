@@ -124,9 +124,19 @@ parse_input(gameOverByBlack(Board,Winner),Ret):-
 
 parse_input(gameOverByWhite(Board,Winner),Ret):-
 	gameOverWhite(Board,Winner,Ret).
-
-parse_input(movePieceInitial(Board, ColumnOrigin, LineOrigin,' '), RetBoard):-
-	movePiece(Board, ColumnOrigin, LineOrigin,' ', RetBoard).
+/*
+parse_input(movePieceInitial(Board, ColumnOrigin, LineOrigin), RetBoard):-
+	movePieceWhite(Board, ColumnOrigin, LineOrigin, RetBoard).
 
 parse_input(movePeca(Board,ColumnDest,LineDest,PieceOrigin), RetBoard):-
-	movePiece(Board,ColumnDest,LineDest,PieceOrigin,RetBoard).
+	movePiece(Board,ColumnDest,LineDest,PieceOrigin,RetBoard).*/
+
+parse_input(makePlays(Board2,ColumnDest,LineDest,ColumnOrigin,LineOrigin,Piece), RetBoard):-
+	makePlay(Board2,ColumnDest,LineDest,ColumnOrigin,LineOrigin, Piece, RetBoard).
+
+/*
+parse_input(checkValidPlays(Board,Player,ColumnDest,LineDest,ColumnOrigin,LineOrigin),RetBoard):-
+	gameUpdate(Board,Player,ColumnDest,LineDest,ColumnOrigin,LineOrigin,RetBoard).
+*/
+
+%gameUpdate(Board,Player,ColumnDest,LineDest,ColumnOrigin,LineOrigin, RetBoard):-

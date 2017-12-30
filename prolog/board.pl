@@ -98,6 +98,21 @@ checkDestinationPiece(Board,Player,ColumnDest,LineDest) :-
 	Player == 1 -> charToInt(ColumnDest,N), getPiece(Board,LineDest/N,Piece), member(Piece,['q','t','b','h'])
 ).
 
+
+gameUpdate(Board,Player,ColumnDest,LineDest,ColumnOrigin,LineOrigin, RetBoard):-
+	checkValidPlay(Board,Player,ColumnOrigin,LineOrigin,ColumnDest,LineDest,Ret),
+	Ret == 1,
+	makePlay(Board,ColumnDest,LineDest,ColumnOrigin,LineOrigin, RetBoard).
+
+gameUpdate(_,_,_,_,_,_,_,_).
+
+makePlay(Board,ColumnDest,LineDest,ColumnIni,LineIni, RetRetBoard):-
+	getPiece(Board,LineIni/ColumnIni,Piece),
+	movePieceWhite(Board, ColumnIni,LineIni, RetBoard),
+	movePiece(RetBoard, ColumnDest, LineDest, Piece, RetRetBoard).
+
+movePieceWhite(Board, Column,Line, RetBoard):- movePiece(Board, Column, Line, ' ', RetBoard).
+
 movePiece(Board, Column, Line, Piece, RetBoard) :-
 charToInt(Column,Col),
 swapFirstPiece(Board,1,Col,Line,Piece, RetBoard).
