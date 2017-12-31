@@ -18,12 +18,16 @@ function MyGameBoard(scene){
   this.gameType = 0;
   this.gameDifficulty = null;
 
-  this.gameStatus = [
-    "Player 1 (Black) Playing",
-    "Player 2 (White) Playing",
-    "Player 1 (Black) Won",
-    "Player 2 (White) Won",
-  ]
+  this.gameStatusOptions = {
+    0: "Player 1 (Black) Playing",
+    1: "Player 2 (White) Playing",
+    2: "Player 1 (Black) Won",
+    3: "Player 2 (White) Won",
+    4: ""
+  }
+
+  this.numberOfPiecesEatenByBlackPlayer = 0;
+  this.numberOfPiecesEatenByWhitePlayer = 0;
 }
 
 function sleep(ms) {
@@ -61,9 +65,7 @@ MyGameBoard.prototype.getPrologRequest = function(requestString, onSuccess, onEr
       game.movePiece(game.destinationPiece.column, game.destinationPiece.line, game.initialPiece.column, game.initialPiece.line, game.initialPiece.piece);
       game.playWasMade = true;
       game.scene.animatePieces(game.initialPiece,game.destinationPiece);
-     
 
-  
       //UPDATE EM MYGRAPHNODE
       game.scene.graph.nodes[game.initialPiece.nodeID].column = game.destinationPiece.column;
       game.scene.graph.nodes[game.initialPiece.nodeID].line = game.destinationPiece.line;
@@ -79,10 +81,17 @@ MyGameBoard.prototype.getPrologRequest = function(requestString, onSuccess, onEr
       if (list[1] == "0") {
         game.initialPiece = null;
         game.destinationPiece = null;
-        console.log('Prolog Board after make play error' + game.prologBoard)
+        console.log('Prolog Board came with error' + game.prologBoard)
       }
-      //Good value
      else {
+
+        if (game.initialPiece.team == "black") {
+          game.numberOfPiecesEatenByBlackPlayer++;
+        } 
+        else {
+          game.numberOfPiecesEatenByWhitePlayer++;
+        }
+        
         game.prologBoard = list[0];
         game.parseBoard(game.prologBoard);
         //console.log('Prolog Board after sucessful play' + game.prologBoard)
@@ -137,8 +146,6 @@ MyGameBoard.prototype.checkEndGame = function() {
   this.getPrologRequest(requestString);
 }
 
-
-
 MyGameBoard.prototype.parseBoard = function(plBoard){
   //console.log('Board do prolog :' + plBoard);
 
@@ -167,15 +174,17 @@ MyGameBoard.prototype.isGameFinished = function() {
   if (countOfPlayerWhitePieces == 0) {
     console.log('Winner is Black, white player has no pieces.');
     this.winner = 1;
+    this.scene.gameStatus = this.gameStatusOptions['2'];
   }
 
   if (countOfPlayerBlackPieces == 0) {
     console.log('Winner is White, black player has no pieces.');
     this.winner = 2;
+    this.scene.gameStatus = this.gameStatusOptions['3'];
   }
+
+  
 }
-
-
 
 MyGameBoard.prototype.givePickedNodes = function(firstNode,secondNode) {
   this.initialPiece = firstNode;
@@ -197,19 +206,31 @@ MyGameBoard.prototype.cycle = async function() {
       await sleep (500);
       
       if (this.playWasMade) {
-        //this.checkEndGame();
+        console.log('numberOfPiecesEatenByWhitePlayer: ' + this.numberOfPiecesEatenByWhitePlayer);
+        console.log('numberOfPiecesEatenByBlackPlayer: ' + this.numberOfPiecesEatenByBlackPlayer);
+
         this.isGameFinished();
   
         if (this.currentPlayer == 1) {
           this.currentPlayer = 2;
+          this.scene.gameStatus = this.gameStatusOptions['1'];
         }
         else {
           this.currentPlayer = 1;
+          this.scene.gameStatus = this.gameStatusOptions['0'];
         }
 
         this.playWasMade = false;
       }
     }
+  }
+  //Human vs Bot
+  else if (this.gameType == 1) {
+
+  }
+  //Bot vs Bot
+  else if (this.gameType == 2) {
+
   }
 }
 

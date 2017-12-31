@@ -20,9 +20,18 @@ function XMLscene(interface) {
     this.startingPlayer = 0;
     this.cameras = [];
 
-    this.cool = 1;
 
-    this.apagardepois = null;
+    this.gameStatusOptions = {
+        0: "Player 1 (Black) Playing",
+        1: "Player 2 (White) Playing",
+        2: "Player 1 (Black) Won",
+        3: "Player 2 (White) Won",
+        4: ""
+    }
+
+    this.gameStatus = this.gameStatusOptions['4'];
+
+    this.cool = 1;
 
     this.firstPickedNode = null;
     this.secondPickedNode = null;
@@ -79,8 +88,6 @@ XMLscene.prototype.animatePieces = function()
 
     var node1 = this.firstPickedNode;
     var node2 = this.secondPickedNode;
-
-    this.apagardepois = node1.nodeID;
 
     let destX = node2.positionX;
     let destY = node2.positionY;
@@ -205,15 +212,19 @@ XMLscene.prototype.logPicking = function()
 
                     if (this.pickResults[0][0].dead)
                         return;
-/*
-                    //black
-                    if (this.game.currentPlayer == 1 && this.pickResults[0][0].team == "white")
-                        return;
-
-                    //white
-                    if (this.game.currentPlayer == 2 && this.pickResults[0][0].team == "black")
-                        return;*/
-
+                        
+                    if (this.game.currentPlayer == 1) {
+                        if (this.firstPickedNode == null && this.pickResults[0][0].team == "white")
+                            return;
+                        if (this.firstPickedNode != null && this.pickResults[0][0].team == "black")
+                            return;
+                    }
+                    else {
+                        if (this.firstPickedNode == null && this.pickResults[0][0].team == "black")
+                            return;
+                        if (this.firstPickedNode != null && this.pickResults[0][0].team == "white")
+                            return;
+                    }
 
                     if (this.firstPickedNode != null && obj.nodeID == this.firstPickedNode.nodeID)
                     {
@@ -351,10 +362,12 @@ XMLscene.prototype.onGraphLoaded = function()
  */
 XMLscene.prototype.startGame = function ()
 {
-    if (this.gameStarted)
+    if (this.gameStarted) {
         return;
+    }
     else {
         this.gameStarted = true;
+        this.gameStatus = this.gameStatusOptions[this.startingPlayer];
     }
 }
 
@@ -378,13 +391,6 @@ XMLscene.prototype.display = function() {
         this.logPicking();
         this.clearPickRegistration();
         //this.updateCamera();
-    }
-
-    if (this.apagardepois != null) {
-        //console.log(this.graph.nodes[this.apagardepois]);
-        //console.log(this.graph.nodes[this.apagardepois].positionX);
-        //console.log(this.graph.nodes[this.apagardepois].positionY);
-        //console.log(this.graph.nodes[this.apagardepois].positionZ);
     }
 
     //console.log(this.graph.nodes["piece5"]);
@@ -441,6 +447,8 @@ XMLscene.prototype.display = function() {
             }
             time = (currTimeElapsed - this.SceneinitTimeElapsed)/1000;
             this.TimeElapsed = Math.floor(time);
+
+
         }
 
         dT = (currTime - this.sceneInitTime)/1000;
