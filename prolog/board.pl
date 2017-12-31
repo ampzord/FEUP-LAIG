@@ -113,7 +113,7 @@ makePlay(Board,ColumnDest,LineDest,ColumnIni,LineIni,Piece,RetRetBoard,RetValue)
 
 makePlay(_,_,_,_,_,_,0).
 
-movePieceWhite(Board, Column,Line, RetBoard):- movePiece(Board, Column, Line, '', RetBoard).
+movePieceWhite(Board, Column,Line, RetBoard):- movePiece(Board, Column, Line, 'z', RetBoard).
 
 movePiece(Board, Column, Line, Piece, RetBoard) :-
 charToInt(Column,Col),

@@ -45,7 +45,7 @@ generalBoard([
 ['H','b','Q','H','q','t','t','b']
 ]).
 
-isSpace(Cha) :- Cha == ' '.
+isSpace(Cha) :- Cha == ' ' ; Cha == 'z'.
 isQueen(Cha) :- Cha == 'Q' ; Cha == 'q'.
 isTower(Cha) :- Cha == 'T' ; Cha == 't'.
 isHorse(Cha) :- Cha == 'H' ; Cha == 'h'.

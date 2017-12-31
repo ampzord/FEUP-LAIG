@@ -57,7 +57,9 @@ XMLscene.prototype.init = function(application) {
     this.setUpdatePeriod(16); //desired delay between update periods - 60 frames
 
     this.game = new MyGameBoard(this);
-    this.game.currentPlayer = 1;
+    /*this.game.currentPlayer = this.startingPlayer + 1;
+    this.game.gameType = this.type;
+    this.game.difficulty = this.Difficulty;*/
 
     this.setPickEnabled(true);
 }
@@ -69,8 +71,8 @@ XMLscene.prototype.updateCamera = function ()
 
 XMLscene.prototype.animatePieces = function(node1, node2, animationName)
 {
-    console.log(node1);
-    console.log(node2);
+    //console.log(node1);
+    //console.log(node2);
 
     var destX = node2.positionX;
     var destY = node2.positionY;
@@ -154,7 +156,7 @@ XMLscene.prototype.logPicking = function()
                        
                         this.game.cycle();
 
-                        this.animatePieces(this.firstPickedNode, this.secondPickedNode,this.randomName());
+                        //this.animatePieces(this.firstPickedNode, this.secondPickedNode,this.randomName());
 
                         this.firstPickedNode = null;
                         this.secondPickedNode = null;
@@ -273,9 +275,9 @@ XMLscene.prototype.startGame = function ()
 {
     if (this.gameStarted)
         return;
-    
-    this.gameStarted = true;
-
+    else {
+        this.gameStarted = true;
+    }
 }
 
 XMLscene.prototype.startCams = function()
