@@ -20,6 +20,8 @@ function XMLscene(interface) {
     this.startingPlayer = 0;
     this.cameras = [];
 
+    this.apagardepois = null;
+
     this.firstPickedNode = null;
     this.secondPickedNode = null;
 
@@ -67,22 +69,38 @@ XMLscene.prototype.updateCamera = function ()
     this.camera = this.cameras[this.CameraChosen];
 }
 
-XMLscene.prototype.animatePieces = function(node1, node2, animationName)
+XMLscene.prototype.animatePieces = function()
 {
-    console.log(node1);
-    console.log(node2);
+    var animationName = this.randomName();
 
-    var destX = node2.positionX;
-    var destY = node2.positionY;
-    var destZ = node2.positionZ;
+    var node1 = this.firstPickedNode;
+    var node2 = this.secondPickedNode;
+
+    this.apagardepois = node1.nodeID;
+
+    let destX = node2.positionX * 2.5;
+    let destY = node2.positionY;
+    let destZ = node2.positionZ * 2.5;
+
+    let initX = node1.positionX * 2.5;
+    let initY = node1.positionY;
+    let initZ = node1.positionZ * 2.5;
+
+    console.log("initX: " + initX);
+    console.log("initY: " + initY);
+    console.log("initZ: " + initZ);
+
+    console.log("destX: " + destX);
+    console.log("destY: " + destY);
+    console.log("destZ: " + destZ);
     
     var controlPoints = [];
-    controlPoints.push(new Array(node1.positionX, node1.positionY, node1.positionZ));
-    controlPoints.push(new Array(node1.positionX, 15, node1.positionZ));
-    controlPoints.push(new Array(destX, 15, destZ));
-    controlPoints.push(new Array(destX-7, destY, destZ));
+    controlPoints.push(new Array(0, 0, 0));
+    //controlPoints.push(new Array(-8.5, 0, 1));
+    //controlPoints.push(new Array(-12.0208, 0, 12.0208));
+    controlPoints.push(new Array(-8.5, 0.0001, 8.5));
 
-    var animation1 = new MyBezierAnimation(this, animationName, "bezier", 10, controlPoints);
+    var animation1 = new MyLinearAnimation(this, animationName, "linear", 5, controlPoints);
     this.graph.animations[animationName] = animation1;
     this.graph.nodes[node1.nodeID].animationsID.push(animationName);
     this.graph.nodes[node1.nodeID].animationElapsedTime = 0;
@@ -90,10 +108,10 @@ XMLscene.prototype.animatePieces = function(node1, node2, animationName)
     //--------------------------------------------
 
     var controlPoints2 = [];
-    controlPoints2.push(new Array(node2.positionX, node2.positionY, node2.positionZ));
-    controlPoints2.push(new Array(node2.positionX, 20, node2.positionZ));
+    controlPoints2.push(new Array(destX, destY, destZ));
+    controlPoints2.push(new Array(destX, 20, destZ));
     controlPoints2.push(new Array(100, 20, 0));
-    controlPoints2.push(new Array(100, node2.positionY, 0));
+    controlPoints2.push(new Array(100, destY, 0));
 
     var animation2 = new MyBezierAnimation(this, "secondMove", "bezier", 50, controlPoints2);
     this.graph.animations["secondMove"] = animation2;
@@ -154,7 +172,7 @@ XMLscene.prototype.logPicking = function()
                        
                         this.game.cycle();
 
-                        this.animatePieces(this.firstPickedNode, this.secondPickedNode,this.randomName());
+                        this.animatePieces();
 
                         this.firstPickedNode = null;
                         this.secondPickedNode = null;
@@ -236,7 +254,8 @@ XMLscene.prototype.update = function(currTime) {
     this.lastUpdateTime = currTime;
     
 	for(var node in this.graph.nodes){
-		this.graph.nodes[node].applyAnimation(deltaTime);
+        this.graph.nodes[node].applyAnimation(deltaTime);
+        this.graph.nodes[node].updatePositions();
     }
 }
 
@@ -298,6 +317,13 @@ XMLscene.prototype.display = function() {
         this.logPicking();
         this.clearPickRegistration();
         //this.updateCamera();
+    }
+
+    if (this.apagardepois != null) {
+        //console.log(this.graph.nodes[this.apagardepois]);
+        console.log(this.graph.nodes[this.apagardepois].positionX);
+        console.log(this.graph.nodes[this.apagardepois].positionY);
+        console.log(this.graph.nodes[this.apagardepois].positionZ);
     }
 
     // Clear image and depth buffer everytime we update the scene
