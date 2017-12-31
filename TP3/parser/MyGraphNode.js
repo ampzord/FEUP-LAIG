@@ -71,6 +71,11 @@ MyGraphNode.prototype.addLeaf = function(leaf) {
     this.leaves.push(leaf);
 }
 
+MyGraphNode.prototype.switchMatrix = function()
+{
+    this.animationMatrix = this.animationMatrixHolder;
+}
+
 /**
  * Applies the animations periodically through a deltatime
  */
@@ -90,9 +95,11 @@ MyGraphNode.prototype.applyAnimation = function(deltaTime) {
         if(this.animationElapsedTime >= animation.getAnimationTotalTime()) {
             this.animationCurrentSection = 0;
             this.animationElapsedTime = 0;
-            //this.animationIndex++;
+            this.animationIndex++;
             this.startedAnimation = false;
-            this.animationsID = [];
+            //this.animationsID = [];
+            //this.transformMatrix = this.animationMatrix;
+            //this.switchMatrix();
         }
         
         // Check if animation between sections ended (combo or linear)

@@ -19,6 +19,7 @@ function XMLscene(interface) {
     this.pauseGame = false;
     this.startingPlayer = 0;
     this.cameras = [];
+    this.apagar = null;
 
 
     this.gameStatusOptions = {
@@ -87,6 +88,7 @@ XMLscene.prototype.animatePieces = function(node11, node22)
     var animationName = this.randomName();
 
     var node1 = this.graph.nodes[node11.nodeID];
+    this.apagar = node1.nodeID;
     var node2 = this.graph.nodes[node22.nodeID];
 
     if (node1.piece == "'h'" || node1.piece == "'H'")
@@ -153,7 +155,6 @@ XMLscene.prototype.animatePieces = function(node11, node22)
         {
             ctrl = 1;
             increment = (node1.line - node2.line)*-1;
-            console.log(increment);
         }
         else if (node2.column.charCodeAt(1) == node1.column.charCodeAt(1) && node2.line < node1.line)
         {
@@ -197,35 +198,48 @@ XMLscene.prototype.animatePieces = function(node11, node22)
         switch (ctrl)
         {
             case 1:
-            controlPoints.push(new Array(8.4*increment, 0.0001, 8.4*increment));
+            console.log(ctrl);
+            /*if (this.graph.nodes[node1.nodeID].animationIndex != 0) {
+                controlPoints.push(new Array(0.425*increment, 0.0001, 0.425*increment));
+                console.log(ctrl);
+            }
+            else*/
+                controlPoints.push(new Array(8.4*increment, 0.0001, 8.4*increment));
             break;
 
             case 2:
             controlPoints.push(new Array(0.0001, 0.0001, 8.4*increment));
+            console.log(ctrl);
             break;
 
             case 3:
             controlPoints.push(new Array(-8.4*increment, 0.0001, 8.4*increment));
+            console.log(ctrl);
             break;
 
             case 4:
             controlPoints.push(new Array(8.4*increment, 0.0001, 0.0001));
+            console.log(ctrl);
             break;
 
             case 5:
             controlPoints.push(new Array(8.4*increment, 0.0001, 0.0001));
+            console.log(ctrl);
             break;
 
             case 6:
             controlPoints.push(new Array(8.4*increment, 0.0001, -8.4*increment));
+            console.log(ctrl);
             break;
 
             case 7:
             controlPoints.push(new Array(0.0001, 0.0001, 8.4*increment));
+            console.log(ctrl);
             break;
 
             case 8:
             controlPoints.push(new Array(8.4*increment, 0.0001, 8.4*increment));
+            console.log(ctrl);
             break;
 
             default:
@@ -465,6 +479,10 @@ XMLscene.prototype.display = function() {
         //this.updateCamera();
     }
 
+    /*if (this.apagar != null)
+        console.log(this.graph.nodes[this.apagar]);*/
+
+
     // Clear image and depth buffer everytime we update the scene
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
@@ -501,6 +519,8 @@ XMLscene.prototype.display = function() {
                 i++;
             }
         }
+
+        console.log(this.graph.nodes["piece5"].transformMatrix);
 
         var newDate = new Date();
         currTime = newDate.getTime();
