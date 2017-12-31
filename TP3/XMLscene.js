@@ -73,17 +73,12 @@ XMLscene.prototype.updateCamera = function ()
     this.camera = this.cameras[this.CameraChosen];
 }
 
-XMLscene.prototype.animatePieces = function(node1, node2)
+XMLscene.prototype.animatePieces = function(node11, node22)
 {
     var animationName = this.randomName();
 
-    let destX = node2.positionX;
-    let destY = node2.positionY;
-    let destZ = node2.positionZ;
-
-    let initX = node1.positionX;
-    let initY = node1.positionY;
-    let initZ = node1.positionZ;
+    var node1 = this.graph.nodes[node11.nodeID];
+    var node2 = this.graph.nodes[node22.nodeID];
 
     if (node1.piece == "'h'" || node1.piece == "'H'")
     {
@@ -127,16 +122,23 @@ XMLscene.prototype.animatePieces = function(node1, node2)
             controlPoints.push(new Array(16.8, 0.0001, -8.4));
         }
 
-        var animation1 = new MyLinearAnimation(this, animationName, "linear", 5, controlPoints);
+        var animation1 = new MyLinearAnimation(this, animationName, "linear", 8, controlPoints);
         this.graph.animations[animationName] = animation1;
         this.graph.nodes[node1.nodeID].animationsID.push(animationName);
         this.graph.nodes[node1.nodeID].animationElapsedTime = 0;
+
+        this.graph.nodes[node1.nodeID].updateLineColumn(node2.column,node2.line);
+        console.log('Depois de mover: ');
+        console.log('Peca origem, Coluna: ' + this.graph.nodes[node1.nodeID].column + ' Linha: ' + this.graph.nodes[node1.nodeID].line + ' Peca: ' + this.graph.nodes[node1.nodeID].piece);
     }
 
     if (!horse)
     {
         var ctrl = -1;
         var increment = -1;
+        console.log('DENTRO DA ANIÇACAO');
+        console.log('Peca origem, Coluna: ' + node1.column + ' Linha: ' + node1.line + ' Peca: ' + node1.piece);
+        console.log('Peca destino, Coluna: ' + node2.column + ' Linha: ' + node2.line + ' Peca: ' + node2.piece);
 
         if (node2.column.charCodeAt(1) < node1.column.charCodeAt(1) && node2.line < node1.line)
         {
@@ -221,21 +223,28 @@ XMLscene.prototype.animatePieces = function(node1, node2)
             break;
         }
 
-        var animation1 = new MyLinearAnimation(this, animationName, "linear", 5, controlPoints);
+        var animation1 = new MyLinearAnimation(this, animationName, "linear", 8, controlPoints);
         this.graph.animations[animationName] = animation1;
         this.graph.nodes[node1.nodeID].animationsID.push(animationName);
         this.graph.nodes[node1.nodeID].animationElapsedTime = 0;
+
+        this.graph.nodes[node1.nodeID].updateLineColumn(node2.column,node2.line);
+        console.log('Depois de mover: ');
+        console.log('Peca origem, Coluna: ' + this.graph.nodes[node1.nodeID].column + ' Linha: ' + this.graph.nodes[node1.nodeID].line + 
+        ' Peca: ' + this.graph.nodes[node1.nodeID].piece);
     }
 
     //--------------------------------------------
 
     var controlPoints2 = [];
-    controlPoints2.push(new Array(destX, destY, destZ));
-    controlPoints2.push(new Array(destX, 20, destZ));
+    controlPoints2.push(new Array(this.graph.nodes[node22.nodeID].transformMatrix[12], 
+        this.graph.nodes[node22.nodeID].transformMatrix[13], this.graph.nodes[node22.nodeID].transformMatrix[14]));
+    controlPoints2.push(new Array(this.graph.nodes[node22.nodeID].transformMatrix[12], 20, 
+        this.graph.nodes[node22.nodeID].transformMatrix[14]));
     controlPoints2.push(new Array(100, 20, 0));
-    controlPoints2.push(new Array(100, destY, 0));
+    controlPoints2.push(new Array(100, this.graph.nodes[node22.nodeID].transformMatrix[13], 0));
 
-    var animation2 = new MyBezierAnimation(this, "secondMove", "bezier", 50, controlPoints2);
+    var animation2 = new MyBezierAnimation(this, "secondMove", "bezier", 100, controlPoints2);
     this.graph.animations["secondMove"] = animation2;
     this.graph.nodes[node2.nodeID].animationsID.push("secondMove");
     this.graph.nodes[node2.nodeID].animationElapsedTime = 0;
@@ -266,14 +275,11 @@ XMLscene.prototype.logPicking = function()
 
                     if (this.pickResults[0][0].dead)
                         return;
-/*
+
                     //black
-                    if (this.game.currentPlayer == 1 && this.pickResults[0][0].team == "white")
-                        return;
 
                     //white
                     if (this.game.currentPlayer == 2 && this.pickResults[0][0].team == "black")
-                        return;*/
 
 
                     if (this.firstPickedNode != null && obj.nodeID == this.firstPickedNode.nodeID)
@@ -440,15 +446,6 @@ XMLscene.prototype.display = function() {
         this.clearPickRegistration();
         //this.updateCamera();
     }
-
-    if (this.apagardepois != null) {
-        //console.log(this.graph.nodes[this.apagardepois]);
-        //console.log(this.graph.nodes[this.apagardepois].positionX);
-        //console.log(this.graph.nodes[this.apagardepois].positionY);
-        //console.log(this.graph.nodes[this.apagardepois].positionZ);
-    }
-
-    //console.log(this.graph.nodes["piece5"]);
 
     // Clear image and depth buffer everytime we update the scene
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);

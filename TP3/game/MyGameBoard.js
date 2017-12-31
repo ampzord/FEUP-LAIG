@@ -60,10 +60,10 @@ MyGameBoard.prototype.getPrologRequest = function(requestString, onSuccess, onEr
 
       game.movePiece(game.destinationPiece.column, game.destinationPiece.line, game.initialPiece.column, game.initialPiece.line, game.initialPiece.piece);
       game.playWasMade = true;
-      game.scene.animatePieces(game.initialPiece,game.destinationPiece);
-     
-
-  
+      var node1 = game.initialPiece;
+      var node2 = game.destinationPiece;
+      game.scene.animatePieces(node1,node2);
+      
       //UPDATE EM MYGRAPHNODE
       game.scene.graph.nodes[game.initialPiece.nodeID].column = game.destinationPiece.column;
       game.scene.graph.nodes[game.initialPiece.nodeID].line = game.destinationPiece.line;
