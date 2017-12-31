@@ -26,8 +26,6 @@ function MyGraphNode(graph, nodeID) {
     //Selectable field in LSX File
     this.selectable = false;
 
-    this.startedAnimation = false;
-
     //Picking field in LSX File
     this.pickable = false;
 
@@ -49,7 +47,11 @@ function MyGraphNode(graph, nodeID) {
     this.animationMatrix = mat4.create();
     mat4.identity(this.animationMatrix);
 
+    this.animationMatrixHolder = mat4.create();
+    mat4.identity(this.animationMatrixHolder);
+
      // Animation Variables
+     this.startedAnimation = false;
      this.animationElapsedTime = 0;
      this.animationCurrentSection = 0;
      this.animationIndex = 0;
@@ -74,11 +76,12 @@ MyGraphNode.prototype.addLeaf = function(leaf) {
  */
 MyGraphNode.prototype.applyAnimation = function(deltaTime) {
 
-    this.animationElapsedTime = deltaTime + this.animationElapsedTime;
+    if (this.startedAnimation == true)
+        this.animationElapsedTime += deltaTime;
 
     if(this.animationIndex < this.animationsID.length) {
         this.startedAnimation = true;
-        
+
         var animation = this.graph.animations[this.animationsID[this.animationIndex]];
         this.animationMatrix = animation.getAnimMatrix(this.animationElapsedTime, this.animationCurrentSection);
         animation.getAnimMatrix(this.animationElapsedTime, this.animationCurrentSection);
@@ -88,6 +91,9 @@ MyGraphNode.prototype.applyAnimation = function(deltaTime) {
             this.animationCurrentSection = 0;
             this.animationElapsedTime = 0;
             this.animationIndex++;
+            this.startedAnimation = false;
+            //this.animationMatrix = this.animationMatrixHolder;
+
             //console.log(this.animationsID.length);
             //this.animationsID.shift();
             //console.log(this.animationsID.length);
