@@ -20,6 +20,10 @@ function XMLscene(interface) {
     this.startingPlayer = 0;
     this.cameras = [];
 
+    this.cool = 1;
+
+    this.apagardepois = null;
+
     this.firstPickedNode = null;
     this.secondPickedNode = null;
 
@@ -69,22 +73,95 @@ XMLscene.prototype.updateCamera = function ()
     this.camera = this.cameras[this.CameraChosen];
 }
 
-XMLscene.prototype.animatePieces = function(node1, node2, animationName)
+XMLscene.prototype.animatePieces = function()
 {
-    //console.log(node1);
-    //console.log(node2);
+    var animationName = this.randomName();
 
-    var destX = node2.positionX;
-    var destY = node2.positionY;
-    var destZ = node2.positionZ;
-    
+    var node1 = this.firstPickedNode;
+    var node2 = this.secondPickedNode;
+
+    this.apagardepois = node1.nodeID;
+
+    let destX = node2.positionX;
+    let destY = node2.positionY;
+    let destZ = node2.positionZ;
+
+    let initX = node1.positionX;
+    let initY = node1.positionY;
+    let initZ = node1.positionZ;
+
+    console.log("initX: " + initX);
+    console.log("initY: " + initY);
+    console.log("initZ: " + initZ);
+
+    console.log("destX: " + destX);
+    console.log("destY: " + destY);
+    console.log("destZ: " + destZ);
+
+    var ctrl = -1;
+    var increment = -1;
+
+    if (node2.column.charCodeAt(1) < node1.column.charCodeAt(1) && node2.line < node1.line)
+    {
+        ctrl = 1;
+        increment = (node1.line - node2.line)*-1;
+        console.log(increment);
+    }
+    else if (node2.column.charCodeAt(1) == node1.column.charCodeAt(1) && node2.line < node1.line)
+    {
+        ctrl = 2;
+        increment = (node1.line-node2.line)*-1;
+    }
+    else if (node2.column.charCodeAt(1) > node1.colummn.charCodeAt(1) && node2.line < node1.line)
+    {
+        ctrl = 3;
+        increment = (node1.line-node2.line)*-1;
+    }
+    else if (node2.line == node1.line && node2.column.charCodeAt(1) < node1.colummn.charCodeAt(1))
+    {
+        ctrl = 4;
+        increment = (node1.column.charCodeAt(1) - node2.column.charCodeAt(1))*-1;
+    }
+    else if (node2.line == node1.line && node2.colummn.charCodeAt(1) > node1.colummn.charCodeAt(1))
+    {
+        ctrl = 5;
+        increment = node2.column.charCodeAt(1) - node1.column.charCodeAt(1);
+    }
+    else if (node2.line > node1.line && node2.colummn.charCodeAt(1) < node1.colummn.charCodeAt(1))
+    {
+        ctrl = 6;
+        increment = (node1.column.charCodeAt(1) - node2.column.charCodeAt(1))*-1;
+    }
+    else if (node1.colummn.charCodeAt(1) == node2.colummn.charCodeAt(1) && node2.line > node1.line)
+    {
+        ctrl = 7;
+        increment = node2.line - node1.line;
+    }
+    else if (node2.line > node1.line && node2.colummn.charCodeAt(1) > node1.colummn.charCodeAt(1))
+    {
+        ctrl = 8;
+        increment = node2.line - node1.line;
+    }
+
     var controlPoints = [];
-    controlPoints.push(new Array(node1.positionX, node1.positionY, node1.positionZ));
-    controlPoints.push(new Array(node1.positionX, 15, node1.positionZ));
-    controlPoints.push(new Array(destX, 15, destZ));
-    controlPoints.push(new Array(destX-7, destY, destZ));
+    controlPoints.push(new Array(this.graph.nodes[node1.nodeID].animationMatrix[12], this.graph.nodes[node1.nodeID].animationMatrix[13], this.graph.nodes[node1.nodeID].animationMatrix[14]));
 
-    var animation1 = new MyBezierAnimation(this, animationName, "bezier", 10, controlPoints);
+    switch (ctrl)
+    {
+        case 1:
+        controlPoints.push(new Array(8.5*increment, 0.0001, 8.5*increment));
+        break;
+
+        case 2:
+        controlPoints.push(new Array(0.0001, 0.0001, 8.5*increment));
+        break;
+
+        default:
+        break;
+    }
+    //controlPoints.push(new Array(-8.5*this.cool, 0.0001, 8.5*this.cool));
+
+    var animation1 = new MyLinearAnimation(this, animationName, "linear", 5, controlPoints);
     this.graph.animations[animationName] = animation1;
     this.graph.nodes[node1.nodeID].animationsID.push(animationName);
     this.graph.nodes[node1.nodeID].animationElapsedTime = 0;
@@ -92,10 +169,10 @@ XMLscene.prototype.animatePieces = function(node1, node2, animationName)
     //--------------------------------------------
 
     var controlPoints2 = [];
-    controlPoints2.push(new Array(node2.positionX, node2.positionY, node2.positionZ));
-    controlPoints2.push(new Array(node2.positionX, 20, node2.positionZ));
+    controlPoints2.push(new Array(destX, destY, destZ));
+    controlPoints2.push(new Array(destX, 20, destZ));
     controlPoints2.push(new Array(100, 20, 0));
-    controlPoints2.push(new Array(100, node2.positionY, 0));
+    controlPoints2.push(new Array(100, destY, 0));
 
     var animation2 = new MyBezierAnimation(this, "secondMove", "bezier", 50, controlPoints2);
     this.graph.animations["secondMove"] = animation2;
@@ -238,7 +315,8 @@ XMLscene.prototype.update = function(currTime) {
     this.lastUpdateTime = currTime;
     
 	for(var node in this.graph.nodes){
-		this.graph.nodes[node].applyAnimation(deltaTime);
+        this.graph.nodes[node].applyAnimation(deltaTime);
+        this.graph.nodes[node].updatePositions();
     }
 }
 
@@ -301,6 +379,15 @@ XMLscene.prototype.display = function() {
         this.clearPickRegistration();
         //this.updateCamera();
     }
+
+    if (this.apagardepois != null) {
+        //console.log(this.graph.nodes[this.apagardepois]);
+        //console.log(this.graph.nodes[this.apagardepois].positionX);
+        //console.log(this.graph.nodes[this.apagardepois].positionY);
+        //console.log(this.graph.nodes[this.apagardepois].positionZ);
+    }
+
+    //console.log(this.graph.nodes["piece5"]);
 
     // Clear image and depth buffer everytime we update the scene
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);

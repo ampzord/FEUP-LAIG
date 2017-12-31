@@ -47,7 +47,11 @@ function MyGraphNode(graph, nodeID) {
     this.animationMatrix = mat4.create();
     mat4.identity(this.animationMatrix);
 
+    this.animationMatrixHolder = mat4.create();
+    mat4.identity(this.animationMatrixHolder);
+
      // Animation Variables
+     this.startedAnimation = false;
      this.animationElapsedTime = 0;
      this.animationCurrentSection = 0;
      this.animationIndex = 0;
@@ -67,29 +71,33 @@ MyGraphNode.prototype.addLeaf = function(leaf) {
     this.leaves.push(leaf);
 }
 
-MyGraphNode.prototype.removeAnimID = function (id)
-{
-
-}
-
 /**
  * Applies the animations periodically through a deltatime
  */
 MyGraphNode.prototype.applyAnimation = function(deltaTime) {
 
-    this.animationElapsedTime = deltaTime + this.animationElapsedTime;
+    if (this.startedAnimation == true)
+        this.animationElapsedTime += deltaTime;
 
     if(this.animationIndex < this.animationsID.length) {
-        
+        this.startedAnimation = true;
+
         var animation = this.graph.animations[this.animationsID[this.animationIndex]];
         this.animationMatrix = animation.getAnimMatrix(this.animationElapsedTime, this.animationCurrentSection);
+        animation.getAnimMatrix(this.animationElapsedTime, this.animationCurrentSection);
 
         // Check if animation ended
         if(this.animationElapsedTime >= animation.getAnimationTotalTime()) {
             this.animationCurrentSection = 0;
             this.animationElapsedTime = 0;
-            //this.animationIndex++;
-            this.animationsID = [];
+            this.animationIndex++;
+            this.startedAnimation = false;
+            //this.animationMatrix = this.animationMatrixHolder;
+
+            //console.log(this.animationsID.length);
+            //this.animationsID.shift();
+            //console.log(this.animationsID.length);
+            //this.graph.animations = this.graph.animations.splice(this.animationsID[this.animationIndex],0);
         }
         
         // Check if animation between sections ended (combo or linear)
@@ -116,15 +124,23 @@ MyGraphNode.prototype.updateLineColumn = function (newColumn, newLine)
 
 /**
  * Updates the node position
- * @param {*} newX 
- * @param {*} newY 
- * @param {*} newZ 
  */
-MyGraphNode.prototype.updatePositions = function (newX, newY, newZ)
+MyGraphNode.prototype.updatePositions = function ()
 {
-    this.positionX = newX;
-    this.positionY = newY;
-    this.positionZ = newZ;
+    if (this.startedAnimation == false) {
+        this.positionX = this.transformMatrix[12];
+        this.positionY = this.transformMatrix[13];
+        this.positionZ = this.transformMatrix[14];
+    }
+    else{
+        this.positionX = this.animationMatrix[12];
+        this.positionY = this.animationMatrix[13];
+        this.positionZ = this.animationMatrix[14];
+
+        /*this.transformMatrix[12] = this.animationMatrix[12];
+        this.transformMatrix[13] = this.animationMatrix[13];
+        this.transformMatrix[14] = this.animationMatrix[14];*/
+    }
 }
 
 /**
