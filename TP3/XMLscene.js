@@ -82,106 +82,178 @@ XMLscene.prototype.updateCamera = function ()
     this.camera = this.cameras[this.CameraChosen];
 }
 
-XMLscene.prototype.animatePieces = function()
+XMLscene.prototype.animatePieces = function(node11, node22)
 {
     var animationName = this.randomName();
 
-    var node1 = this.firstPickedNode;
-    var node2 = this.secondPickedNode;
+    var node1 = this.graph.nodes[node11.nodeID];
+    var node2 = this.graph.nodes[node22.nodeID];
 
-    let destX = node2.positionX;
-    let destY = node2.positionY;
-    let destZ = node2.positionZ;
+    if (node1.piece == "'h'" || node1.piece == "'H'")
+    {
+        var horse = true;
 
-    let initX = node1.positionX;
-    let initY = node1.positionY;
-    let initZ = node1.positionZ;
+        var controlPoints = [];
+        controlPoints.push(new Array(this.graph.nodes[node1.nodeID].animationMatrix[12], 
+            this.graph.nodes[node1.nodeID].animationMatrix[13], this.graph.nodes[node1.nodeID].animationMatrix[14]));
+            
 
-    console.log("initX: " + initX);
-    console.log("initY: " + initY);
-    console.log("initZ: " + initZ);
+        if (node2.line == (node1.line+2) && node2.column.charCodeAt(1) == (node1.column.charCodeAt(1)+1))
+        {
+            controlPoints.push(new Array(8.4, 0.0001, 16.8));
+        }
+        else if (node2.line == (node1.line+2) && node2.column.charCodeAt(1) == (node1.column.charCodeAt(1)-1))
+        {
+            controlPoints.push(new Array(-8.4, 0.0001, 16.8));
+        }
+        else if (node2.line == (node1.line-2) && node2.column.charCodeAt(1) == (node1.column.charCodeAt(1)-1))
+        {
+            controlPoints.push(new Array(-8.4, 0.0001, -16.8));
+        }
+        else if (node2.line == (node1.line-2) && node2.column.charCodeAt(1) == (node1.column.charCodeAt(1)+1))
+        {
+            controlPoints.push(new Array(8.4, 0.0001, -16.8));
+        }
+        else if (node2.line == (node1.line-1) && node2.column.charCodeAt(1) == (node1.column.charCodeAt(1)-2))
+        {
+            controlPoints.push(new Array(-16.8, 0.0001, -8.4));
+        }
+        else if (node2.line == (node1.line+1) && node2.column.charCodeAt(1) == (node1.column.charCodeAt(1)-2))
+        {
+            controlPoints.push(new Array(-16.8, 0.0001, 8.4));
+        }
+        else if (node2.line == (node1.line+1) && node2.column.charCodeAt(1) == (node1.column.charCodeAt(1)+2))
+        {
+            controlPoints.push(new Array(16.8, 0.0001, 8.4));
+        }
+        else if (node2.line == (node1.line-1) && node2.column.charCodeAt(1) == (node1.column.charCodeAt(1)+2))
+        {
+            controlPoints.push(new Array(16.8, 0.0001, -8.4));
+        }
 
-    console.log("destX: " + destX);
-    console.log("destY: " + destY);
-    console.log("destZ: " + destZ);
+        var animation1 = new MyLinearAnimation(this, animationName, "linear", 8, controlPoints);
+        this.graph.animations[animationName] = animation1;
+        this.graph.nodes[node1.nodeID].animationsID.push(animationName);
+        this.graph.nodes[node1.nodeID].animationElapsedTime = 0;
 
-    var ctrl = -1;
-    var increment = -1;
-
-    if (node2.column.charCodeAt(1) < node1.column.charCodeAt(1) && node2.line < node1.line)
-    {
-        ctrl = 1;
-        increment = (node1.line - node2.line)*-1;
-        console.log(increment);
-    }
-    else if (node2.column.charCodeAt(1) == node1.column.charCodeAt(1) && node2.line < node1.line)
-    {
-        ctrl = 2;
-        increment = (node1.line-node2.line)*-1;
-    }
-    else if (node2.column.charCodeAt(1) > node1.colummn.charCodeAt(1) && node2.line < node1.line)
-    {
-        ctrl = 3;
-        increment = (node1.line-node2.line)*-1;
-    }
-    else if (node2.line == node1.line && node2.column.charCodeAt(1) < node1.colummn.charCodeAt(1))
-    {
-        ctrl = 4;
-        increment = (node1.column.charCodeAt(1) - node2.column.charCodeAt(1))*-1;
-    }
-    else if (node2.line == node1.line && node2.colummn.charCodeAt(1) > node1.colummn.charCodeAt(1))
-    {
-        ctrl = 5;
-        increment = node2.column.charCodeAt(1) - node1.column.charCodeAt(1);
-    }
-    else if (node2.line > node1.line && node2.colummn.charCodeAt(1) < node1.colummn.charCodeAt(1))
-    {
-        ctrl = 6;
-        increment = (node1.column.charCodeAt(1) - node2.column.charCodeAt(1))*-1;
-    }
-    else if (node1.colummn.charCodeAt(1) == node2.colummn.charCodeAt(1) && node2.line > node1.line)
-    {
-        ctrl = 7;
-        increment = node2.line - node1.line;
-    }
-    else if (node2.line > node1.line && node2.colummn.charCodeAt(1) > node1.colummn.charCodeAt(1))
-    {
-        ctrl = 8;
-        increment = node2.line - node1.line;
+        this.graph.nodes[node1.nodeID].updateLineColumn(node2.column,node2.line);
+        console.log('Depois de mover: ');
+        console.log('Peca origem, Coluna: ' + this.graph.nodes[node1.nodeID].column + ' Linha: ' + this.graph.nodes[node1.nodeID].line + ' Peca: ' + this.graph.nodes[node1.nodeID].piece);
     }
 
-    var controlPoints = [];
-    controlPoints.push(new Array(this.graph.nodes[node1.nodeID].animationMatrix[12], this.graph.nodes[node1.nodeID].animationMatrix[13], this.graph.nodes[node1.nodeID].animationMatrix[14]));
-
-    switch (ctrl)
+    if (!horse)
     {
-        case 1:
-        controlPoints.push(new Array(8.5*increment, 0.0001, 8.5*increment));
-        break;
+        var ctrl = -1;
+        var increment = -1;
+        console.log('DENTRO DA ANIÇACAO');
+        console.log('Peca origem, Coluna: ' + node1.column + ' Linha: ' + node1.line + ' Peca: ' + node1.piece);
+        console.log('Peca destino, Coluna: ' + node2.column + ' Linha: ' + node2.line + ' Peca: ' + node2.piece);
 
-        case 2:
-        controlPoints.push(new Array(0.0001, 0.0001, 8.5*increment));
-        break;
+        if (node2.column.charCodeAt(1) < node1.column.charCodeAt(1) && node2.line < node1.line)
+        {
+            ctrl = 1;
+            increment = (node1.line - node2.line)*-1;
+            console.log(increment);
+        }
+        else if (node2.column.charCodeAt(1) == node1.column.charCodeAt(1) && node2.line < node1.line)
+        {
+            ctrl = 2;
+            increment = (node1.line-node2.line)*-1;
+        }
+        else if (node2.column.charCodeAt(1) > node1.column.charCodeAt(1) && node2.line < node1.line)
+        {
+            ctrl = 3;
+            increment = (node1.line-node2.line)*-1;
+        }
+        else if (node2.line == node1.line && node2.column.charCodeAt(1) < node1.column.charCodeAt(1))
+        {
+            ctrl = 4;
+            increment = (node1.column.charCodeAt(1) - node2.column.charCodeAt(1))*-1;
+        }
+        else if (node2.line == node1.line && node2.column.charCodeAt(1) > node1.column.charCodeAt(1))
+        {
+            ctrl = 5;
+            increment = node2.column.charCodeAt(1) - node1.column.charCodeAt(1);
+        }
+        else if (node2.line > node1.line && node2.column.charCodeAt(1) < node1.column.charCodeAt(1))
+        {
+            ctrl = 6;
+            increment = (node1.column.charCodeAt(1) - node2.column.charCodeAt(1))*-1;
+        }
+        else if (node1.column.charCodeAt(1) == node2.column.charCodeAt(1) && node2.line > node1.line)
+        {
+            ctrl = 7;
+            increment = node2.line - node1.line;
+        }
+        else if (node2.line > node1.line && node2.column.charCodeAt(1) > node1.column.charCodeAt(1))
+        {
+            ctrl = 8;
+            increment = node2.line - node1.line;
+        }
 
-        default:
-        break;
+        var controlPoints = [];
+        controlPoints.push(new Array(this.graph.nodes[node1.nodeID].animationMatrix[12], this.graph.nodes[node1.nodeID].animationMatrix[13], this.graph.nodes[node1.nodeID].animationMatrix[14]));
+
+        switch (ctrl)
+        {
+            case 1:
+            controlPoints.push(new Array(8.4*increment, 0.0001, 8.4*increment));
+            break;
+
+            case 2:
+            controlPoints.push(new Array(0.0001, 0.0001, 8.4*increment));
+            break;
+
+            case 3:
+            controlPoints.push(new Array(-8.4*increment, 0.0001, 8.4*increment));
+            break;
+
+            case 4:
+            controlPoints.push(new Array(8.4*increment, 0.0001, 0.0001));
+            break;
+
+            case 5:
+            controlPoints.push(new Array(8.4*increment, 0.0001, 0.0001));
+            break;
+
+            case 6:
+            controlPoints.push(new Array(8.4*increment, 0.0001, -8.4*increment));
+            break;
+
+            case 7:
+            controlPoints.push(new Array(0.0001, 0.0001, 8.4*increment));
+            break;
+
+            case 8:
+            controlPoints.push(new Array(8.4*increment, 0.0001, 8.4*increment));
+            break;
+
+            default:
+            break;
+        }
+
+        var animation1 = new MyLinearAnimation(this, animationName, "linear", 8, controlPoints);
+        this.graph.animations[animationName] = animation1;
+        this.graph.nodes[node1.nodeID].animationsID.push(animationName);
+        this.graph.nodes[node1.nodeID].animationElapsedTime = 0;
+
+        this.graph.nodes[node1.nodeID].updateLineColumn(node2.column,node2.line);
+        console.log('Depois de mover: ');
+        console.log('Peca origem, Coluna: ' + this.graph.nodes[node1.nodeID].column + ' Linha: ' + this.graph.nodes[node1.nodeID].line + 
+        ' Peca: ' + this.graph.nodes[node1.nodeID].piece);
     }
-    //controlPoints.push(new Array(-8.5*this.cool, 0.0001, 8.5*this.cool));
-
-    var animation1 = new MyLinearAnimation(this, animationName, "linear", 5, controlPoints);
-    this.graph.animations[animationName] = animation1;
-    this.graph.nodes[node1.nodeID].animationsID.push(animationName);
-    this.graph.nodes[node1.nodeID].animationElapsedTime = 0;
 
     //--------------------------------------------
 
     var controlPoints2 = [];
-    controlPoints2.push(new Array(destX, destY, destZ));
-    controlPoints2.push(new Array(destX, 20, destZ));
+    controlPoints2.push(new Array(this.graph.nodes[node22.nodeID].transformMatrix[12], 
+        this.graph.nodes[node22.nodeID].transformMatrix[13], this.graph.nodes[node22.nodeID].transformMatrix[14]));
+    controlPoints2.push(new Array(this.graph.nodes[node22.nodeID].transformMatrix[12], 20, 
+        this.graph.nodes[node22.nodeID].transformMatrix[14]));
     controlPoints2.push(new Array(100, 20, 0));
-    controlPoints2.push(new Array(100, destY, 0));
+    controlPoints2.push(new Array(100, this.graph.nodes[node22.nodeID].transformMatrix[13], 0));
 
-    var animation2 = new MyBezierAnimation(this, "secondMove", "bezier", 50, controlPoints2);
+    var animation2 = new MyBezierAnimation(this, "secondMove", "bezier", 100, controlPoints2);
     this.graph.animations["secondMove"] = animation2;
     this.graph.nodes[node2.nodeID].animationsID.push("secondMove");
     this.graph.nodes[node2.nodeID].animationElapsedTime = 0;
@@ -392,8 +464,6 @@ XMLscene.prototype.display = function() {
         this.clearPickRegistration();
         //this.updateCamera();
     }
-
-    //console.log(this.graph.nodes["piece5"]);
 
     // Clear image and depth buffer everytime we update the scene
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
