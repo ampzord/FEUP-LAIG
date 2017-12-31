@@ -31,13 +31,15 @@ function XMLscene(interface) {
 
     this.gameStatus = this.gameStatusOptions['4'];
 
-    this.cool = 1;
-
     this.firstPickedNode = null;
     this.secondPickedNode = null;
 
     var date = new Date();
     this.sceneInitTime = date.getTime();
+
+    this.oldTimeElapsed = null;
+    this.PlayerBlack_Score = 0;
+    this.PlayerWhite_Score = 0;
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -284,6 +286,15 @@ XMLscene.prototype.logPicking = function()
 
                     if (this.pickResults[0][0].dead)
                         return;
+
+                    if (this.firstPickedNode != null && obj.nodeID == this.firstPickedNode.nodeID) {
+                        this.firstPickedNode = null;
+                        this.secondPickedNode = null;
+                        this.selectableNodes = "None";
+                        this.clearPickRegistration();
+                        this.pickMode = true;
+                        return; 
+                    }
                         
                     if (this.game.currentPlayer == 1) {
                         if (this.firstPickedNode == null && this.pickResults[0][0].team == "white")
@@ -298,15 +309,7 @@ XMLscene.prototype.logPicking = function()
                             return;
                     }
 
-                    if (this.firstPickedNode != null && obj.nodeID == this.firstPickedNode.nodeID)
-                    {
-                        this.firstPickedNode = null;
-                        this.secondPickedNode = null;
-                        this.selectableNodes = "None";
-                        this.clearPickRegistration();
-                        this.pickMode = true;
-                        return; 
-                    }
+
 
                     if(this.secondPickedNode == null && this.firstPickedNode != null)
                     {
@@ -423,10 +426,9 @@ XMLscene.prototype.onGraphLoaded = function()
     this.interface.addLightsGroup(this.graph.lights);
 
     //Add selectable nodes check boxes
-    this.interface.addSelectableNodes(this.graph.selectableNodes);
+    //this.interface.addSelectableNodes(this.graph.selectableNodes);
 
     this.interface.addOptions();
-   
 }
 
 /**
@@ -440,7 +442,16 @@ XMLscene.prototype.startGame = function ()
     else {
         this.gameStarted = true;
         this.gameStatus = this.gameStatusOptions[this.startingPlayer];
+        this.game.gameMode = this.Type;
+        this.game.botDifficulty = this.Difficulty;
+        console.log("Type:" +  this.game.gameMode);
+        console.log("Difficulty: " + this.game.botDifficulty);
     }
+}
+
+XMLscene.prototype.pauseGame = function ()
+{
+
 }
 
 XMLscene.prototype.startCams = function()
@@ -507,7 +518,15 @@ XMLscene.prototype.display = function() {
         if(this.SceneinitTime == null) {
             this.SceneinitTime = currTime;
         }
-        if (this.gameStarted) //&& !this.pauseGame) 
+
+        if (this.pauseGame && this.oldTimeElapsed == null) {
+            this.oldTimeElapsed = this.timeElapsed;
+        }
+        else if (!this.pauseGame && this.oldTimeElapsed != null) {
+            this.ElapsedTime = this.oldTimeElapsed;
+        }
+        /*
+        if (this.gameStarted && !this.pauseGame) 
         {
             var newDateElapsedTime = new Date();
             currTimeElapsed = newDateElapsedTime.getTime();
@@ -517,9 +536,7 @@ XMLscene.prototype.display = function() {
             }
             time = (currTimeElapsed - this.SceneinitTimeElapsed)/1000;
             this.TimeElapsed = Math.floor(time);
-
-
-        }
+        }*/
 
         dT = (currTime - this.sceneInitTime)/1000;
 

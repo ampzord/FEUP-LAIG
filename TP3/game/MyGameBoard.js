@@ -15,8 +15,6 @@ function MyGameBoard(scene){
   this.playWasMade = null;
   this.gameCycleCounter = 1;
 
-  this.gameType = 0;
-  this.gameDifficulty = null;
 
   this.gameStatusOptions = {
     0: "Player 1 (Black) Playing",
@@ -25,6 +23,15 @@ function MyGameBoard(scene){
     3: "Player 2 (White) Won",
     4: ""
   }
+
+  this.botDifficultyOptions = {
+    0: "Easy",
+    1: "Medium",
+    2: "Hard"
+  }
+
+  this.botDifficulty = null;
+  this.gameMode = null;
 
   this.numberOfPiecesEatenByBlackPlayer = 0;
   this.numberOfPiecesEatenByWhitePlayer = 0;
@@ -87,9 +94,11 @@ MyGameBoard.prototype.getPrologRequest = function(requestString, onSuccess, onEr
 
         if (game.initialPiece.team == "black") {
           game.numberOfPiecesEatenByBlackPlayer++;
+          game.scene.PlayerBlack_Score = game.numberOfPiecesEatenByBlackPlayer;
         } 
         else {
           game.numberOfPiecesEatenByWhitePlayer++;
+          game.scene.PlayerWhite_Score = game.numberOfPiecesEatenByWhitePlayer;
         }
         
         game.prologBoard = list[0];
@@ -117,8 +126,6 @@ MyGameBoard.prototype.getPrologRequest = function(requestString, onSuccess, onEr
       game.winner = 2;
       console.log('Winner is White, black player has no pieces.');
     }
-
-
   }
     
   request.onerror = onError || function(){console.log("Error waiting for response");};
@@ -183,7 +190,6 @@ MyGameBoard.prototype.isGameFinished = function() {
     this.scene.gameStatus = this.gameStatusOptions['3'];
   }
 
-  
 }
 
 MyGameBoard.prototype.givePickedNodes = function(firstNode,secondNode) {
@@ -194,7 +200,7 @@ MyGameBoard.prototype.givePickedNodes = function(firstNode,secondNode) {
 MyGameBoard.prototype.cycle = async function() {
 
   //Human vs Human
-  if (this.gameType == 0) {
+  if (this.gameMode == 0) {
     if (this.initialPiece != null && this.destinationPiece != null) {
       console.log('Game Cycle Counter : ' + this.gameCycleCounter++ + ' Current Player: ' + this.currentPlayer);
       console.log('Peca Origem,  Coluna: ' + this.initialPiece.column + ' Linha: ' + this.initialPiece.line + ' Peça: ' + this.initialPiece.piece);
@@ -225,12 +231,44 @@ MyGameBoard.prototype.cycle = async function() {
     }
   }
   //Human vs Bot
-  else if (this.gameType == 1) {
+  else if (this.gameMode == 1) {
+    if (this.currentPlayer == 1) {
 
+      if (this.initialPiece != null && this.destinationPiece != null) {
+        console.log('Game Cycle Counter : ' + this.gameCycleCounter++ + ' Current Player: ' + this.currentPlayer);
+        console.log('Peca Origem,  Coluna: ' + this.initialPiece.column + ' Linha: ' + this.initialPiece.line + ' Peça: ' + this.initialPiece.piece);
+        console.log('Peca Destino, Coluna: ' + this.destinationPiece.column + ' Linha: ' + this.destinationPiece.line + ' Peça: ' + this.destinationPiece.piece);
+
+
+        this.checkValidPlay(this.initialPiece.column, this.initialPiece.line, this.destinationPiece.column, this.destinationPiece.line);
+      
+        await sleep (500);
+        
+        if (this.playWasMade) {
+          console.log('numberOfPiecesEatenByWhitePlayer: ' + this.numberOfPiecesEatenByWhitePlayer);
+          console.log('numberOfPiecesEatenByBlackPlayer: ' + this.numberOfPiecesEatenByBlackPlayer);
+
+          this.isGameFinished();
+    
+          this.currentPlayer = 3; //BOT
+          this.scene.gameStatus = "Bot is Playing";
+          this.playWasMade = false;
+        }
+      }
+    }
+    //BOT
+    else {
+      //get Bot Moves - not done in prolog
+
+      this.isGameFinished();
+
+      this.currentPlayer = 1;
+      this.scene.gameStatus = this.gameStatusOptions['0'];
+    }
   }
   //Bot vs Bot
-  else if (this.gameType == 2) {
-
+  else if (this.gameMode == 2) {
+    this.scene.gameStatus = "Bot 1 is Playing";
   }
 }
 

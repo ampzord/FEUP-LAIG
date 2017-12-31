@@ -47,15 +47,16 @@ MyInterface.prototype.addLightsGroup = function(lights) {
     }
 }
 
+
 /**
  * Adds a folder containing the IDs of the nodes that may be selected
  */
-
+/*
 MyInterface.prototype.addSelectableNodes = function(nodes)
 {
     var shadersGroup = this.gui.addFolder("Shaders");
     this.gui.add(this.scene, "selectableNodes", nodes).name("Select Node");
-}
+}*/
 
 MyInterface.prototype.addOptions = function() 
 {
@@ -69,8 +70,9 @@ MyInterface.prototype.addOptions = function()
     this.options.add(this.scene, 'startGame').name('Start Game');
     this.options.add(this.scene, 'pauseGame').name('Pause Game');
     this.options.add(this.scene, 'gameStatus').listen().name('Game Status');
+    this.options.add(this.scene, 'PlayerBlack_Score').listen().name('Player 1 Score');
+    this.options.add(this.scene, 'PlayerWhite_Score').listen().name('Player 2 Score');
 }
-
 /**
  * processKeyboard
  * @param event {Event}
