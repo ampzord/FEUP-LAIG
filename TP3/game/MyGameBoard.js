@@ -35,6 +35,32 @@ function MyGameBoard(scene){
 
   this.numberOfPiecesEatenByBlackPlayer = 0;
   this.numberOfPiecesEatenByWhitePlayer = 0;
+
+  this.graveyardSpot1;
+  this.graveyardSpot1;
+  this.graveyardSpot1;
+  this.graveyardSpot1;
+  this.graveyardSpot1;
+
+  var years = [];
+  for (i= 2015;i<=2030;i=i+1)    {
+      years.push({operator : i})
+  }
+
+  this.graveyardSpots = []; 
+
+  for(let i = 0;i < 64; i++)    {
+    this.graveyardSpots.push({occupied : false,position: []})
+  }
+
+  this.createGraveyard();
+
+/*
+here array years is having values like
+
+years[0]={operator:2015}
+years[1]={operator:2016}*/
+
 }
 
 function sleep(ms) {
@@ -71,12 +97,24 @@ MyGameBoard.prototype.getPrologRequest = function(requestString, onSuccess, onEr
 
       game.movePiece(game.destinationPiece.column, game.destinationPiece.line, game.initialPiece.column, game.initialPiece.line, game.initialPiece.piece);
       game.playWasMade = true;
+
+      var pecaInicio = game.initialPiece;
+
       game.scene.animatePieces(game.initialPiece,game.destinationPiece);
 
       //UPDATE EM MYGRAPHNODE
       game.scene.graph.nodes[game.initialPiece.nodeID].column = game.destinationPiece.column;
       game.scene.graph.nodes[game.initialPiece.nodeID].line = game.destinationPiece.line;
       game.scene.graph.nodes[game.destinationPiece.nodeID].dead = true;
+
+      game.scene.graph.nodes[game.initialPiece.nodeID].graveyardX = pecaInicio.graveyardX;
+      game.scene.graph.nodes[game.initialPiece.nodeID].graveyardY = pecaInicio.graveyardY;
+      game.scene.graph.nodes[game.initialPiece.nodeID].graveyardZ = pecaInicio.graveyardZ;
+
+
+      /*game.scene.graph.nodes[game.initialPiece.nodeID].positionX = game.destinationPiece.positionX;
+      game.scene.graph.nodes[game.initialPiece.nodeID].positionY = game.destinationPiece.positionY;
+      game.scene.graph.nodes[game.initialPiece.nodeID].positionZ = game.destinationPiece.positionZ;*/
     }
 
     
@@ -216,16 +254,17 @@ MyGameBoard.prototype.cycle = async function() {
         console.log('numberOfPiecesEatenByBlackPlayer: ' + this.numberOfPiecesEatenByBlackPlayer);
 
         this.isGameFinished();
-  
-        if (this.currentPlayer == 1) {
-          this.currentPlayer = 2;
-          this.scene.gameStatus = this.gameStatusOptions['1'];
-        }
-        else {
-          this.currentPlayer = 1;
-          this.scene.gameStatus = this.gameStatusOptions['0'];
-        }
+        if (this.winner == null) {
 
+          if (this.currentPlayer == 1) {
+            this.currentPlayer = 2;
+            this.scene.gameStatus = this.gameStatusOptions['1'];
+          }
+          else {
+            this.currentPlayer = 1;
+            this.scene.gameStatus = this.gameStatusOptions['0'];
+          }
+        }
         this.playWasMade = false;
       }
     }
@@ -268,7 +307,23 @@ MyGameBoard.prototype.cycle = async function() {
   }
   //Bot vs Bot
   else if (this.gameMode == 2) {
+    //bot moves not done in prolog
     this.scene.gameStatus = "Bot 1 is Playing";
   }
 }
 
+MyGameBoard.prototype.createGraveyard = function() {
+  /*graveyardX
+  :
+  98.375
+  graveyardY
+  :
+  0.20000000298023224
+  graveyardZ
+  :
+  -1.375*/
+  this.graveyardSpots[0].position = [98.375, 0.20000000298023224,-1.375];
+  this.graveyardSpots[1].position = [25.92500001192093, 0.20000000298023224,-1];
+  this.graveyardSpots[2].position = [76.92500001192093, 0.20000000298023224,0];
+  this.graveyardSpots[3].position = [50.92500001192093, 0.20000000298023224,0];
+}

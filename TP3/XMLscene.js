@@ -85,14 +85,15 @@ XMLscene.prototype.updateCamera = function ()
     this.camera = this.cameras[this.CameraChosen];
 }
 
-XMLscene.prototype.animatePieces = function(node11, node22)
+XMLscene.prototype.animatePieces = async function(node11, node22)
 {
     var animationName = this.randomName();
 
     var node1 = this.graph.nodes[node11.nodeID];
-    this.apagar = node1.nodeID;
     var node2 = this.graph.nodes[node22.nodeID];
 
+    console.log(node1);
+    console.log(node2);
     /*if (node1.piece == "'h'" || node1.piece == "'H'")
     {
         var horse = true;
@@ -265,16 +266,28 @@ XMLscene.prototype.animatePieces = function(node11, node22)
         //this.graph.nodes[node1.nodeID].animationElapsedTime = 0;
 
         
-    }*/
+}*//*
+    console.log('ANTES DE FAZER QUALQUER COISA');
 
-    this.graph.nodes[node1.nodeID].updatePosition(node2.positionX,node2.positionY,node2.positionZ);
-    
-    this.graph.nodes[node1.nodeID].updateLineColumn(node2.column,node2.line);
-    console.log('Depois de mover: ');
-    console.log('Peca origem, Coluna: ' + this.graph.nodes[node1.nodeID].column + ' Linha: ' + this.graph.nodes[node1.nodeID].line + 
-    ' Peca: ' + this.graph.nodes[node1.nodeID].piece);
+    console.log('NODE1');
 
-    //--------------------------------------------
+    console.log(node1.piece);
+
+    console.log('initX: ' + node1.initialX);
+    console.log('initY: ' + node1.initialY);
+    console.log('initZ: ' + node1.initialZ);
+
+    console.log('currentX: ' + node1.positionX);
+    console.log('currentY: ' + node1.positionY);
+    console.log('currentZ: ' + node1.positionZ);
+
+    console.log('graveyardX: ' + node1.graveyardX);
+    console.log('graveyardY: ' + node1.graveyardY);
+    console.log('graveyardZ: ' + node1.graveyardZ);
+
+    console.log('NODE2');
+
+    console.log(node2.piece);
 
     console.log('initX: ' + node2.initialX);
     console.log('initY: ' + node2.initialY);
@@ -284,22 +297,136 @@ XMLscene.prototype.animatePieces = function(node11, node22)
     console.log('currentY: ' + node2.positionY);
     console.log('currentZ: ' + node2.positionZ);
 
+    console.log('graveyardX: ' + node2.graveyardX);
+    console.log('graveyardY: ' + node2.graveyardY);
+    console.log('graveyardZ: ' + node2.graveyardZ);
 
-    
+    var a = node1.graveyardX;
+    var b = node1.graveyardY;
+    var c = node1.graveyardZ;*/
 
 
+/*
     var controlPoints2 = [];
     controlPoints2.push(new Array(node2.positionX, node2.positionY, node2.positionZ));
     controlPoints2.push(new Array(node2.positionX, 20, node2.positionZ));
     
-    //erro e aki mano
     controlPoints2.push(new Array(node2.graveyardX, 20, node2.graveyardZ));
     controlPoints2.push(new Array(node2.graveyardX, node2.graveyardY, node2.graveyardZ));
 
-    var animation2 = new MyBezierAnimation(this, "secondMove", "bezier", 100, controlPoints2);
-    this.graph.animations["secondMove"] = animation2;
-    this.graph.nodes[node2.nodeID].animationsID.push("secondMove");
+
+    var animationName4 = this.randomName();
+    var animation2 = new MyBezierAnimation(this, animationName4, "bezier", 100, controlPoints2);
+    this.graph.animations[animationName4] = animation2;
+    this.graph.nodes[node2.nodeID].animationsID.push(animationName4);
+    this.graph.nodes[node2.nodeID].animationElapsedTime = 0;*/
+    var graveyardPosAux;
+    node2.graveyardZ;
+    /*
+    for (let i = 0; i < 64; i++) {
+        if (this.game.graveyardSpots[i].occupied == false) {
+            this.game.graveyardSpots[i].occupied = true;
+            graveyardPosAux = this.game.graveyardSpots[i].position;
+            break;
+        }
+    }*/
+    //console.log(graveyardPosAux[0]);
+    calcDistX2 = (node2.graveyardX + Math.abs(node2.initialX-node2.positionX));
+    calcDistZ2 = (node2.graveyardX + Math.abs(node2.initialX-node2.positionX));
+
+    calcDistX = Math.abs(node2.graveyardX - node2.positionX);
+    calcDistZ = Math.abs(node2.graveyardZ - node2.positionZ);
+    
+    var controlPoints2 = [];
+    
+    controlPoints2.push(new Array(0, 0, 0));
+    controlPoints2.push(new Array(0, 20, 0));
+    
+    controlPoints2.push(new Array(calcDistX2, 20, calcDistZ2));
+    controlPoints2.push(new Array(calcDistX2, 0, calcDistZ2));
+
+
+    /*
+    var controlPoints2 = [];
+    controlPoints2.push(new Array(node2.positionX, node2.positionY, node2.positionZ));
+    controlPoints2.push(new Array(node2.positionX, 20, node2.positionZ));
+    
+    controlPoints2.push(new Array(node2.graveyardX, 20, node2.graveyardZ));
+    controlPoints2.push(new Array(node2.graveyardX, node2.graveyardY, node2.graveyardZ));*/
+
+
+    var animationName4 = this.randomName();
+    var animation2 = new MyBezierAnimation(this, animationName4, "bezier", 100, controlPoints2);
+    this.graph.animations[animationName4] = animation2;
+    this.graph.nodes[node2.nodeID].animationsID.push(animationName4);
     this.graph.nodes[node2.nodeID].animationElapsedTime = 0;
+
+
+
+
+
+    node1.updatePosition(node2.positionX,node2.positionY,node2.positionZ);
+    node1.updateLineColumn(node2.column,node2.line);
+
+
+/*
+    node1.updatePosition(node2.positionX,node2.positionY,node2.positionZ);
+    node1.updateLineColumn(node2.column,node2.line);*/
+
+
+
+    //this.graph.nodes[node1.nodeID].updatePosition(node2.positionX,node2.positionY,node2.positionZ);
+    
+    //this.graph.nodes[node1.nodeID].updateLineColumn(node2.column,node2.line);
+    /*console.log('Depois de mover: ');
+    console.log('Peca origem, Coluna: ' + this.graph.nodes[node1.nodeID].column + ' Linha: ' + this.graph.nodes[node1.nodeID].line + 
+    ' Peca: ' + this.graph.nodes[node1.nodeID].piece);*/
+    //--------------------------------------------
+/*
+    console.log(node1);
+    console.log(node2);*/
+
+/*
+    console.log('DEPOIS DE DAR UPDATE AO NOde1');
+
+    console.log('NODE1');
+
+    console.log(node1.piece);
+
+    console.log('initX: ' + this.graph.nodes[node1.nodeID].initialX);
+    console.log('initY: ' + node1.initialY);
+    console.log('initZ: ' + node1.initialZ);
+
+    console.log('currentX: ' + node1.positionX);
+    console.log('currentY: ' + node1.positionY);
+    console.log('currentZ: ' + node1.positionZ);
+
+    console.log('graveyardX: ' + node1.graveyardX);
+    console.log('graveyardY: ' + node1.graveyardY);
+    console.log('graveyardZ: ' + node1.graveyardZ);
+
+    console.log('NODE2');
+
+    console.log(node2.piece);
+
+    console.log('initX: ' + node2.initialX);
+    console.log('initY: ' + node2.initialY);
+    console.log('initZ: ' + node2.initialZ);
+
+    console.log('currentX: ' + node2.positionX);
+    console.log('currentY: ' + node2.positionY);
+    console.log('currentZ: ' + node2.positionZ);
+
+    console.log('graveyardX: ' + node2.graveyardX);
+    console.log('graveyardY: ' + node2.graveyardY);
+    console.log('graveyardZ: ' + node2.graveyardZ);*/
+
+
+
+/*
+    console.log(node1);
+    console.log(node2);*/
+
 }
 
 XMLscene.prototype.randomName = function() {
@@ -485,24 +612,15 @@ XMLscene.prototype.startGame = function ()
         this.gameStatus = this.gameStatusOptions[this.startingPlayer];
         this.game.gameMode = this.Type;
         this.game.botDifficulty = this.Difficulty;
-        console.log("Type:" +  this.game.gameMode);
-        console.log("Difficulty: " + this.game.botDifficulty);
     }
-}
-
-XMLscene.prototype.pauseGame = function ()
-{
-
 }
 
 XMLscene.prototype.startCams = function()
 {
-    this.cameras[0] = new CGFcamera(0.4,0.1,500,vec3.fromValues(0.186868, 7.508605, 6.870955),vec3.fromValues(0.210242, 0.971526, -0.737233));
-    this.cameras[1] = new CGFcamera(0.4,0.1,500,vec3.fromValues(0.186868, -7.508605, -6.870955),vec3.fromValues(0.210242, 0.971526, -0.737233));
-    this.cameras[2] = new CGFcamera(0.4,0.1,500,vec3.fromValues(6.284444, 8.675453, -0.100106),vec3.fromValues(-0.495502, 1.905979, -0.097830));
-    this.cameras[3] = new CGFcamera(0.4,0.1,500,vec3.fromValues(-7.650352, 8.345042, -0.149275),vec3.fromValues(0.025431, 2.612263, -0.053628));
-    this.cameras[4] = new CGFcamera(0.4,0.1,500,vec3.fromValues(0.094776, 11.472537, 0.392229),vec3.fromValues(-0.016847, 1.898517, -0.046128));
-    //this.camera = this.cameras[4];
+    this.cameras[0] = new CGFcamera(0.4,0.1,500,vec3.fromValues(1.5, 10, 1),vec3.fromValues(1.5, 0, 0)); //top view
+    this.cameras[1] = new CGFcamera(0.4,0.1,500,vec3.fromValues(20, 20, 1),vec3.fromValues(-2.5, 0, 0)); //angle outter view
+    this.cameras[2] = new CGFcamera(0.4,0.1,500,vec3.fromValues(35, 35, 3),vec3.fromValues(0, 0, -2.5)); //outter view
+    this.camera = this.cameras[2];
 }
 
 /**
@@ -514,12 +632,8 @@ XMLscene.prototype.display = function() {
     if (this.gameStarted || !this.pauseGame){
         this.logPicking();
         this.clearPickRegistration();
-        //this.updateCamera();
+        this.updateCamera();
     }
-
-    /*if (this.apagar != null)
-        console.log(this.graph.nodes[this.apagar]);*/
-
 
     // Clear image and depth buffer everytime we update the scene
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
@@ -558,21 +672,12 @@ XMLscene.prototype.display = function() {
             }
         }
 
-        //console.log(this.graph.nodes["piece5"].transformMatrix);
-
         var newDate = new Date();
         currTime = newDate.getTime();
         if(this.SceneinitTime == null) {
             this.SceneinitTime = currTime;
         }
-
-        if (this.pauseGame && this.oldTimeElapsed == null) {
-            this.oldTimeElapsed = this.timeElapsed;
-        }
-        else if (!this.pauseGame && this.oldTimeElapsed != null) {
-            this.ElapsedTime = this.oldTimeElapsed;
-        }
-        /*
+        
         if (this.gameStarted && !this.pauseGame) 
         {
             var newDateElapsedTime = new Date();
@@ -583,7 +688,7 @@ XMLscene.prototype.display = function() {
             }
             time = (currTimeElapsed - this.SceneinitTimeElapsed)/1000;
             this.TimeElapsed = Math.floor(time);
-        }*/
+        }
 
         dT = (currTime - this.sceneInitTime)/1000;
 

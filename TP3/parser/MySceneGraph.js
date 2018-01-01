@@ -1493,6 +1493,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
             }
 
             this.nodes[nodeID].assignInitialPositions();
+            this.nodes[nodeID].assignGraveyard();
 
             // Retrieves information about children.
             var descendantsIndex = specsNames.indexOf("DESCENDANTS");

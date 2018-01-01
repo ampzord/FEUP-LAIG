@@ -64,7 +64,7 @@ MyInterface.prototype.addOptions = function()
     this.options.open();
     this.options.add(this.scene, 'Difficulty', { Easy: 0, Medium: 1, Hard: 2 }).name('Game Difficulty');
     this.options.add(this.scene, 'Type', { HumanVsHuman: 0, HumanVsBot: 1, BotVsBot: 2 }).name('Game Mode');
-    this.options.add(this.scene, 'CameraChosen', { Player1: 0, Player2: 1 , Right: 2,  Left: 3, Top: 4}).name('Camera Angle');
+    this.options.add(this.scene, 'CameraChosen', { Top: 0, AngleView: 1 , OuterView: 2}).name('Camera Angle');
     this.options.add(this.scene, 'TimeElapsed').listen().name('Time Elapsed');
     this.options.add(this.scene, 'startingPlayer', { Player1: 0, Player2: 1 }).name('Starting Player');
     this.options.add(this.scene, 'startGame').name('Start Game');
@@ -82,8 +82,8 @@ MyInterface.prototype.processKeyDown = function(event)
     CGFinterface.prototype.processKeyboard.call(this,event);
 	switch (event.keyCode)
 	{
-		case (85): //'u' letter
-			console.log('UNDO');
+		case (85): //u letter
+			console.log('undo play');
 			break;
 		
 	};

@@ -63,6 +63,9 @@ function MyGraphNode(graph, nodeID) {
      this.animationElapsedTime = 0;
      this.animationCurrentSection = 0;
      this.animationIndex = 0;
+
+
+     this.counter = 0;
 }
 
 /**
@@ -89,6 +92,13 @@ MyGraphNode.prototype.updatePosition = function(newx,newy,newz)
     this.transformMatrix[12] = newx;
     this.transformMatrix[13] = newy;
     this.transformMatrix[14] = newz;
+}
+
+MyGraphNode.prototype.updateGraveyard = function(newx,newy,newz)
+{
+    this.graveyardX = newx;
+    this.graveyardY = newy;
+    this.graveyardZ = newz;
 }
 
 /**
@@ -149,18 +159,24 @@ MyGraphNode.prototype.updatePositionValues = function ()
     this.positionZ = this.transformMatrix[14];
 }
 
+MyGraphNode.prototype.assignGraveyard = function ()
+{
+    if (this.graveyardX == null && this.graveyardY == null && this.graveyardZ == null) {
+        this.graveyardX = this.initialX+100;
+        this.graveyardY = this.initialY;
+        this.graveyardZ = this.initialZ;
+    }
+}
+
 /**
  * Initially assigns the position to nodes
  */
 MyGraphNode.prototype.assignInitialPositions = function ()
 {
+
     this.initialX = this.transformMatrix[12];
     this.initialY = this.transformMatrix[13];
     this.initialZ = this.transformMatrix[14];
-
-    this.graveyardX = this.initialX+100;
-    this.graveyardY = this.initialY;
-    this.graveyardZ = 0;
 
     switch (this.nodeID)
     {
