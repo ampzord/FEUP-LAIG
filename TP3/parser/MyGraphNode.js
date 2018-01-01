@@ -64,8 +64,6 @@ function MyGraphNode(graph, nodeID) {
      this.animationCurrentSection = 0;
      this.animationIndex = 0;
 
-
-     this.counter = 0;
 }
 
 /**
@@ -122,9 +120,6 @@ MyGraphNode.prototype.applyAnimation = function(deltaTime) {
             this.animationElapsedTime = 0;
             this.animationIndex++;
             this.startedAnimation = false;
-            //this.animationsID = [];
-            //this.transformMatrix = this.animationMatrix;
-            //this.switchMatrix();
         }
         
         // Check if animation between sections ended (combo or linear)
