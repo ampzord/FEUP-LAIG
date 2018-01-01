@@ -93,13 +93,18 @@ XMLscene.prototype.animatePieces = function(node11, node22)
     this.apagar = node1.nodeID;
     var node2 = this.graph.nodes[node22.nodeID];
 
-    if (node1.piece == "'h'" || node1.piece == "'H'")
+    /*if (node1.piece == "'h'" || node1.piece == "'H'")
     {
         var horse = true;
 
         var controlPoints = [];
         controlPoints.push(new Array(this.graph.nodes[node1.nodeID].animationMatrix[12], 
             this.graph.nodes[node1.nodeID].animationMatrix[13], this.graph.nodes[node1.nodeID].animationMatrix[14]));
+
+        console.log('x : ' + this.graph.nodes[node1.nodeID].animationMatrix[12]);
+        console.log('y : ' + this.graph.nodes[node1.nodeID].animationMatrix[13]);
+        console.log('z : ' + this.graph.nodes[node1.nodeID].animationMatrix[14]);
+
             
 
         if (node2.line == (node1.line+2) && node2.column.charCodeAt(1) == (node1.column.charCodeAt(1)+1))
@@ -196,17 +201,23 @@ XMLscene.prototype.animatePieces = function(node11, node22)
 
         var controlPoints = [];
         controlPoints.push(new Array(this.graph.nodes[node1.nodeID].animationMatrix[12], this.graph.nodes[node1.nodeID].animationMatrix[13], this.graph.nodes[node1.nodeID].animationMatrix[14]));
+        //controlPoints.push(new Array(0, 0, 8.4));
+
+        console.log('x : ' + this.graph.nodes[node1.nodeID].animationMatrix[12]);
+        console.log('y : ' + this.graph.nodes[node1.nodeID].animationMatrix[13]);
+        console.log('z : ' + this.graph.nodes[node1.nodeID].animationMatrix[14]);
 
         switch (ctrl)
         {
             case 1:
             console.log(ctrl);
-            /*if (this.graph.nodes[node1.nodeID].animationIndex != 0) {
-                controlPoints.push(new Array(0.425*increment, 0.0001, 0.425*increment));
-                console.log(ctrl);
-            }
-            else*/
-                controlPoints.push(new Array(8.4*increment, 0.0001, 8.4*increment));
+            console.log('x : ' + this.graph.nodes[node1.nodeID].transformMatrix[12]);
+            console.log('y : ' + this.graph.nodes[node1.nodeID].transformMatrix[13]);
+            console.log('z : ' + this.graph.nodes[node1.nodeID].transformMatrix[14]);
+            this.graph.nodes[node1.nodeID].updatePosition(node2.positionX,node2.positionY,node2.positionZ);
+            console.log('x : ' + this.graph.nodes[node1.nodeID].transformMatrix[12]);
+            console.log('y : ' + this.graph.nodes[node1.nodeID].transformMatrix[13]);
+            console.log('z : ' + this.graph.nodes[node1.nodeID].transformMatrix[14]);
             break;
 
             case 2:
@@ -248,26 +259,42 @@ XMLscene.prototype.animatePieces = function(node11, node22)
             break;
         }
 
-        var animation1 = new MyLinearAnimation(this, animationName, "linear", 8, controlPoints);
-        this.graph.animations[animationName] = animation1;
-        this.graph.nodes[node1.nodeID].animationsID.push(animationName);
-        this.graph.nodes[node1.nodeID].animationElapsedTime = 0;
+        //var animation1 = new MyLinearAnimation(this, animationName, "linear", 8, controlPoints);
+        //this.graph.animations[animationName] = animation1;
+        //this.graph.nodes[node1.nodeID].animationsID.push(animationName);
+        //this.graph.nodes[node1.nodeID].animationElapsedTime = 0;
 
-        this.graph.nodes[node1.nodeID].updateLineColumn(node2.column,node2.line);
-        console.log('Depois de mover: ');
-        console.log('Peca origem, Coluna: ' + this.graph.nodes[node1.nodeID].column + ' Linha: ' + this.graph.nodes[node1.nodeID].line + 
-        ' Peca: ' + this.graph.nodes[node1.nodeID].piece);
-    }
+        
+    }*/
+
+    this.graph.nodes[node1.nodeID].updatePosition(node2.positionX,node2.positionY,node2.positionZ);
+    
+    this.graph.nodes[node1.nodeID].updateLineColumn(node2.column,node2.line);
+    console.log('Depois de mover: ');
+    console.log('Peca origem, Coluna: ' + this.graph.nodes[node1.nodeID].column + ' Linha: ' + this.graph.nodes[node1.nodeID].line + 
+    ' Peca: ' + this.graph.nodes[node1.nodeID].piece);
 
     //--------------------------------------------
 
+    console.log('initX: ' + node2.initialX);
+    console.log('initY: ' + node2.initialY);
+    console.log('initZ: ' + node2.initialZ);
+
+    console.log('currentX: ' + node2.positionX);
+    console.log('currentY: ' + node2.positionY);
+    console.log('currentZ: ' + node2.positionZ);
+
+
+    
+
+
     var controlPoints2 = [];
-    controlPoints2.push(new Array(this.graph.nodes[node22.nodeID].transformMatrix[12], 
-        this.graph.nodes[node22.nodeID].transformMatrix[13], this.graph.nodes[node22.nodeID].transformMatrix[14]));
-    controlPoints2.push(new Array(this.graph.nodes[node22.nodeID].transformMatrix[12], 20, 
-        this.graph.nodes[node22.nodeID].transformMatrix[14]));
-    controlPoints2.push(new Array(100, 20, 0));
-    controlPoints2.push(new Array(100, this.graph.nodes[node22.nodeID].transformMatrix[13], 0));
+    controlPoints2.push(new Array(node2.positionX, node2.positionY, node2.positionZ));
+    controlPoints2.push(new Array(node2.positionX, 20, node2.positionZ));
+    
+    //erro e aki mano
+    controlPoints2.push(new Array(node2.graveyardX, 20, node2.graveyardZ));
+    controlPoints2.push(new Array(node2.graveyardX, node2.graveyardY, node2.graveyardZ));
 
     var animation2 = new MyBezierAnimation(this, "secondMove", "bezier", 100, controlPoints2);
     this.graph.animations["secondMove"] = animation2;
@@ -416,7 +443,7 @@ XMLscene.prototype.update = function(currTime) {
     
 	for(var node in this.graph.nodes){
         this.graph.nodes[node].applyAnimation(deltaTime);
-        this.graph.nodes[node].updatePositions();
+        this.graph.nodes[node].updatePositionValues();
     }
 }
 
@@ -531,7 +558,7 @@ XMLscene.prototype.display = function() {
             }
         }
 
-        console.log(this.graph.nodes["piece5"].transformMatrix);
+        //console.log(this.graph.nodes["piece5"].transformMatrix);
 
         var newDate = new Date();
         currTime = newDate.getTime();

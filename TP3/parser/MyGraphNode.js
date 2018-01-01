@@ -39,6 +39,14 @@ function MyGraphNode(graph, nodeID) {
     this.positionZ = null;
     this.dead = false;
 
+    this.initialX = null;
+    this.initialY = null;
+    this.initialZ = null;
+
+    this.graveyardX = null;
+    this.graveyardY = null;
+    this.graveyardZ = null;
+
     // Transform Matrix
     this.transformMatrix = mat4.create();
     mat4.identity(this.transformMatrix);
@@ -74,6 +82,13 @@ MyGraphNode.prototype.addLeaf = function(leaf) {
 MyGraphNode.prototype.switchMatrix = function()
 {
     this.animationMatrix = this.animationMatrixHolder;
+}
+
+MyGraphNode.prototype.updatePosition = function(newx,newy,newz)
+{
+    this.transformMatrix[12] = newx;
+    this.transformMatrix[13] = newy;
+    this.transformMatrix[14] = newz;
 }
 
 /**
@@ -127,22 +142,11 @@ MyGraphNode.prototype.updateLineColumn = function (newColumn, newLine)
 /**
  * Updates the node position
  */
-MyGraphNode.prototype.updatePositions = function ()
+MyGraphNode.prototype.updatePositionValues = function ()
 {
-    if (this.startedAnimation == false) {
-        this.positionX = this.transformMatrix[12];
-        this.positionY = this.transformMatrix[13];
-        this.positionZ = this.transformMatrix[14];
-    }
-    else{
-        this.positionX = this.animationMatrix[12];
-        this.positionY = this.animationMatrix[13];
-        this.positionZ = this.animationMatrix[14];
-
-        /*this.transformMatrix[12] = this.animationMatrix[12];
-        this.transformMatrix[13] = this.animationMatrix[13];
-        this.transformMatrix[14] = this.animationMatrix[14];*/
-    }
+    this.positionX = this.transformMatrix[12];
+    this.positionY = this.transformMatrix[13];
+    this.positionZ = this.transformMatrix[14];
 }
 
 /**
@@ -150,9 +154,13 @@ MyGraphNode.prototype.updatePositions = function ()
  */
 MyGraphNode.prototype.assignInitialPositions = function ()
 {
-    this.positionX = this.transformMatrix[12];
-    this.positionY = this.transformMatrix[13];
-    this.positionZ = this.transformMatrix[14];
+    this.initialX = this.transformMatrix[12];
+    this.initialY = this.transformMatrix[13];
+    this.initialZ = this.transformMatrix[14];
+
+    this.graveyardX = this.initialX+100;
+    this.graveyardY = this.initialY;
+    this.graveyardZ = 0;
 
     switch (this.nodeID)
     {
