@@ -148,6 +148,8 @@ MyGraphNode.prototype.applyAnimation = function(deltaTime) {
             this.animationEndY = 0;
             this.animationEndZ = 0;
             }
+
+            
         }
         
         // Check if animation between sections ended (combo or linear)

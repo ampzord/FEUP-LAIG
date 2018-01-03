@@ -91,6 +91,9 @@ XMLscene.prototype.animatePieces = function(node11, node22)
     var node1 = this.graph.nodes[node11.nodeID];
     var node2 = this.graph.nodes[node22.nodeID];
 
+    console.log('Peca origem, Coluna: ' + node1.column + ' Linha: ' + node1.line + ' Peca: ' + node1.piece);
+    console.log('Peca destino, Coluna: ' + node2.column + ' Linha: ' + node2.line + ' Peca: ' + node2.piece);
+
     if (node1.piece == "'h'" || node1.piece == "'H'")
     {
         var horse = true;
@@ -140,17 +143,15 @@ XMLscene.prototype.animatePieces = function(node11, node22)
         this.graph.nodes[node1.nodeID].updateAnimationEnds(node2.positionX,node2.positionY,node2.positionZ);
 
         this.graph.nodes[node1.nodeID].updateLineColumn(node2.column,node2.line);
-        console.log('Depois de mover: ');
-        console.log('Peca origem, Coluna: ' + this.graph.nodes[node1.nodeID].column + ' Linha: ' + this.graph.nodes[node1.nodeID].line + ' Peca: ' + this.graph.nodes[node1.nodeID].piece);
+        //console.log('Peca origem, Coluna: ' + this.graph.nodes[node1.nodeID].column + ' Linha: ' + this.graph.nodes[node1.nodeID].line + ' Peca: ' + this.graph.nodes[node1.nodeID].piece);
     }
 
     if (!horse)
     {
         var ctrl = -1;
         var increment = -1;
-        console.log('DENTRO DA ANIÇACAO');
-        console.log('Peca origem, Coluna: ' + node1.column + ' Linha: ' + node1.line + ' Peca: ' + node1.piece);
-        console.log('Peca destino, Coluna: ' + node2.column + ' Linha: ' + node2.line + ' Peca: ' + node2.piece);
+        //console.log('Peca origem, Coluna: ' + node1.column + ' Linha: ' + node1.line + ' Peca: ' + node1.piece);
+        //console.log('Peca destino, Coluna: ' + node2.column + ' Linha: ' + node2.line + ' Peca: ' + node2.piece);
 
         if (node2.column.charCodeAt(1) < node1.column.charCodeAt(1) && node2.line < node1.line)
         {
