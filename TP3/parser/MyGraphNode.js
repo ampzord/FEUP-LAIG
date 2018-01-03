@@ -64,6 +64,11 @@ function MyGraphNode(graph, nodeID) {
      this.animationCurrentSection = 0;
      this.animationIndex = 0;
 
+
+     this.animationEndX = null;
+    this.animationEndY = null;
+    this.animationEndZ = null;
+
 }
 
 /**
@@ -99,6 +104,21 @@ MyGraphNode.prototype.updateGraveyard = function(newx,newy,newz)
     this.graveyardZ = newz;
 }
 
+MyGraphNode.prototype.updateTransformMatrix = function()
+{
+    this.transformMatrix[12] = this.animationEndX;
+    this.transformMatrix[13] = this.animationEndY;
+    this.transformMatrix[14] = this.animationEndZ;
+}
+MyGraphNode.prototype.updateAnimationEnds = function(newx,newy,newz)
+{
+    this.animationEndX = newx;
+    this.animationEndY = newy;
+    this.animationEndZ = newz;
+}
+
+
+
 /**
  * Applies the animations periodically through a deltatime
  */
@@ -120,6 +140,14 @@ MyGraphNode.prototype.applyAnimation = function(deltaTime) {
             this.animationElapsedTime = 0;
             this.animationIndex++;
             this.startedAnimation = false;
+
+            if (!this.dead) {
+            mat4.identity(this.animationMatrix);
+            this.updateTransformMatrix();
+            this.animationEndX = 0;
+            this.animationEndY = 0;
+            this.animationEndZ = 0;
+            }
         }
         
         // Check if animation between sections ended (combo or linear)

@@ -4,7 +4,7 @@ var DEGREE_TO_RAD = Math.PI / 180;
  * XMLscene class, representing the scene that is to be rendered.
  * @constructor
  */
-function XMLscene(interface) {
+ function XMLscene(interface) {
     CGFscene.call(this);
 
     this.interface = interface;
@@ -25,7 +25,7 @@ XMLscene.prototype.constructor = XMLscene;
 /**
  * Initializes the scene, setting some WebGL defaults, initializing the camera and the axis.
  */
-XMLscene.prototype.init = function(application) {
+ XMLscene.prototype.init = function(application) {
     CGFscene.prototype.init.call(this, application);
 
     this.shader = new CGFshader(this.gl, "shaders/shader.vert", "shaders/shader.frag");
@@ -91,7 +91,168 @@ XMLscene.prototype.animatePieces = function(node11, node22)
     var node1 = this.graph.nodes[node11.nodeID];
     var node2 = this.graph.nodes[node22.nodeID];
 
-    node1.updatePosition(node2.positionX,node2.positionY,node2.positionZ);
+    if (node1.piece == "'h'" || node1.piece == "'H'")
+    {
+        var horse = true;
+
+        var controlPoints = [];
+        controlPoints.push(new Array(this.graph.nodes[node1.nodeID].positionX, 
+            this.graph.nodes[node1.nodeID].positionY, this.graph.nodes[node1.nodeID].positionZ));
+
+
+        if (node2.line == (node1.line+2) && node2.column.charCodeAt(1) == (node1.column.charCodeAt(1)+1))
+        {
+            controlPoints.push(new Array(8.4, 0.0001, 16.8));
+        }
+        else if (node2.line == (node1.line+2) && node2.column.charCodeAt(1) == (node1.column.charCodeAt(1)-1))
+        {
+            controlPoints.push(new Array(-8.4, 0.0001, 16.8));
+        }
+        else if (node2.line == (node1.line-2) && node2.column.charCodeAt(1) == (node1.column.charCodeAt(1)-1))
+        {
+            controlPoints.push(new Array(-8.4, 0.0001, -16.8));
+        }
+        else if (node2.line == (node1.line-2) && node2.column.charCodeAt(1) == (node1.column.charCodeAt(1)+1))
+        {
+            controlPoints.push(new Array(8.4, 0.0001, -16.8));
+        }
+        else if (node2.line == (node1.line-1) && node2.column.charCodeAt(1) == (node1.column.charCodeAt(1)-2))
+        {
+            controlPoints.push(new Array(-16.8, 0.0001, -8.4));
+        }
+        else if (node2.line == (node1.line+1) && node2.column.charCodeAt(1) == (node1.column.charCodeAt(1)-2))
+        {
+            controlPoints.push(new Array(-16.8, 0.0001, 8.4));
+        }
+        else if (node2.line == (node1.line+1) && node2.column.charCodeAt(1) == (node1.column.charCodeAt(1)+2))
+        {
+            controlPoints.push(new Array(16.8, 0.0001, 8.4));
+        }
+        else if (node2.line == (node1.line-1) && node2.column.charCodeAt(1) == (node1.column.charCodeAt(1)+2))
+        {
+            controlPoints.push(new Array(16.8, 0.0001, -8.4));
+        }
+
+        var animation1 = new MyLinearAnimation(this, animationName, "linear", 8, controlPoints);
+        this.graph.animations[animationName] = animation1;
+        this.graph.nodes[node1.nodeID].animationsID.push(animationName);
+        this.graph.nodes[node1.nodeID].animationElapsedTime = 0;
+        this.graph.nodes[node1.nodeID].updateAnimationEnds(node2.positionX,node2.positionY,node2.positionZ);
+
+        this.graph.nodes[node1.nodeID].updateLineColumn(node2.column,node2.line);
+        console.log('Depois de mover: ');
+        console.log('Peca origem, Coluna: ' + this.graph.nodes[node1.nodeID].column + ' Linha: ' + this.graph.nodes[node1.nodeID].line + ' Peca: ' + this.graph.nodes[node1.nodeID].piece);
+    }
+
+    if (!horse)
+    {
+        var ctrl = -1;
+        var increment = -1;
+        console.log('DENTRO DA ANIÇACAO');
+        console.log('Peca origem, Coluna: ' + node1.column + ' Linha: ' + node1.line + ' Peca: ' + node1.piece);
+        console.log('Peca destino, Coluna: ' + node2.column + ' Linha: ' + node2.line + ' Peca: ' + node2.piece);
+
+        if (node2.column.charCodeAt(1) < node1.column.charCodeAt(1) && node2.line < node1.line)
+        {
+            ctrl = 1;
+            increment = (node1.line - node2.line)*-1;
+        }
+        else if (node2.column.charCodeAt(1) == node1.column.charCodeAt(1) && node2.line < node1.line)
+        {
+            ctrl = 2;
+            increment = (node1.line-node2.line)*-1;
+        }
+        else if (node2.column.charCodeAt(1) > node1.column.charCodeAt(1) && node2.line < node1.line)
+        {
+            ctrl = 3;
+            increment = (node1.line-node2.line)*-1;
+        }
+        else if (node2.line == node1.line && node2.column.charCodeAt(1) < node1.column.charCodeAt(1))
+        {
+            ctrl = 4;
+            increment = (node1.column.charCodeAt(1) - node2.column.charCodeAt(1))*-1;
+        }
+        else if (node2.line == node1.line && node2.column.charCodeAt(1) > node1.column.charCodeAt(1))
+        {
+            ctrl = 5;
+            increment = node2.column.charCodeAt(1) - node1.column.charCodeAt(1);
+        }
+        else if (node2.line > node1.line && node2.column.charCodeAt(1) < node1.column.charCodeAt(1))
+        {
+            ctrl = 6;
+            increment = (node1.column.charCodeAt(1) - node2.column.charCodeAt(1))*-1;
+        }
+        else if (node1.column.charCodeAt(1) == node2.column.charCodeAt(1) && node2.line > node1.line)
+        {
+            ctrl = 7;
+            increment = node2.line - node1.line;
+        }
+        else if (node2.line > node1.line && node2.column.charCodeAt(1) > node1.column.charCodeAt(1))
+        {
+            ctrl = 8;
+            increment = node2.line - node1.line;
+        }
+
+        var controlPoints = [];
+        controlPoints.push(new Array(this.graph.nodes[node1.nodeID].positionX, this.graph.nodes[node1.nodeID].positionY, this.graph.nodes[node1.nodeID].positionZ));
+
+        switch (ctrl)
+        {
+            case 1:
+            console.log(ctrl);
+            controlPoints.push(new Array(8.4*increment, 0.0001, 8.4*increment));
+            break;
+
+            case 2:
+            controlPoints.push(new Array(0.0001, 0.0001, 8.4*increment));
+            console.log(ctrl);
+            break;
+
+            case 3:
+            controlPoints.push(new Array(-8.4*increment, 0.0001, 8.4*increment));
+            console.log(ctrl);
+            break;
+
+            case 4:
+            controlPoints.push(new Array(8.4*increment, 0.0001, 0.0001));
+            console.log(ctrl);
+            break;
+
+            case 5:
+            controlPoints.push(new Array(8.4*increment, 0.0001, 0.0001));
+            console.log(ctrl);
+            break;
+
+            case 6:
+            controlPoints.push(new Array(8.4*increment, 0.0001, -8.4*increment));
+            console.log(ctrl);
+            break;
+
+            case 7:
+            controlPoints.push(new Array(0.0001, 0.0001, 8.4*increment));
+            console.log(ctrl);
+            break;
+
+            case 8:
+            controlPoints.push(new Array(8.4*increment, 0.0001, 8.4*increment));
+            console.log(ctrl);
+            break;
+
+            default:
+            break;
+        }
+
+        var animation1 = new MyLinearAnimation(this, animationName, "linear", 8, controlPoints);
+        this.graph.animations[animationName] = animation1;
+        this.graph.nodes[node1.nodeID].animationsID.push(animationName);
+        this.graph.nodes[node1.nodeID].animationElapsedTime = 0;
+        this.graph.nodes[node1.nodeID].updateAnimationEnds(node2.positionX,node2.positionY,node2.positionZ);
+
+    }
+
+
+
+    //node1.updatePosition(node2.positionX,node2.positionY,node2.positionZ);
     node1.updateLineColumn(node2.column,node2.line);
 
     calcDistX = Math.abs(node2.graveyardX - node2.positionX);
@@ -110,16 +271,18 @@ XMLscene.prototype.animatePieces = function(node11, node22)
     this.graph.nodes[node2.nodeID].animationsID.push(animationName4);
     this.graph.nodes[node2.nodeID].animationElapsedTime = 0;
 
+    this.graph.nodes[node2.nodeID].updateAnimationEnds(node2.positionX,node2.positionY,node2.positionZ);
+
 }
 
 XMLscene.prototype.randomName = function() {
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  
+
     for (var i = 0; i < 5; i++)
       text += possible.charAt(Math.floor(Math.random() * possible.length));
   
-    return text;
+  return text;
 }
 
 
@@ -129,74 +292,74 @@ XMLscene.prototype.logPicking = function()
         return;
 
     if (this.pickMode == false) {
-		if (this.pickResults != null && this.pickResults.length > 0) {
-			for (var i=0; i< this.pickResults.length; i++) {
-				var obj = this.pickResults[i][0];
-				if (obj)
-				{
+      if (this.pickResults != null && this.pickResults.length > 0) {
+         for (var i=0; i< this.pickResults.length; i++) {
+            var obj = this.pickResults[i][0];
+            if (obj)
+            {
 
-                    if (this.pickResults[0][0].dead)
+                if (this.pickResults[0][0].dead)
+                    return;
+
+                if (this.firstPickedNode != null && obj.nodeID == this.firstPickedNode.nodeID) {
+                    this.firstPickedNode = null;
+                    this.secondPickedNode = null;
+                    this.selectableNodes = "None";
+                    this.clearPickRegistration();
+                    this.pickMode = true;
+                    return; 
+                }
+
+                if (this.game.currentPlayer == 1) {
+                    if (this.firstPickedNode == null && this.pickResults[0][0].team == "white")
                         return;
-
-                    if (this.firstPickedNode != null && obj.nodeID == this.firstPickedNode.nodeID) {
-                        this.firstPickedNode = null;
-                        this.secondPickedNode = null;
-                        this.selectableNodes = "None";
-                        this.clearPickRegistration();
-                        this.pickMode = true;
-                        return; 
-                    }
-                        
-                    if (this.game.currentPlayer == 1) {
-                        if (this.firstPickedNode == null && this.pickResults[0][0].team == "white")
-                            return;
-                        if (this.firstPickedNode != null && this.pickResults[0][0].team == "black")
-                            return;
-                    }
-                    else {
-                        if (this.firstPickedNode == null && this.pickResults[0][0].team == "black")
-                            return;
-                        if (this.firstPickedNode != null && this.pickResults[0][0].team == "white")
-                            return;
-                    }
-
-                    if(this.secondPickedNode == null && this.firstPickedNode != null)
-                    {
-                        this.secondPickedNode = this.pickResults[0][0];
-                        
-                        this.game.givePickedNodes(this.firstPickedNode, this.secondPickedNode);
-                        this.game.cycle();
-
-                        this.firstPickedNode = null;
-                        this.secondPickedNode = null;
-                        this.selectableNodes = "None";
-                        this.clearPickRegistration();
-                        this.pickMode = true;
+                    if (this.firstPickedNode != null && this.pickResults[0][0].team == "black")
                         return;
-                    }
-                    this.selectableNodes =  this.pickResults[0][0].nodeID;
-                    var customId = this.pickResults[i][1];
-                    this.firstPickedNode = this.pickResults[0][0];
+                }
+                else {
+                    if (this.firstPickedNode == null && this.pickResults[0][0].team == "black")
+                        return;
+                    if (this.firstPickedNode != null && this.pickResults[0][0].team == "white")
+                        return;
+                }
+
+                if(this.secondPickedNode == null && this.firstPickedNode != null)
+                {
+                    this.secondPickedNode = this.pickResults[0][0];
+
+                    this.game.givePickedNodes(this.firstPickedNode, this.secondPickedNode);
+                    this.game.cycle();
+
+                    this.firstPickedNode = null;
+                    this.secondPickedNode = null;
+                    this.selectableNodes = "None";
+                    this.clearPickRegistration();
+                    this.pickMode = true;
+                    return;
+                }
+                this.selectableNodes =  this.pickResults[0][0].nodeID;
+                var customId = this.pickResults[i][1];
+                this.firstPickedNode = this.pickResults[0][0];
                     //console.log("Picked object with id " + customId);
-				}
-			}
-			this.pickResults.splice(0,this.pickResults.length);
-		}		
-	}
+                }
+            }
+            this.pickResults.splice(0,this.pickResults.length);
+        }		
+    }
 }
 
 /**
  * Updates the scale factors of shaders
  */
-XMLscene.prototype.updateScaleFactor = function(date)
-{
+ XMLscene.prototype.updateScaleFactor = function(date)
+ {
     this.shader.setUniformsValues({time: date});
 };
 
 /**
  * Initializes the scene lights with the values read from the LSX file.
  */
-XMLscene.prototype.initLights = function() {
+ XMLscene.prototype.initLights = function() {
     var i = 0;
     // Lights index.
     
@@ -230,7 +393,7 @@ XMLscene.prototype.initLights = function() {
 /**
  * Initializes the scene cameras.
  */
-XMLscene.prototype.initCameras = function() {
+ XMLscene.prototype.initCameras = function() {
     this.camera = new CGFcamera(0.4,0.1,500,vec3.fromValues(15, 15, 15),vec3.fromValues(0, 0, 0));
 }
 
@@ -242,38 +405,38 @@ XMLscene.prototype.registerForPicking = function(id,object)
 /**
  * Updates every node to their current animated matrix.
  */
-XMLscene.prototype.update = function(currTime) {
-	var deltaTime = (currTime - this.lastUpdateTime) / 1000;
-    this.lastUpdateTime = currTime;
-    
-	for(var node in this.graph.nodes){
-        this.graph.nodes[node].applyAnimation(deltaTime);
-        this.graph.nodes[node].updatePositionValues();
-    }
+ XMLscene.prototype.update = function(currTime) {
+   var deltaTime = (currTime - this.lastUpdateTime) / 1000;
+   this.lastUpdateTime = currTime;
 
-    if (this.game.winner != null && this.gameStarted) {
+   for(var node in this.graph.nodes){
+    this.graph.nodes[node].applyAnimation(deltaTime);
+    this.graph.nodes[node].updatePositionValues();
+}
 
-        if (this.game.winner == 1) {
-            alert('The Game winner is Player 1 - Black Pieces.');
-        }
-        else {
-            alert('The Game winner is Player 2 - White Pieces.');
-        }
-        this.game = new MyGameBoard(this);
+if (this.game.winner != null && this.gameStarted) {
+
+    if (this.game.winner == 1) {
+        alert('The Game winner is Player 1 - Black Pieces.');
     }
+    else {
+        alert('The Game winner is Player 2 - White Pieces.');
+    }
+    this.game = new MyGameBoard(this);
+}
 }
 
 /* Handler called when the graph is finally loaded. 
  * As loading is asynchronous, this may be called already after the application has started the run loop
  */
-XMLscene.prototype.onGraphLoaded = function() 
-{
+ XMLscene.prototype.onGraphLoaded = function() 
+ {
     this.camera.near = this.graph.near;
     this.camera.far = this.graph.far;
     this.axis = new CGFaxis(this,this.graph.referenceLength);
     
     this.setGlobalAmbientLight(this.graph.ambientIllumination[0], this.graph.ambientIllumination[1], 
-    this.graph.ambientIllumination[2], this.graph.ambientIllumination[3]);
+        this.graph.ambientIllumination[2], this.graph.ambientIllumination[3]);
     
     this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
     
@@ -288,8 +451,8 @@ XMLscene.prototype.onGraphLoaded = function()
 /**
  * Handles the starting of the game
  */
-XMLscene.prototype.startGame = function ()
-{
+ XMLscene.prototype.startGame = function ()
+ {
     if (this.gameStarted) {
         return;
     }
@@ -312,7 +475,7 @@ XMLscene.prototype.startCams = function()
 /**
  * Displays the scene.
  */
-XMLscene.prototype.display = function() {
+ XMLscene.prototype.display = function() {
     // ---- BEGIN Background, camera and axis setup
     
     if (this.gameStarted || !this.pauseGame){
@@ -383,8 +546,8 @@ XMLscene.prototype.display = function() {
         // Displays the scene.
         this.graph.displayScene();
     }
-	else
-	{
+    else
+    {
 		// Draw axis
 		this.axis.display();
 	}
